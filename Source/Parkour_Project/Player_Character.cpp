@@ -73,7 +73,7 @@ APlayer_Character::APlayer_Character()
 	bIsSprinting = false;
 
 	//DASH-> Sets the default value of the biscurrentlydashing variable to fasle
-	bIsCurrentlyDashing = false;
+	//bIsCurrentlyDashing = false;
 
 	//STAMINA-> sets the value of the players stamina
 	MaxStamina = 1.0f;
