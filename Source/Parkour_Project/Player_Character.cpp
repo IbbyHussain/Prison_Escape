@@ -83,12 +83,19 @@ APlayer_Character::APlayer_Character()
 
 	//DASH-> The amount of stamina that is taken from the players total stamina when dashing
 	DashDrain = 0.2;
+
+	//TEST CODE
+	bSprintStartStatus = false;
+
+	bSprintResetStatus = false;
 }
 
 // EVENT BEGIN PLAY-> Called when the game starts or when spawned
 void APlayer_Character::BeginPlay()
 {
 	Super::BeginPlay();
+
+
 	
 }
 
@@ -108,13 +115,16 @@ void APlayer_Character::Tick(float DeltaTime)
 			MaxStamina = MaxStamina - SprintDrain;
 		}
 
-		//if the stamina is leass than or equal to 0
+	    //if the stamina is leass than or equal to 0
 		if (MaxStamina <= 0)
 		{
-			// call function stop sprinting so the player cant sprint anymore
-			StopSprinting();
+			//call function stop sprinting so the player cant sprint anymore
+		StopSprinting();
 		}
 	}
+	
+	
+
 }
 
 //MOVEMENT-> The function for moving forward or backwards
@@ -147,10 +157,35 @@ void APlayer_Character::stopjumponce()
 	DoubleJumpCounter = 0;
 }
 
+//SPRINT-> when button pressed
+void APlayer_Character::ResetSprintPressed()
+{
+	bSprintResetStatus = true;
+	GetWorldTimerManager().SetTimer(TimeForSprintResetStatus, this, &APlayer_Character::ResetSprintCheckStatus, DashStop, false);
+}
+
+//SPRINT-> when button is released
+void APlayer_Character::ResetSprintReleased()
+{
+	bSprintResetStatus = false;
+	StopSprinting();
+}
+
+//SPRINT-> resets the sprint status, checks if button 1 is pressed
+void APlayer_Character::ResetSprintCheckStatus()
+{
+	if(!bSprintStartStatus)
+	{
+		//print statement here
+		UE_LOG(LogTemp, Log, TEXT("UE_LOG_RESET"));
+	
+	}
+}
+
 // DOUBLEJUMP-> The function that handles double jumping
 void APlayer_Character::DoubleJump()
 {
-	// a check to see if the character can double jump, as thye should be able to
+	// a check to see if the character can double jump, as they should be able to
 	// if they have already jumped twice
 	// if the player has jumped once or hasnt jumped at all
 	if (DoubleJumpCounter <= 1)
@@ -174,24 +209,47 @@ void APlayer_Character::Landed(const FHitResult & Hit)
 	DoubleJumpCounter = 0;
 }
 
-//SPRINT-> the function for sprinting
+//SPRINT-> PRESSED the function for sprinting
 void APlayer_Character::Sprint()
 {
-	// they can sprint if they have enough stamina
-	if (MaxStamina >= 0.01)
-	{
-		//sets the character speed to the sprint speed variable
-		GetCharacterMovement()->MaxWalkSpeed = Sprintspeed;
-		bIsSprinting = true;
-	}
+	bSprintStartStatus = true;
+	//Delay here
+	GetWorldTimerManager().SetTimer(TimeForSprintStartStatus, this, &APlayer_Character::StartSprintCheckStatus,DashStop,false);
 }
 
-//SPRINT-> the function for stop sprinting
+//SPRINT-> RELEASED the function for stop sprinting
 void APlayer_Character::StopSprinting()
 {
+	//TEST CODE
+	bSprintStartStatus = false;
 	//sets the character speed to the default speed variable
 	GetCharacterMovement()->MaxWalkSpeed = Defaultspeed;
 	bIsSprinting = false;
+}
+
+//SPRINT->
+void APlayer_Character::StartSprintCheckStatus()
+{
+	// Checks if second button is pressed
+	if(!bSprintResetStatus)
+	{
+		UE_LOG(LogTemp, Log, TEXT("UE_LOG_START"));
+	}
+	
+	//if both buttons pressed
+	if(bSprintStartStatus && bSprintResetStatus)
+	{
+		UE_LOG(LogTemp, Log, TEXT("UE_LOG_BOTHPRESSED"));
+		
+		if (MaxStamina >= 0.01 || GetCharacterMovement()->MaxWalkSpeed >= 550)
+		{
+			//sets the character speed to the sprint speed variable
+			GetCharacterMovement()->MaxWalkSpeed = Sprintspeed;
+			bIsSprinting = true;
+
+		}
+	}
+
 }
 
 //DASH-> The function for the dash mechanic
@@ -264,6 +322,12 @@ void APlayer_Character::SetupPlayerInputComponent(UInputComponent * PlayerInputC
 	
 	//SPRINT-> Binds the action for stop sprinting
 	PlayerInputComponent->BindAction("Sprint", IE_Released, this, &APlayer_Character::StopSprinting);
+
+	//RESETSPRINT->
+	PlayerInputComponent->BindAction("ResetSprint", IE_Pressed, this, &APlayer_Character::ResetSprintPressed);
+
+	//RESETSPRINT->
+	PlayerInputComponent->BindAction("ResetSprint", IE_Released, this, &APlayer_Character::ResetSprintReleased);
 
 	//DASH-> binds action for dashing
 	PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &APlayer_Character::Dash);

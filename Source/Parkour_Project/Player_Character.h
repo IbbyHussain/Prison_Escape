@@ -86,15 +86,15 @@ public:
 	void StopSprinting();
 
 	//SPRINT-> The declaration of the defaultspeed variable
-	UPROPERTY(EditAnywhere, Category = "Sprint")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sprint")
 	float Defaultspeed;
 
 	//SPRINT-> The declaration of the sprintspeed variable
-	UPROPERTY(EditAnywhere, Category = "Sprint")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sprint")
 	float Sprintspeed;
 
 	//SPRINT-> The declaration of the sprintdrain variable
-	UPROPERTY(EditAnywhere, Category = "Sprint")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sprint")
 	float SprintDrain;
 	
 	//SPRINT-> The declaration of the is sprinting variable
@@ -146,5 +146,30 @@ public:
 
 	FTimerHandle TimeBetweenJumps;
 
+	//TwoButtonsPressedForSprint
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sprint")
+	bool bSprintStartStatus;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sprint")
+	bool bSprintResetStatus;
+
+	FTimerHandle TimeForSprintResetStatus;
+
+	FTimerHandle TimeForSprintStartStatus;
+
+	UFUNCTION(BLueprintCallable)
+	void ResetSprintPressed();
+
+	UFUNCTION(BlueprintCallable)
+	void ResetSprintReleased();
+
+	UFUNCTION(BlueprintCallable)
+	void ResetSprintCheckStatus();
+
+	UFUNCTION(BlueprintCallable)
+	void StartSprintCheckStatus();
+
+	
 
 };
