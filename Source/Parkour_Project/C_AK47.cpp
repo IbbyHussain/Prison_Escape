@@ -23,7 +23,34 @@ void AC_AK47::BeginPlay()
 
 void AC_AK47::Fire()
 {
-	
+	//LineTrace Logic
+
+	// sets the player as owner of this weapon
+	AActor* MyOwner = GetOwner();
+	// checks so that it will not run if null
+	if (MyOwner)
+	{
+		// vector values for line trace parameters
+		FVector EyeLocation;
+		FRotator EyeRotation;
+		//Gets the point of the camera
+		MyOwner->GetActorEyesViewPoint(EyeLocation, EyeRotation);
+		// The line trace will end from camera to 1000units in the direction of camera
+		FVector TraceEnd = EyeLocation + (EyeRotation.Vector() * 1000);
+
+		// ignores the player and the gun so they dont take damage
+		FCollisionQueryParams QueryParams;
+		QueryParams.AddIgnoredActor(MyOwner);
+		QueryParams.AddIgnoredActor(this);
+		//complex line trace
+		QueryParams.bTraceComplex = true;
+
+		FHitResult Hit;
+		if (GetWorld()->LineTraceSingleByChannel(Hit, EyeLocation, TraceEnd, ECC_Visibility, QueryParams))
+		{
+			//Damage
+		}
+	}
 }
 
 // Called every frame
