@@ -170,6 +170,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void StartSprintCheckStatus();
 
+	//TEST CODE
+
+	UAnimInstance* TestAnim;
+
+	APlayer_Character* PlayerCharacterRef;
+
 	
 
 };
