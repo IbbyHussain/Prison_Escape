@@ -113,6 +113,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	float DashCoolDown;
 	
+	//DASH-> the amount of stamina that will be taken away
+	float DashDrain;
+	
 	//DASH-> The declaration of the DASH stop variable
 	UPROPERTY(EditAnywhere)
 	float DashStop;
@@ -134,14 +137,12 @@ public:
 	UPROPERTY()
 	FTimerHandle UnUsedHandle;
 
-	//TEST CODE->
+	//JUMP-> functions 
 
 	void jumponce();
+	
 	void stopjumponce();
 
-	float DashDrain;
-
-	
 	FTimerHandle JumpTimer;
 
 	FTimerHandle TimeBetweenJumps;
@@ -172,9 +173,9 @@ public:
 
 	//TEST CODE
 
-	UAnimInstance* TestAnim;
+	//LINETRACE-> will allow the line trace to come from the player camera properly
+	virtual FVector GetPawnViewLocation() const override;
 
-	APlayer_Character* PlayerCharacterRef;
 
 	
 
