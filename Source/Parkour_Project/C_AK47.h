@@ -24,6 +24,7 @@ protected:
 	UPROPERTY(EditAnywhere)
 	USkeletalMeshComponent* AK47Mesh;
 	
+	UFUNCTION(BlueprintCallable, Category = "AK47")
 	void Fire();
 
 public:	
