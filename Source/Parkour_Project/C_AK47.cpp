@@ -2,6 +2,7 @@
 
 
 #include "C_AK47.h"
+#include "DrawDebugHelpers.h"
 
 // Sets default values
 AC_AK47::AC_AK47()
@@ -50,6 +51,8 @@ void AC_AK47::Fire()
 		{
 			//Damage
 		}
+
+		DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, FColor::Green, false, 1.0f, 0, 1.0f);
 	}
 }
 
