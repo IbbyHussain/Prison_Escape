@@ -123,8 +123,10 @@ void APlayer_Character::Tick(float DeltaTime)
 		}
 	}
 	
-	
+	//TEST CODE -> Casting to animation blueprints
 
+	//UE_LOG(LogTemp,Log,TEXT("hi"));
+		
 }
 
 //MOVEMENT-> The function for moving forward or backwards
