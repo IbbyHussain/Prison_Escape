@@ -123,7 +123,6 @@ void APlayer_Character::Tick(float DeltaTime)
 		}
 	}
 	
-	//TEST CODE -> Casting to animation blueprints
 
 	//UE_LOG(LogTemp,Log,TEXT("hi"));
 		
@@ -252,6 +251,21 @@ void APlayer_Character::StartSprintCheckStatus()
 		}
 	}
 
+}
+
+//LINETRACE-> allows the line trace to come from the camera
+FVector APlayer_Character::GetPawnViewLocation() const
+{
+	// null check
+	if (CameraComp) 
+	{
+		//returns the camera location
+		return CameraComp->GetComponentLocation();
+	}
+
+	// other wise returns pawn location
+	return Super::GetPawnViewLocation();
+	
 }
 
 //DASH-> The function for the dash mechanic
