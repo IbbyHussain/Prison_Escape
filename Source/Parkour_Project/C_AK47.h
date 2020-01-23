@@ -7,6 +7,7 @@
 #include "C_AK47.generated.h"
 
 class USkeletalMeshComponent;
+class UDamageType;
 
 UCLASS()
 class PARKOUR_PROJECT_API AC_AK47 : public AActor
@@ -26,6 +27,9 @@ protected:
 	
 	UFUNCTION(BlueprintCallable, Category = "AK47")
 	void Fire();
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AK47")
+	TSubclassOf<UDamageType> DefaultDamage;
 
 public:	
 	// Called every frame

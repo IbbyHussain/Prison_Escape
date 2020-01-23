@@ -3,6 +3,7 @@
 
 #include "C_AK47.h"
 #include "DrawDebugHelpers.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AC_AK47::AC_AK47()
@@ -36,8 +37,11 @@ void AC_AK47::Fire()
 		FRotator EyeRotation;
 		//Gets the point of the camera
 		MyOwner->GetActorEyesViewPoint(EyeLocation, EyeRotation);
+		
+		FVector ShotDirection = EyeRotation.Vector();
+		
 		// The line trace will end from camera to 1000units in the direction of camera
-		FVector TraceEnd = EyeLocation + (EyeRotation.Vector() * 1000);
+		FVector TraceEnd = EyeLocation + (ShotDirection * 1000);
 
 		// ignores the player and the gun so they dont take damage
 		FCollisionQueryParams QueryParams;
@@ -50,6 +54,9 @@ void AC_AK47::Fire()
 		if (GetWorld()->LineTraceSingleByChannel(Hit, EyeLocation, TraceEnd, ECC_Visibility, QueryParams))
 		{
 			//Damage
+
+			AActor* HitActor = Hit.GetActor();
+			UGameplayStatics::ApplyPointDamage(HitActor, 20.0f, ShotDirection, Hit, MyOwner->GetInstigatorController(), this, DefaultDamage);
 		}
 
 		DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, FColor::Green, false, 1.0f, 0, 1.0f);
