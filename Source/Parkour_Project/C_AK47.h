@@ -8,6 +8,7 @@
 
 class USkeletalMeshComponent;
 class UDamageType;
+class UParticleSystem;
 
 UCLASS()
 class PARKOUR_PROJECT_API AC_AK47 : public AActor
@@ -30,6 +31,15 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AK47")
 	TSubclassOf<UDamageType> DefaultDamage;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "AK47")
+	FName MuzzleSocket;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AK47")
+	UParticleSystem* MuzzleEffect;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AK47")
+	UParticleSystem* ImpactEffect;
 
 public:	
 	// Called every frame

@@ -4,6 +4,7 @@
 #include "C_AK47.h"
 #include "DrawDebugHelpers.h"
 #include "Kismet/GameplayStatics.h"
+#include "Particles/ParticleSystem.h"
 
 // Sets default values
 AC_AK47::AC_AK47()
@@ -13,6 +14,8 @@ AC_AK47::AC_AK47()
 
 	AK47Mesh = CreateDefaultSubobject<USkeletalMeshComponent>("MeshComponent");
 	RootComponent = AK47Mesh;
+
+	MuzzleSocket = "MuzzleSocket";
 
 }
 
@@ -57,9 +60,21 @@ void AC_AK47::Fire()
 
 			AActor* HitActor = Hit.GetActor();
 			UGameplayStatics::ApplyPointDamage(HitActor, 20.0f, ShotDirection, Hit, MyOwner->GetInstigatorController(), this, DefaultDamage);
+
+			if (ImpactEffect) 
+			{
+				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.ImpactPoint, Hit.ImpactNormal.Rotation());
+			}
 		}
 
 		DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, FColor::Green, false, 1.0f, 0, 1.0f);
+
+		//Attaches the particle effect to the AK47
+		if (MuzzleEffect) 
+		{
+			UGameplayStatics::SpawnEmitterAttached(MuzzleEffect, AK47Mesh, MuzzleSocket);
+		}
+		
 	}
 }
 
