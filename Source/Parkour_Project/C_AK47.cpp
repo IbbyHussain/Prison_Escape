@@ -5,6 +5,8 @@
 #include "DrawDebugHelpers.h"
 #include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystem.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 
 // Sets default values
 AC_AK47::AC_AK47()
@@ -17,6 +19,7 @@ AC_AK47::AC_AK47()
 
 	MuzzleSocket = "MuzzleSocket";
 
+	TracerTargetName = "Target";
 }
 
 // Called when the game starts or when spawned
@@ -53,6 +56,9 @@ void AC_AK47::Fire()
 		//complex line trace
 		QueryParams.bTraceComplex = true;
 
+		// the "target" for the tracer particle parameter
+		FVector TracerEndPoint = TraceEnd;
+
 		FHitResult Hit;
 		if (GetWorld()->LineTraceSingleByChannel(Hit, EyeLocation, TraceEnd, ECC_Visibility, QueryParams))
 		{
@@ -65,6 +71,9 @@ void AC_AK47::Fire()
 			{
 				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.ImpactPoint, Hit.ImpactNormal.Rotation());
 			}
+
+			TracerEndPoint = Hit.ImpactPoint;
+
 		}
 
 		DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, FColor::Green, false, 1.0f, 0, 1.0f);
@@ -74,6 +83,24 @@ void AC_AK47::Fire()
 		{
 			UGameplayStatics::SpawnEmitterAttached(MuzzleEffect, AK47Mesh, MuzzleSocket);
 		}
+
+		
+
+		if (TraceEffect) 
+		{
+			//gets the location of the muzzle socket 
+			FVector MuzzleLocation = AK47Mesh->GetSocketLocation(MuzzleSocket);
+
+			UParticleSystemComponent* TracerComp = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), TraceEffect, MuzzleLocation);
+
+			if (TracerComp)
+			{
+				TracerComp->SetVectorParameter(TracerTargetName, TracerEndPoint);
+			}
+
+		}
+
+		
 		
 	}
 }

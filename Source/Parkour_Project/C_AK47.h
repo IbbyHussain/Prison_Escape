@@ -35,11 +35,17 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "AK47")
 	FName MuzzleSocket;
 
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "AK47")
+	FName TracerTargetName;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AK47")
 	UParticleSystem* MuzzleEffect;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AK47")
 	UParticleSystem* ImpactEffect;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "AK47")
+	UParticleSystem* TraceEffect;
 
 public:	
 	// Called every frame
