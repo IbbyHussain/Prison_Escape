@@ -54,6 +54,26 @@ protected:
 	// STAMINA-> the current stamina value                                           
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stamina")
 	float CurrentStamina;
+
+	//ZOOM-> zoomed in value
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Zoom")
+	float ZoomedFOV;
+
+	//ZOOM->
+	UPROPERTY(EditDefaultsOnly, Category = "Zoom", meta = (ClampMin = 0.1, ClampMax = 100))
+	float ZoomInterpSpeed;
+
+	//ZOOM-> default field of view
+	float DefaultFOV;
+
+	//ZOOM-> A boolean to control zooming in
+	bool bCanZoomIn;
+
+	//ZOOM->
+	void BeginZoom();
+
+	//ZOOM->
+	void EndZoom();
 		
 
 	

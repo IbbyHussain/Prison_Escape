@@ -88,6 +88,12 @@ APlayer_Character::APlayer_Character()
 	bSprintStartStatus = false;
 
 	bSprintResetStatus = false;
+
+	//ZOOM->
+	ZoomedFOV = 60.0f;
+
+	//ZOOM->
+	ZoomInterpSpeed = 20.0f;
 }
 
 // EVENT BEGIN PLAY-> Called when the game starts or when spawned
@@ -95,8 +101,21 @@ void APlayer_Character::BeginPlay()
 {
 	Super::BeginPlay();
 
-
+	//ZOOM->
+	DefaultFOV = CameraComp->FieldOfView;
 	
+}
+
+//ZOOM-> Initial Zoom
+void APlayer_Character::BeginZoom()
+{
+	bCanZoomIn = true;
+}
+
+//ZOOM-> End Zoom
+void APlayer_Character::EndZoom()
+{
+	bCanZoomIn = false;
 }
 
 // EVENT TICK-> Called every frame
@@ -123,6 +142,13 @@ void APlayer_Character::Tick(float DeltaTime)
 		}
 	}
 	
+	//ZOOM-> will set currentFOV based on the value of bCanZoomIn (left to right)
+	float TargetFOV = bCanZoomIn ? ZoomedFOV : DefaultFOV;
+
+	float NewFOV = FMath::FInterpTo(CameraComp->FieldOfView, TargetFOV, DeltaTime, ZoomInterpSpeed);
+
+	//ZOOM-> Ensures that the FOV is constantly updated
+	CameraComp->SetFieldOfView(NewFOV);
 
 	//UE_LOG(LogTemp,Log,TEXT("hi"));
 		
@@ -349,6 +375,12 @@ void APlayer_Character::SetupPlayerInputComponent(UInputComponent * PlayerInputC
 	PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &APlayer_Character::Dash);
 
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &APlayer_Character::jumponce);
+
+	PlayerInputComponent->BindAction("Zoom", IE_Pressed, this, &APlayer_Character::BeginZoom);
+
+	PlayerInputComponent->BindAction("Zoom", IE_Released, this, &APlayer_Character::EndZoom);
+
+
 }
 
 
