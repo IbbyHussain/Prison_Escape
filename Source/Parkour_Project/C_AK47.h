@@ -25,9 +25,6 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	USkeletalMeshComponent* AK47Mesh;
-	
-	UFUNCTION(BlueprintCallable, Category = "AK47")
-	void Fire();
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AK47")
 	TSubclassOf<UDamageType> DefaultDamage;
@@ -50,5 +47,8 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION(BlueprintCallable, Category = "AK47")
+	void Fire();
 
 };

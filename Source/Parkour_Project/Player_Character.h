@@ -8,6 +8,7 @@
 
 class UCameraComponent;
 class USpringArmComponent;
+class AC_AK47;
 
 UCLASS()
 class PARKOUR_PROJECT_API APlayer_Character : public ACharacter
@@ -74,9 +75,14 @@ protected:
 
 	//ZOOM->
 	void EndZoom();
-		
 
-	
+	AC_AK47* AK47;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "AK47")
+	TSubclassOf<AC_AK47> AK47Class;
+
+	UPROPERTY(VisibleDefaultsOnly)
+	FName WeaponAttachSocketName;
 
 public:	
 	// Called every frame
@@ -196,7 +202,9 @@ public:
 	//LINETRACE-> will allow the line trace to come from the player camera properly
 	virtual FVector GetPawnViewLocation() const override;
 
-
+	//FIRE
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	void StartFire();
 	
 
 };

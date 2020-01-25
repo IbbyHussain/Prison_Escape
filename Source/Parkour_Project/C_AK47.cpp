@@ -75,18 +75,16 @@ void AC_AK47::Fire()
 			TracerEndPoint = Hit.ImpactPoint;
 
 		}
-
-		DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, FColor::Green, false, 1.0f, 0, 1.0f);
-
+		
 		//Attaches the particle effect to the AK47
-		if (MuzzleEffect) 
+		if (MuzzleEffect)
 		{
 			UGameplayStatics::SpawnEmitterAttached(MuzzleEffect, AK47Mesh, MuzzleSocket);
 		}
 
-		
 
-		if (TraceEffect) 
+
+		if (TraceEffect)
 		{
 			//gets the location of the muzzle socket 
 			FVector MuzzleLocation = AK47Mesh->GetSocketLocation(MuzzleSocket);
@@ -100,10 +98,12 @@ void AC_AK47::Fire()
 
 		}
 
-		
-		
+		DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, FColor::Green, false, 1.0f, 0, 1.0f);
 	}
+
 }
+
+
 
 // Called every frame
 void AC_AK47::Tick(float DeltaTime)

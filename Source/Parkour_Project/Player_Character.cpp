@@ -11,6 +11,7 @@
 #include "Runtime/Engine/Classes/GameFramework/CharacterMovementComponent.h"
 #include "Runtime/Engine/Public/TimerManager.h"
 #include "TimerManager.h"
+#include "C_AK47.h"
 
 
 
@@ -94,6 +95,9 @@ APlayer_Character::APlayer_Character()
 
 	//ZOOM->
 	ZoomInterpSpeed = 20.0f;
+
+	//FIRING->
+	WeaponAttachSocketName = "RifleSocket";
 }
 
 // EVENT BEGIN PLAY-> Called when the game starts or when spawned
@@ -103,19 +107,18 @@ void APlayer_Character::BeginPlay()
 
 	//ZOOM->
 	DefaultFOV = CameraComp->FieldOfView;
+
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+	AK47 = GetWorld()->SpawnActor<AC_AK47>(AK47Class, FVector::ZeroVector, FRotator::ZeroRotator, SpawnParams);
+
+	if (AK47)
+	{
+		AK47->SetOwner(this);
+		AK47->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, WeaponAttachSocketName);
+	}
 	
-}
-
-//ZOOM-> Initial Zoom
-void APlayer_Character::BeginZoom()
-{
-	bCanZoomIn = true;
-}
-
-//ZOOM-> End Zoom
-void APlayer_Character::EndZoom()
-{
-	bCanZoomIn = false;
 }
 
 // EVENT TICK-> Called every frame
@@ -128,20 +131,20 @@ void APlayer_Character::Tick(float DeltaTime)
 	if (bIsSprinting)
 	{
 		// if the stamina is greater than or equal to 0
-		if(MaxStamina >= 0)
+		if (MaxStamina >= 0)
 		{
 			// subtract a value each tick
 			MaxStamina = MaxStamina - SprintDrain;
 		}
 
-	    //if the stamina is leass than or equal to 0
+		//if the stamina is leass than or equal to 0
 		if (MaxStamina <= 0)
 		{
 			//call function stop sprinting so the player cant sprint anymore
-		StopSprinting();
+			StopSprinting();
 		}
 	}
-	
+
 	//ZOOM-> will set currentFOV based on the value of bCanZoomIn (left to right)
 	float TargetFOV = bCanZoomIn ? ZoomedFOV : DefaultFOV;
 
@@ -151,6 +154,28 @@ void APlayer_Character::Tick(float DeltaTime)
 	CameraComp->SetFieldOfView(NewFOV);
 
 	//UE_LOG(LogTemp,Log,TEXT("hi"));
+
+}
+
+
+//ZOOM-> Initial Zoom
+void APlayer_Character::BeginZoom()
+{
+	bCanZoomIn = true;
+}
+
+//ZOOM-> End Zoom
+void APlayer_Character::EndZoom()
+{
+	bCanZoomIn = false;
+}
+//FIRING->
+void APlayer_Character::StartFire()
+{
+	if (AK47)
+	{
+		AK47->Fire();
+	}
 		
 }
 
@@ -340,6 +365,8 @@ void APlayer_Character::ResetDashing()
 	bCanDash = true;
 }
 
+
+
 // Called to bind functionality to input
 void APlayer_Character::SetupPlayerInputComponent(UInputComponent * PlayerInputComponent)
 {
@@ -374,11 +401,17 @@ void APlayer_Character::SetupPlayerInputComponent(UInputComponent * PlayerInputC
 	//DASH-> binds action for dashing
 	PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &APlayer_Character::Dash);
 
+	//JUMP->
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &APlayer_Character::jumponce);
 
+	//ZOOM->
 	PlayerInputComponent->BindAction("Zoom", IE_Pressed, this, &APlayer_Character::BeginZoom);
 
+	//ZOOM->
 	PlayerInputComponent->BindAction("Zoom", IE_Released, this, &APlayer_Character::EndZoom);
+
+	//FIRE
+	PlayerInputComponent->BindAction("SemiFire", IE_Pressed, this, &APlayer_Character::StartFire);
 
 
 }
