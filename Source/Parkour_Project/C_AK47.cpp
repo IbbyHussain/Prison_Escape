@@ -7,6 +7,9 @@
 #include "Particles/ParticleSystem.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "PhysicalMaterials/PhysicalMaterial.h"
+#include "Parkour_Project.h"
+
 
 
 // Sets default values
@@ -30,6 +33,7 @@ void AC_AK47::BeginPlay()
 	
 }
 
+//FIRE-> The firing function for the AK47
 void AC_AK47::Fire()
 {
 	//LineTrace Logic
@@ -56,6 +60,8 @@ void AC_AK47::Fire()
 		QueryParams.AddIgnoredActor(this);
 		//complex line trace
 		QueryParams.bTraceComplex = true;
+		QueryParams.bReturnPhysicalMaterial = true;
+
 
 		// the "target" for the tracer particle parameter
 		FVector TracerEndPoint = TraceEnd;
@@ -68,13 +74,28 @@ void AC_AK47::Fire()
 			AActor* HitActor = Hit.GetActor();
 			UGameplayStatics::ApplyPointDamage(HitActor, 20.0f, ShotDirection, Hit, MyOwner->GetInstigatorController(), this, DefaultDamage);
 
-			if (ImpactEffect) 
+			//PHYSMAterial Logic
+
+			EPhysicalSurface SurfaceType = UPhysicalMaterial::DetermineSurfaceType(Hit.PhysMaterial.Get());
+			UParticleSystem* SelectedImpactEffect = nullptr;
+			switch (SurfaceType)
 			{
-				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, Hit.ImpactPoint, Hit.ImpactNormal.Rotation());
+			case SURFACE_FLESHDEFAULT:
+			case SURFACE_FLESHVULNERABLE:
+				SelectedImpactEffect = FleshImpactEffect;
+				break;
+			default:
+				SelectedImpactEffect = DefaultImpactEffect;
+				break;
 			}
 
 			TracerEndPoint = Hit.ImpactPoint;
 
+			// will play the impact effect that has been chosen by switch statement
+			if (SelectedImpactEffect)
+			{
+				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), SelectedImpactEffect, Hit.ImpactPoint, Hit.ImpactNormal.Rotation());
+			}
 		}
 		
 		//Attaches the particle effect to the AK47
@@ -99,7 +120,8 @@ void AC_AK47::Fire()
 
 		}
 
-		DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, FColor::Green, false, 1.0f, 0, 1.0f);
+		//Debug Line for line trace
+		//DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, FColor::Green, false, 1.0f, 0, 1.0f);
 
 		APawn* MyOwner = Cast<APawn>(GetOwner());
 		if(MyOwner)
@@ -118,7 +140,7 @@ void AC_AK47::Fire()
 
 
 
-// Called every frame
+//EVENT TICK-> Called every frame
 void AC_AK47::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
