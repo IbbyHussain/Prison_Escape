@@ -8,6 +8,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Particles/ParticleSystemComponent.h"
 
+
 // Sets default values
 AC_AK47::AC_AK47()
 {
@@ -60,7 +61,7 @@ void AC_AK47::Fire()
 		FVector TracerEndPoint = TraceEnd;
 
 		FHitResult Hit;
-		if (GetWorld()->LineTraceSingleByChannel(Hit, EyeLocation, TraceEnd, QueryParams))
+		if (GetWorld()->LineTraceSingleByChannel(Hit, EyeLocation, TraceEnd, ECC_Visibility, QueryParams))
 		{
 			//Damage
 
@@ -99,6 +100,18 @@ void AC_AK47::Fire()
 		}
 
 		DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, FColor::Green, false, 1.0f, 0, 1.0f);
+
+		APawn* MyOwner = Cast<APawn>(GetOwner());
+		if(MyOwner)
+		{
+			APlayerController* PlayerController = Cast<APlayerController>(MyOwner->GetController());
+			//get controller
+			if(PlayerController)
+			{
+				PlayerController->ClientPlayCameraShake(FireCameraShake);
+			}
+
+		}
 	}
 
 }
