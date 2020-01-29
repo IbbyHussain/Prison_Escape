@@ -53,7 +53,7 @@ APlayer_Character::APlayer_Character()
 	bCanDash = true;
 
 	//DASH-> The distance the player will dash
-	DashDistance = 6000;
+	DashDistance = 12000;
 
 	//DASH-> 1 second cooldown for dashing
 	DashCoolDown = 1.0f;
@@ -98,6 +98,12 @@ APlayer_Character::APlayer_Character()
 
 	//FIRING->
 	WeaponAttachSocketName = "RifleSocket";
+
+	//STAMINAREGENERATION-> The delay used for stamina regeneration
+	StaminaRegenerationDelay = 0.1f;
+	
+
+
 }
 
 // EVENT BEGIN PLAY-> Called when the game starts or when spawned
@@ -118,7 +124,7 @@ void APlayer_Character::BeginPlay()
 		AK47->SetOwner(this);
 		AK47->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, WeaponAttachSocketName);
 	}
-	
+
 }
 
 // EVENT TICK-> Called every frame
@@ -144,6 +150,12 @@ void APlayer_Character::Tick(float DeltaTime)
 			StopSprinting();
 		}
 	}
+	
+	//STAMINAREGENERATION-> Calculates stamina regeneration
+	if (MaxStamina <= 0)
+	{
+		RegenStamina();
+	}
 
 	//ZOOM-> will set currentFOV based on the value of bCanZoomIn (left to right)
 	float TargetFOV = bCanZoomIn ? ZoomedFOV : DefaultFOV;
@@ -153,10 +165,32 @@ void APlayer_Character::Tick(float DeltaTime)
 	//ZOOM-> Ensures that the FOV is constantly updated
 	CameraComp->SetFieldOfView(NewFOV);
 
-	//UE_LOG(LogTemp,Log,TEXT("hi"));
-
 }
 
+//STAMINAREGENERATION->
+void APlayer_Character::RegenStamina()
+{
+	//UE_LOG(LogTemp, Log, TEXT("stamina is less than 1"));
+	
+	GetWorldTimerManager().SetTimer(StaminaRegenerationTimerHandle, this, &APlayer_Character::RegenStaminaDelay, StaminaRegenerationDelay, false);
+	//regen per sec
+	//up to 1
+	//then stop regen
+}
+
+//STAMINAREGENERATION->
+void APlayer_Character::RegenStaminaDelay()
+{
+	MaxStamina += 0.1;
+	if (MaxStamina >= 1) 
+	{
+		return;
+	}
+	else;
+	{
+		RegenStamina();
+	}
+}
 
 //ZOOM-> Initial Zoom
 void APlayer_Character::BeginZoom()

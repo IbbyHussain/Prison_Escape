@@ -84,6 +84,18 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly)
 	FName WeaponAttachSocketName;
 
+	//STAMINAREGENERATION->
+	FTimerHandle StaminaRegenerationTimerHandle;
+
+	//STAMINAREGENERATION->
+	float StaminaRegenerationDelay;
+
+	//STAMINAREGENERATION->
+	void RegenStamina();
+
+	//STAMINAREGENERATION->
+	void RegenStaminaDelay();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
