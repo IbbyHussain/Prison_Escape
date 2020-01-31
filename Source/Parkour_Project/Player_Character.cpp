@@ -15,7 +15,7 @@
 
 
 
-// Sets default values
+//CONSTRUCTOR-> Sets default values
 APlayer_Character::APlayer_Character()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -99,10 +99,7 @@ APlayer_Character::APlayer_Character()
 	//FIRING->
 	WeaponAttachSocketName = "RifleSocket";
 
-	//STAMINAREGENERATION-> The delay used for stamina regeneration
-	StaminaRegenerationDelay = 0.1f;
 	
-
 
 }
 
@@ -140,7 +137,7 @@ void APlayer_Character::Tick(float DeltaTime)
 		if (MaxStamina >= 0)
 		{
 			// subtract a value each tick
-			MaxStamina = MaxStamina - SprintDrain;
+			MaxStamina -= SprintDrain;
 		}
 
 		//if the stamina is leass than or equal to 0
@@ -151,12 +148,6 @@ void APlayer_Character::Tick(float DeltaTime)
 		}
 	}
 	
-	//STAMINAREGENERATION-> Calculates stamina regeneration
-	if (MaxStamina <= 0)
-	{
-		RegenStamina();
-	}
-
 	//ZOOM-> will set currentFOV based on the value of bCanZoomIn (left to right)
 	float TargetFOV = bCanZoomIn ? ZoomedFOV : DefaultFOV;
 
@@ -164,68 +155,90 @@ void APlayer_Character::Tick(float DeltaTime)
 
 	//ZOOM-> Ensures that the FOV is constantly updated
 	CameraComp->SetFieldOfView(NewFOV);
-
 }
 
-//STAMINAREGENERATION->
-void APlayer_Character::RegenStamina()
-{
-	//UE_LOG(LogTemp, Log, TEXT("stamina is less than 1"));
-	
-	GetWorldTimerManager().SetTimer(StaminaRegenerationTimerHandle, this, &APlayer_Character::RegenStaminaDelay, StaminaRegenerationDelay, false);
-	//regen per sec
-	//up to 1
-	//then stop regen
-}
+//MOVEMENTCODE->
 
-//STAMINAREGENERATION->
-void APlayer_Character::RegenStaminaDelay()
-{
-	MaxStamina += 0.1;
-	if (MaxStamina >= 1) 
-	{
-		return;
-	}
-	else;
-	{
-		RegenStamina();
-	}
-}
-
-//ZOOM-> Initial Zoom
-void APlayer_Character::BeginZoom()
-{
-	bCanZoomIn = true;
-}
-
-//ZOOM-> End Zoom
-void APlayer_Character::EndZoom()
-{
-	bCanZoomIn = false;
-}
-//FIRING->
-void APlayer_Character::StartFire()
-{
-	if (AK47)
-	{
-		AK47->Fire();
-	}
-		
-}
-
-//MOVEMENT-> The function for moving forward or backwards
+//BASICMOVEMENT-> The function for moving forward or backwards
 void APlayer_Character::MoveForward(float Value)
 {
 	AddMovementInput(GetActorForwardVector()* Value);
 }
 
-//MOVEMENT-> The function for moving left or right
+//BASICMOVEMENT-> The function for moving left or right
 void APlayer_Character::MoveRight(float Value)
 {
 	AddMovementInput(GetActorRightVector()* Value);
 }
 
-//JUMP-> the function for jumping once
+//SPRINT-> (pressed) the function for sprinting
+void APlayer_Character::Sprint()
+{
+	//bCanRegenStamina = false;
+	bSprintStartStatus = true;
+	//Delay here
+	GetWorldTimerManager().SetTimer(TimeForSprintStartStatus, this, &APlayer_Character::StartSprintCheckStatus, DashStop, false);
+}
+
+//SPRINT-> checks the sprint status
+void APlayer_Character::StartSprintCheckStatus()
+{
+	// Checks if second button is pressed
+	if (!bSprintResetStatus)
+	{
+		//UE_LOG(LogTemp, Log, TEXT("UE_LOG_START"));
+	}
+
+	//if both buttons pressed
+	if (bSprintStartStatus && bSprintResetStatus)
+	{
+		//UE_LOG(LogTemp, Log, TEXT("UE_LOG_BOTHPRESSED"));
+
+		if (MaxStamina >= 0.01 || GetCharacterMovement()->MaxWalkSpeed >= 550)
+		{
+			//sets the character speed to the sprint speed variable
+			GetCharacterMovement()->MaxWalkSpeed = Sprintspeed;
+			bIsSprinting = true;
+		}
+	}
+}
+
+//SPRINT-> RELEASED the function for stop sprinting
+void APlayer_Character::StopSprinting()
+{
+	//TEST CODE
+	bSprintStartStatus = false;
+	//sets the character speed to the default speed variable
+	GetCharacterMovement()->MaxWalkSpeed = Defaultspeed;
+	bIsSprinting = false;
+}
+
+
+//SPRINT RESET->  when button pressed
+void APlayer_Character::ResetSprintPressed()
+{
+	bSprintResetStatus = true;
+	GetWorldTimerManager().SetTimer(TimeForSprintResetStatus, this, &APlayer_Character::ResetSprintCheckStatus, DashStop, false);
+}
+
+//SPRINT RESET-> when button is released
+void APlayer_Character::ResetSprintReleased()
+{
+	bSprintResetStatus = false;
+	StopSprinting();
+}
+
+//SPRINT RESET->  resets the sprint status, checks if button 1 is pressed
+void APlayer_Character::ResetSprintCheckStatus()
+{
+	if (!bSprintStartStatus)
+	{
+		//print statement here
+		//UE_LOG(LogTemp, Log, TEXT("UE_LOG_RESET"));
+	}
+}
+
+//SINGLE JUMP-> the function for jumping once
 void APlayer_Character::jumponce()
 {
 	// if the player has not jumped, they can jump
@@ -237,38 +250,14 @@ void APlayer_Character::jumponce()
 	}
 }
 
+//SINGLE JUMP->
 void APlayer_Character::stopjumponce()
 {
 	// sets the players number of jumps to 0, so they can jump again
 	DoubleJumpCounter = 0;
 }
 
-//SPRINT-> when button pressed
-void APlayer_Character::ResetSprintPressed()
-{
-	bSprintResetStatus = true;
-	GetWorldTimerManager().SetTimer(TimeForSprintResetStatus, this, &APlayer_Character::ResetSprintCheckStatus, DashStop, false);
-}
-
-//SPRINT-> when button is released
-void APlayer_Character::ResetSprintReleased()
-{
-	bSprintResetStatus = false;
-	StopSprinting();
-}
-
-//SPRINT-> resets the sprint status, checks if button 1 is pressed
-void APlayer_Character::ResetSprintCheckStatus()
-{
-	if(!bSprintStartStatus)
-	{
-		//print statement here
-		UE_LOG(LogTemp, Log, TEXT("UE_LOG_RESET"));
-	
-	}
-}
-
-// DOUBLEJUMP-> The function that handles double jumping
+//DOUBLEJUMP-> The function that handles double jumping
 void APlayer_Character::DoubleJump()
 {
 	// a check to see if the character can double jump, as they should be able to
@@ -287,7 +276,7 @@ void APlayer_Character::DoubleJump()
 	}
 }
 
-// DOUBLEJUMP->The function that handles landing after double jumping
+// DOUBLE JUMP->The function that handles landing after double jumping
 void APlayer_Character::Landed(const FHitResult & Hit)
 {
 	// When the player lands on the floor the amount of jumps
@@ -295,47 +284,77 @@ void APlayer_Character::Landed(const FHitResult & Hit)
 	DoubleJumpCounter = 0;
 }
 
-//SPRINT-> PRESSED the function for sprinting
-void APlayer_Character::Sprint()
+//DASH-> The function for the dash mechanic
+void APlayer_Character::Dash()
 {
-	bSprintStartStatus = true;
-	//Delay here
-	GetWorldTimerManager().SetTimer(TimeForSprintStartStatus, this, &APlayer_Character::StartSprintCheckStatus,DashStop,false);
-}
-
-//SPRINT-> RELEASED the function for stop sprinting
-void APlayer_Character::StopSprinting()
-{
-	//TEST CODE
-	bSprintStartStatus = false;
-	//sets the character speed to the default speed variable
-	GetCharacterMovement()->MaxWalkSpeed = Defaultspeed;
-	bIsSprinting = false;
-}
-
-//SPRINT->
-void APlayer_Character::StartSprintCheckStatus()
-{
-	// Checks if second button is pressed
-	if(!bSprintResetStatus)
+	//bCanRegenStamina = false;
+	//checking if the player is able to dash
+	if (MaxStamina >= 0.2)
 	{
-		UE_LOG(LogTemp, Log, TEXT("UE_LOG_START"));
-	}
-	
-	//if both buttons pressed
-	if(bSprintStartStatus && bSprintResetStatus)
-	{
-		UE_LOG(LogTemp, Log, TEXT("UE_LOG_BOTHPRESSED"));
-		
-		if (MaxStamina >= 0.01 || GetCharacterMovement()->MaxWalkSpeed >= 550)
+		//bCanRegenStamina = false;
+		if (bCanDash)
 		{
-			//sets the character speed to the sprint speed variable
-			GetCharacterMovement()->MaxWalkSpeed = Sprintspeed;
-			bIsSprinting = true;
-
+			//bCanRegenStamina = false;
+			// stops the character from being slowed down by obstacles
+			GetCharacterMovement()->BrakingFrictionFactor = 0.f;
+			// Allows thge player to only dash along the x or y axis but no z, 
+			//as we dont want them dashing up or down
+			// send them the distance of dash distance variable
+			LaunchCharacter(FVector(CameraComp->GetForwardVector().X, CameraComp->GetForwardVector().Y, 0).GetSafeNormal()* DashDistance, true, true);
+			// stops player from dashing again
+			bCanDash = false;
+			// after 0.1 seconds calls the stop dashing function
+			GetWorldTimerManager().SetTimer(UnUsedHandle, this, &APlayer_Character::StopDashing, DashStop, false);
+			// subtracts stamina if the player is dashing
+			if (MaxStamina >= 0)
+			{
+				MaxStamina -= DashDrain;
+			}
 		}
 	}
+}
 
+//DASH-> The function for the Stopdash mechanic
+void APlayer_Character::StopDashing()
+{
+	//bCanRegenStamina = true;
+	// stops the player from moving
+	GetCharacterMovement()->StopMovementImmediately();
+	// sets thefriction back to default
+	GetCharacterMovement()->BrakingFrictionFactor = 2.f;
+	// the delay between reseting each dash
+	GetWorldTimerManager().SetTimer(UnUsedHandle, this, &APlayer_Character::ResetDashing, DashCoolDown, false);
+}
+
+//DASH-> The function for the Resetdash mechanic
+void APlayer_Character::ResetDashing()
+{
+	// allows the player to dash after cooldown
+	bCanDash = true;
+	//bCanRegenStamina = false;
+}
+
+//WEAPON CODE->
+
+//ZOOM-> Initial Zoom
+void APlayer_Character::BeginZoom()
+{
+	bCanZoomIn = true;
+}
+
+//ZOOM-> End Zoom
+void APlayer_Character::EndZoom()
+{
+	bCanZoomIn = false;
+}
+
+//FIRING->
+void APlayer_Character::StartFire()
+{
+	if (AK47)
+	{
+		AK47->Fire();
+	}
 }
 
 //LINETRACE-> allows the line trace to come from the camera
@@ -350,56 +369,7 @@ FVector APlayer_Character::GetPawnViewLocation() const
 
 	// other wise returns pawn location
 	return Super::GetPawnViewLocation();
-	
 }
-
-//DASH-> The function for the dash mechanic
-void APlayer_Character::Dash()
-{
-	//checking if the player is able to dash
-	if (MaxStamina >= 0.2) 
-	{
-		if (bCanDash)
-		{
-			// stops the character from being slowed down by obstacles
-			GetCharacterMovement()->BrakingFrictionFactor = 0.f;
-			// Allows thge player to only dash along the x or y axis but no z, 
-			//as we dont want them dashing up or down
-			// send them the distance of dash distance variable
-			LaunchCharacter(FVector(CameraComp->GetForwardVector().X, CameraComp->GetForwardVector().Y, 0).GetSafeNormal()* DashDistance, true, true);
-			// stops player from dashing again
-			bCanDash = false;
-			// after 0.1 seconds calls the stop dashing function
-			GetWorldTimerManager().SetTimer(UnUsedHandle, this, &APlayer_Character::StopDashing, DashStop, false);
-			// subtracts stamina if the player is dashing
-			if (MaxStamina >= 0)
-			{
-				MaxStamina = MaxStamina - DashDrain;
-			}
-		}
-	}
-}
-
-//DASH-> The function for the Stopdash mechanic
-void APlayer_Character::StopDashing()
-{
-	
-	// stops the player from moving
-	GetCharacterMovement()->StopMovementImmediately();
-	// sets thefriction back to default
-	GetCharacterMovement()->BrakingFrictionFactor = 2.f;
-	// the delay between reseting each dash
-	GetWorldTimerManager().SetTimer(UnUsedHandle, this, &APlayer_Character::ResetDashing, DashCoolDown, false);
-}
-
-//DASH-> The function for the Resetdash mechanic
-void APlayer_Character::ResetDashing()
-{
-	// allows the player to dash after cooldown
-	bCanDash = true;
-}
-
-
 
 // Called to bind functionality to input
 void APlayer_Character::SetupPlayerInputComponent(UInputComponent * PlayerInputComponent)
