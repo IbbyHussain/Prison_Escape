@@ -416,8 +416,6 @@ void APlayer_Character::SetupPlayerInputComponent(UInputComponent * PlayerInputC
 
 	//FIRE
 	PlayerInputComponent->BindAction("SemiFire", IE_Pressed, this, &APlayer_Character::StartFire);
-
-
 }
 
 
