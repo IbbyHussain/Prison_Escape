@@ -9,6 +9,7 @@
 class UParticleSystemComponent;
 class UBoxComponent;
 class UStaticMeshComponent;
+class APlayer_Character;
 class C_StaminaPickUp;
 
 
@@ -40,8 +41,11 @@ protected:
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	APlayer_Character* PlayerCharacterRef;
 
 };
