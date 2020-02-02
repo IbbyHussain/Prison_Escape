@@ -52,7 +52,11 @@ void AC_StaminaPickUp::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AAct
 	if(PlayerCharacterRef && PlayerCharacterRef == OtherActor)
 	{
 		PlayerCharacterRef->AddStamina();
+
+		Destroy();
 	}
+
+	//Destroy();
 	
 }
 
