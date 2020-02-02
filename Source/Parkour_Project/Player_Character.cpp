@@ -99,11 +99,6 @@ APlayer_Character::APlayer_Character()
 
 	//FIRING->
 	WeaponAttachSocketName = "RifleSocket";
-	
-	
-	
-
-
 }
 
 // EVENT BEGIN PLAY-> Called when the game starts or when spawned
@@ -124,15 +119,6 @@ void APlayer_Character::BeginPlay()
 		AK47->SetOwner(this);
 		AK47->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, WeaponAttachSocketName);
 	}
-
-	GetMesh()->OnComponentBeginOverlap.AddDynamic(this, &APlayer_Character::OnOverlapBegin);
-
-}
-
-//EVENT ONCOMPONETBEGINOVERLAP
-void APlayer_Character::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
-{
-	UE_LOG(LogTemp, Log, TEXT("Overlaped with component"));
 }
 
 // EVENT TICK-> Called every frame
