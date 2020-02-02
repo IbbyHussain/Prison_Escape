@@ -5,6 +5,7 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "Components/BoxComponent.h"
 #include "Math/Vector.h"
+#include "Components/PrimitiveComponent.h"
 
 // Sets default values
 AC_StaminaPickUp::AC_StaminaPickUp()
@@ -12,30 +13,25 @@ AC_StaminaPickUp::AC_StaminaPickUp()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	StaminaPickupSkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>("MeshComp");
+	StaminaPickupStaticMesh = CreateDefaultSubobject<UStaticMeshComponent>("MeshComp");
+	RootComponent = StaminaPickupStaticMesh;
 
 	StaminaPickupEffect = CreateDefaultSubobject<UParticleSystemComponent>("Particlecomp");
-
-	BoxComponent = CreateDefaultSubobject<UBoxComponent>("BoxComp");
-	
-	RootComponent = StaminaPickupSkeletalMesh;
-	BoxComponent->AttachTo(RootComponent);
 	StaminaPickupEffect->AttachTo(RootComponent);
 
-	Self->StaminaPickupSkeletalMesh;
-	
-	/*FVector StaminaPickupScale(20.f);
-	Self->SetActorRelativeScale3D(StaminaPickupScale);*/
-
-	//Scales all components to 2
-	SetActorScale3D(FVector(1.5f));
-
+	BoxComponent = CreateDefaultSubobject<UBoxComponent>("BoxComp");
+	BoxComponent->AttachTo(RootComponent);
 	//changes the relative scale of the box collision
 	BoxComponent->SetRelativeScale3D(FVector(0.65f));
-	BoxComponent->SetRelativeLocation(FVector(0.f, 0.f, 11.f));
+	
+	Self->StaminaPickupStaticMesh;
+	
+	//Scales all components to 1.5
+	SetActorScale3D(FVector(1.5f));
 
-	//Physics
-	StaminaPickupSkeletalMesh->SetSimulatePhysics = true;
+	
+	
+
 }
 
 // EVENTBEGINPLAY-> Called when the game starts or when spawned
@@ -50,5 +46,7 @@ void AC_StaminaPickUp::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	//simulates physics
+	StaminaPickupStaticMesh->SetSimulatePhysics(true);
 }
 

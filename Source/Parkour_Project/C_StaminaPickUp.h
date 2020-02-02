@@ -6,10 +6,11 @@
 #include "GameFramework/Actor.h"
 #include "C_StaminaPickUp.generated.h"
 
-class USkeletalMeshComponent;
 class UParticleSystemComponent;
 class UBoxComponent;
+class UStaticMeshComponent;
 class C_StaminaPickUp;
+
 
 UCLASS()
 class PARKOUR_PROJECT_API AC_StaminaPickUp : public AActor
@@ -24,8 +25,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Mesh")
-	USkeletalMeshComponent* StaminaPickupSkeletalMesh;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Mesh")
+	UStaticMeshComponent* StaminaPickupStaticMesh;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Mesh")
 	UParticleSystemComponent* StaminaPickupEffect;
