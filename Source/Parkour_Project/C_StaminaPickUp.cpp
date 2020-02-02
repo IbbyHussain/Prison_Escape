@@ -6,6 +6,8 @@
 #include "Components/BoxComponent.h"
 #include "Math/Vector.h"
 #include "Components/PrimitiveComponent.h"
+#include "Player_Character.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 
 // Sets default values
 AC_StaminaPickUp::AC_StaminaPickUp()
@@ -28,10 +30,6 @@ AC_StaminaPickUp::AC_StaminaPickUp()
 	
 	//Scales all components to 1.5
 	SetActorScale3D(FVector(1.5f));
-
-	
-	
-
 }
 
 // EVENTBEGINPLAY-> Called when the game starts or when spawned
@@ -40,12 +38,22 @@ void AC_StaminaPickUp::BeginPlay()
 	Super::BeginPlay();
 
 	BoxComponent->OnComponentBeginOverlap.AddDynamic(this, &AC_StaminaPickUp::OnOverlapBegin);
+
+	PlayerCharacterRef = Cast<APlayer_Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+
 	
 }
 
+// STAMINA REGEN -> adds stamina when player overlaps with box collision
 void AC_StaminaPickUp::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 	UE_LOG(LogTemp, Log, TEXT("OVERLAPED WITH STAMINA COMP"));
+
+	if(PlayerCharacterRef && PlayerCharacterRef == OtherActor)
+	{
+		PlayerCharacterRef->AddStamina();
+	}
+	
 }
 
 // EVENT TICK-> Called every frame
