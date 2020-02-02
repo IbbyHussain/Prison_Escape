@@ -12,6 +12,7 @@
 #include "Runtime/Engine/Public/TimerManager.h"
 #include "TimerManager.h"
 #include "C_AK47.h"
+#include "Components/CapsuleComponent.h"
 
 
 
@@ -99,7 +100,7 @@ APlayer_Character::APlayer_Character()
 	//FIRING->
 	WeaponAttachSocketName = "RifleSocket";
 	
-	MeshComponentName->OnComponentBeginOverlap.AddDynamic(this, &APlayer_Character::OnOverlapBegin)
+	
 	
 
 
@@ -124,12 +125,14 @@ void APlayer_Character::BeginPlay()
 		AK47->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, WeaponAttachSocketName);
 	}
 
+	GetMesh()->OnComponentBeginOverlap.AddDynamic(this, &APlayer_Character::OnOverlapBegin);
+
 }
 
 //EVENT ONCOMPONETBEGINOVERLAP
-APlayer_Character::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+void APlayer_Character::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-
+	UE_LOG(LogTemp, Log, TEXT("Overlaped with component"));
 }
 
 // EVENT TICK-> Called every frame
