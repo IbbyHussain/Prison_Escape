@@ -38,7 +38,14 @@ AC_StaminaPickUp::AC_StaminaPickUp()
 void AC_StaminaPickUp::BeginPlay()
 {
 	Super::BeginPlay();
+
+	BoxComponent->OnComponentBeginOverlap.AddDynamic(this, &AC_StaminaPickUp::OnOverlapBegin);
 	
+}
+
+void AC_StaminaPickUp::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	UE_LOG(LogTemp, Log, TEXT(""));
 }
 
 // EVENT TICK-> Called every frame
