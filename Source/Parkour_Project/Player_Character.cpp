@@ -331,6 +331,13 @@ void APlayer_Character::ResetDashing()
 	//bCanRegenStamina = false;
 }
 
+//STAMINA
+void APlayer_Character::AddStamina()
+{
+	MaxStamina += 0.1;
+	UE_LOG(LogTemp, Log, TEXT("ADDS STAMINA"));
+}
+
 //WEAPON CODE->
 
 //ZOOM-> Initial Zoom

@@ -49,9 +49,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Jump")
 	bool bCanJump;
 
-	// STAMINA-> The max stamina variable
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stamina")
-	float MaxStamina;
+	
 
 	// STAMINA-> the current stamina value                                           
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stamina")
@@ -199,6 +197,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void StartSprintCheckStatus();
 
+	// STAMINA-> The max stamina variable
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stamina")
+	float MaxStamina;
+
 	//TEST CODE
 
 	//LINETRACE-> will allow the line trace to come from the player camera properly
@@ -207,6 +209,9 @@ public:
 	//FIRE
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void StartFire();
+
+	//STAMINA
+	void AddStamina();
 	
 
 };
