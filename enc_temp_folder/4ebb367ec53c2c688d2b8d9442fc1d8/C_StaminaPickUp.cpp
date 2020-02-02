@@ -14,25 +14,22 @@ AC_StaminaPickUp::AC_StaminaPickUp()
 	PrimaryActorTick.bCanEverTick = true;
 
 	StaminaPickupStaticMesh = CreateDefaultSubobject<UStaticMeshComponent>("MeshComp");
+	RootComponent = StaminaPickupStaticMesh;
 
 	StaminaPickupEffect = CreateDefaultSubobject<UParticleSystemComponent>("Particlecomp");
-
-	BoxComponent = CreateDefaultSubobject<UBoxComponent>("BoxComp");
-	
-	RootComponent = StaminaPickupStaticMesh;
-	BoxComponent->AttachTo(RootComponent);
 	StaminaPickupEffect->AttachTo(RootComponent);
 
-	Self->StaminaPickupStaticMesh;
-	
-	/*FVector StaminaPickupScale(20.f);
-	Self->SetActorRelativeScale3D(StaminaPickupScale);*/
-
-	//Scales all components to 2
-	SetActorScale3D(FVector(1.5f));
-
+	BoxComponent = CreateDefaultSubobject<UBoxComponent>("BoxComp");
+	BoxComponent->AttachTo(RootComponent);
 	//changes the relative scale of the box collision
 	BoxComponent->SetRelativeScale3D(FVector(0.65f));
+	
+	Self->StaminaPickupStaticMesh;
+	
+	//Scales all components to 1.5
+	SetActorScale3D(FVector(1.5f));
+
+	
 	
 
 }
@@ -41,7 +38,14 @@ AC_StaminaPickUp::AC_StaminaPickUp()
 void AC_StaminaPickUp::BeginPlay()
 {
 	Super::BeginPlay();
+
+	BoxComponent->OnComponentBeginOverlap.AddDynamic(this, &AC_StaminaPickUp::OnOverlapBegin);
 	
+}
+
+void AC_StaminaPickUp::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	UE_LOG(LogTemp, Log, TEXT("Hellow"));
 }
 
 // EVENT TICK-> Called every frame
@@ -49,6 +53,7 @@ void AC_StaminaPickUp::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	//simulates physics
 	StaminaPickupStaticMesh->SetSimulatePhysics(true);
 }
 
