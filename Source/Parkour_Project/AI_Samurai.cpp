@@ -60,6 +60,7 @@ void AAI_Samurai::Death()
 	GetMesh()->SetSimulatePhysics(true);
 	//Stops character movement
 	GetCharacterMovement()->StopMovementImmediately();
+	GetCharacterMovement()->DisableMovement();
 }
 
 // Called every frame
