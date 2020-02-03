@@ -61,8 +61,6 @@ protected:
 
 	void DespawnAI();
 
-
-
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

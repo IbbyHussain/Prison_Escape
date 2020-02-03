@@ -8,6 +8,7 @@
 #include "Runtime/Engine/Classes/Engine/World.h."
 #include "Runtime/Engine/Classes/GameFramework/CharacterMovementComponent.h"
 #include "TimerManager.h"
+#include "Runtime/Engine/Public/TimerManager.h"
 
 
 // Sets default values
@@ -24,7 +25,7 @@ AAI_Samurai::AAI_Samurai()
 
 	Health = 1;
 
-	DeathTimer = 3.0f;
+	DeathTimer = 10.0f;
 
 }
 
@@ -32,6 +33,7 @@ AAI_Samurai::AAI_Samurai()
 void AAI_Samurai::BeginPlay()
 {
 	Super::BeginPlay();
+	
 	
 }
 
@@ -58,14 +60,16 @@ void AAI_Samurai::SpawnWeaponCase(TSubclassOf<AAI_Samurai_Guard_WeaponCase> Samu
 //DEATH->
 void AAI_Samurai::Death()
 {
-	UE_LOG(LogTemp, Log, TEXT("AI has died"));
-	// simulates physics
+	UE_LOG(LogTemp, Log, TEXT("ruuning death function"));
+	//simulates physics
 	GetMesh()->SetSimulatePhysics(true);
 	//Stops character movement
 	GetCharacterMovement()->StopMovementImmediately();
 	GetCharacterMovement()->DisableMovement();
-
-	GetWorldTimerManager().SetTimer(DeathTimerHandle, this, &AAI_Samurai::DespawnAI, DeathTimer, false);
+	// Timer used with function that contain parameters
+	FTimerHandle UniqueHandle;
+	FTimerDelegate RespawnDelegate = FTimerDelegate::CreateUObject(this, &AAI_Samurai::DespawnAI);
+	GetWorldTimerManager().SetTimer(UniqueHandle, RespawnDelegate, DeathTimer, false);
 }
 
 void AAI_Samurai::DespawnAI()
@@ -79,11 +83,11 @@ void AAI_Samurai::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if(Health == 0)
+	if(Health <= 0)
 	{
+		UE_LOG(LogTemp, Log, TEXT("AI has died"));
 		Death();
 	}
-
 }
 
 // Called to bind functionality to input
