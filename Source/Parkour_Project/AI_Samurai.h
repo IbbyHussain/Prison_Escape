@@ -47,6 +47,7 @@ protected:
 	void SpawnWeaponCase(TSubclassOf<AAI_Samurai_Guard_WeaponCase> SamuraiWeaponCaseClass);
 
 	//DEATH->
+	UFUNCTION(BlueprintCallable)
 	void Death();
 
 	UPROPERTY(EditAnywhere, Category = "Health")
