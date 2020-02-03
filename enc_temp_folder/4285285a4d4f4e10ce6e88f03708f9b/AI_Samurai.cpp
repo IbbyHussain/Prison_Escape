@@ -6,7 +6,6 @@
 #include "AI_Samurai_Guard_WeaponCase.h"
 #include "GameFramework/MovementComponent.h"
 #include "Runtime/Engine/Classes/Engine/World.h."
-#include "Runtime/Engine/Classes/GameFramework/CharacterMovementComponent.h"
 
 
 // Sets default values
@@ -58,8 +57,8 @@ void AAI_Samurai::Death()
 	UE_LOG(LogTemp, Log, TEXT("AI has died"));
 	// simulates physics
 	GetMesh()->SetSimulatePhysics(true);
-	//Stops character movement
-	GetCharacterMovement()->StopMovementImmediately();
+
+	
 }
 
 // Called every frame
