@@ -65,7 +65,7 @@ void AAI_Samurai::Death()
 	GetCharacterMovement()->StopMovementImmediately();
 	GetCharacterMovement()->DisableMovement();
 
-	GetWorldTimerManager().SetTimer(DeathTimerHandle, this, &AAI_Samurai::DespawnAI, DeathTimer, false);
+	GetWorldTimerManager().SetTimer(DeathTimerHandle, this, &AAI_Samurai::DespawnAI, DeathTimer);
 }
 
 void AAI_Samurai::DespawnAI()

@@ -51,7 +51,7 @@ protected:
 	void Death();
 
 	//DEATH->
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
+	UPROPERTY(EditAnywhere, Category = "Health")
 	float Health;
 
 	//DEATH->
