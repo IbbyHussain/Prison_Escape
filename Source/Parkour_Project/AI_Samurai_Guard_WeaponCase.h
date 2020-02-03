@@ -6,7 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "AI_Samurai_Guard_WeaponCase.generated.h"
 
-class APlayer_Character;
+class AAI_Samurai;
 
 UCLASS()
 class PARKOUR_PROJECT_API AAI_Samurai_Guard_WeaponCase : public AActor
@@ -25,10 +25,12 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Weapon")
 	USkeletalMeshComponent* Weaponref;
 
+
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	APlayer_Character* PlayerCharacterRef;
+	AAI_Samurai* SamuraiRef;
 
 };
