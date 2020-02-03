@@ -2,9 +2,6 @@
 
 
 #include "AI_Samurai_Guard_WeaponCase.h"
-#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
-#include "Player_Character.h"
-#include "Components/PrimitiveComponent.h"
 
 // Sets default values
 AAI_Samurai_Guard_WeaponCase::AAI_Samurai_Guard_WeaponCase()
@@ -20,7 +17,6 @@ void AAI_Samurai_Guard_WeaponCase::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	PlayerCharacterRef = Cast<APlayer_Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 }
 
 // Called every frame

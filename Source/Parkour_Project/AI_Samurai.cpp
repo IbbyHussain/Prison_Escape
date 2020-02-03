@@ -11,6 +11,7 @@
 #include "Runtime/Engine/Public/TimerManager.h"
 
 
+
 // Sets default values
 AAI_Samurai::AAI_Samurai()
 {
@@ -76,6 +77,7 @@ void AAI_Samurai::DespawnAI()
 {
 	UE_LOG(LogTemp, Log, TEXT("Despawn body"));
 	Destroy();
+	Destroy(SamuraiWeaponCase);
 }
 
 // Called every frame

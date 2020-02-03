@@ -6,8 +6,6 @@
 #include "GameFramework/Actor.h"
 #include "AI_Samurai_Guard_WeaponCase.generated.h"
 
-class APlayer_Character;
-
 UCLASS()
 class PARKOUR_PROJECT_API AAI_Samurai_Guard_WeaponCase : public AActor
 {
@@ -28,7 +26,5 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	APlayer_Character* PlayerCharacterRef;
 
 };

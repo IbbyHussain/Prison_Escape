@@ -56,7 +56,7 @@ void AC_StaminaPickUp::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AAct
 		Destroy();
 	}
 
-	//Destroy();
+	
 	
 }
 
