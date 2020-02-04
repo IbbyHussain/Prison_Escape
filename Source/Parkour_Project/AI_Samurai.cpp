@@ -31,7 +31,7 @@ AAI_Samurai::AAI_Samurai()
 	
 	Black = CreateDefaultSubobject<UMaterial>("Black");
 
-	Red = CreateDefaultSubobject<UMaterial>("Red");
+	
 
 }
 
@@ -40,11 +40,7 @@ void AAI_Samurai::BeginPlay()
 {
 	Super::BeginPlay();
 
-	GetMesh()->SetMaterial(4, Red);
-	GetMesh()->SetMaterial(9, Red);
-	GetMesh()->SetMaterial(13, Red);
-	GetMesh()->SetMaterial(18, Red);
-	GetMesh()->SetMaterial(19, Red);
+	
 
 }
 
