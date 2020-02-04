@@ -8,6 +8,7 @@
 
 class AAI_Samurai_Guard_Weapon;
 class AAI_Samurai_Guard_WeaponCase;
+class UMaterial;
 
 UCLASS()
 class PARKOUR_PROJECT_API AAI_Samurai : public ACharacter
@@ -60,6 +61,13 @@ protected:
 	float DeathTimer;
 
 	void DespawnAI();
+	
+	// MATERIALS
+	UPROPERTY(EditAnywhere, Category = "Materials")
+	UMaterial* Glow;
+
+	UPROPERTY(EditAnywhere, Category = "Materials")
+	UMaterial* Black;
 
 public:	
 	// Called every frame

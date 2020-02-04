@@ -9,6 +9,7 @@
 #include "Runtime/Engine/Classes/GameFramework/CharacterMovementComponent.h"
 #include "TimerManager.h"
 #include "Runtime/Engine/Public/TimerManager.h"
+#include "Components/MeshComponent.h"
 
 
 
@@ -71,6 +72,8 @@ void AAI_Samurai::Death()
 	FTimerHandle UniqueHandle;
 	FTimerDelegate RespawnDelegate = FTimerDelegate::CreateUObject(this, &AAI_Samurai::DespawnAI);
 	GetWorldTimerManager().SetTimer(UniqueHandle, RespawnDelegate, DeathTimer, false);
+
+	GetMesh()->SetMaterial();
 }
 
 void AAI_Samurai::DespawnAI()
