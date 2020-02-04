@@ -8,6 +8,8 @@
 
 class UCameraComponent;
 class USpringArmComponent;
+class AC_AK47;
+class APlayer_Character;
 
 UCLASS()
 class PARKOUR_PROJECT_API APlayer_Character : public ACharacter
@@ -47,17 +49,41 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Jump")
 	bool bCanJump;
 
-	// STAMINA-> The max stamina variable
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stamina")
-	float MaxStamina;
+	
 
 	// STAMINA-> the current stamina value                                           
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stamina")
 	float CurrentStamina;
-		
+
+	//ZOOM-> zoomed in value
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Zoom")
+	float ZoomedFOV;
+
+	//ZOOM->
+	UPROPERTY(EditDefaultsOnly, Category = "Zoom", meta = (ClampMin = 0.1, ClampMax = 100))
+	float ZoomInterpSpeed;
+
+	//ZOOM-> default field of view
+	float DefaultFOV;
+
+	//ZOOM-> A boolean to control zooming in
+	bool bCanZoomIn;
+
+	//ZOOM->
+	void BeginZoom();
+
+	//ZOOM->
+	void EndZoom();
+
+	AC_AK47* AK47;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "AK47")
+	TSubclassOf<AC_AK47> AK47Class;
+
+	UPROPERTY(VisibleDefaultsOnly)
+	FName WeaponAttachSocketName;
 
 	
-
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -113,6 +139,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	float DashCoolDown;
 	
+	//DASH-> the amount of stamina that will be taken away
+	float DashDrain;
+	
 	//DASH-> The declaration of the DASH stop variable
 	UPROPERTY(EditAnywhere)
 	float DashStop;
@@ -134,14 +163,12 @@ public:
 	UPROPERTY()
 	FTimerHandle UnUsedHandle;
 
-	//TEST CODE->
+	//JUMP-> functions 
 
 	void jumponce();
+	
 	void stopjumponce();
 
-	float DashDrain;
-
-	
 	FTimerHandle JumpTimer;
 
 	FTimerHandle TimeBetweenJumps;
@@ -170,6 +197,21 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void StartSprintCheckStatus();
 
+	// STAMINA-> The max stamina variable
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stamina")
+	float MaxStamina;
+
+	//TEST CODE
+
+	//LINETRACE-> will allow the line trace to come from the player camera properly
+	virtual FVector GetPawnViewLocation() const override;
+
+	//FIRE
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	void StartFire();
+
+	//STAMINA
+	void AddStamina();
 	
 
 };

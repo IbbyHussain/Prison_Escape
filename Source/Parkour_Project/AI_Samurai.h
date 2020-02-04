@@ -46,6 +46,21 @@ protected:
 	UFUNCTION(BlueprintCallable) 
 	void SpawnWeaponCase(TSubclassOf<AAI_Samurai_Guard_WeaponCase> SamuraiWeaponCaseClass);
 
+	//DEATH->
+	UFUNCTION(BlueprintCallable)
+	void Death();
+
+	//DEATH->
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
+	float Health;
+
+	//DEATH->
+	FTimerHandle DeathTimerHandle;
+
+	float DeathTimer;
+
+	void DespawnAI();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

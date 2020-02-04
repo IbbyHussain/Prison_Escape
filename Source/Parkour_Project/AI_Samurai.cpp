@@ -4,7 +4,13 @@
 #include "AI_Samurai.h"
 #include "AI_Samurai_Guard_Weapon.h"
 #include "AI_Samurai_Guard_WeaponCase.h"
+#include "GameFramework/MovementComponent.h"
 #include "Runtime/Engine/Classes/Engine/World.h."
+#include "Runtime/Engine/Classes/GameFramework/CharacterMovementComponent.h"
+#include "TimerManager.h"
+#include "Runtime/Engine/Public/TimerManager.h"
+
+
 
 // Sets default values
 AAI_Samurai::AAI_Samurai()
@@ -18,12 +24,17 @@ AAI_Samurai::AAI_Samurai()
 	//ANIMATION -> Assigning the right hand socket
 	WeaponAttachSocket = "WeaponSwordSocket";
 
+	Health = 1;
+
+	DeathTimer = 10.0f;
+
 }
 
 // Called when the game starts or when spawned
 void AAI_Samurai::BeginPlay()
 {
 	Super::BeginPlay();
+	
 	
 }
 
@@ -47,11 +58,38 @@ void AAI_Samurai::SpawnWeaponCase(TSubclassOf<AAI_Samurai_Guard_WeaponCase> Samu
 	SamuraiWeaponCase->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, WeaponAttachSocketName);
 }
 
+//DEATH->
+void AAI_Samurai::Death()
+{
+	UE_LOG(LogTemp, Log, TEXT("ruuning death function"));
+	//simulates physics
+	GetMesh()->SetSimulatePhysics(true);
+	//Stops character movement
+	GetCharacterMovement()->StopMovementImmediately();
+	GetCharacterMovement()->DisableMovement();
+	// Timer used with function that contain parameters
+	FTimerHandle UniqueHandle;
+	FTimerDelegate RespawnDelegate = FTimerDelegate::CreateUObject(this, &AAI_Samurai::DespawnAI);
+	GetWorldTimerManager().SetTimer(UniqueHandle, RespawnDelegate, DeathTimer, false);
+}
+
+void AAI_Samurai::DespawnAI()
+{
+	UE_LOG(LogTemp, Log, TEXT("Despawn body"));
+	Destroy();
+	Destroy(SamuraiWeaponCase);
+}
+
 // Called every frame
 void AAI_Samurai::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if(Health <= 0)
+	{
+		UE_LOG(LogTemp, Log, TEXT("AI has died"));
+		Death();
+	}
 }
 
 // Called to bind functionality to input
