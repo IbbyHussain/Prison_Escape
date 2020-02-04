@@ -9,6 +9,7 @@
 class AAI_Samurai_Guard_Weapon;
 class AAI_Samurai_Guard_WeaponCase;
 class UMaterial;
+class AC_StaminaPickUp;
 
 UCLASS()
 class PARKOUR_PROJECT_API AAI_Samurai : public ACharacter
@@ -66,7 +67,14 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Materials")
 	UMaterial* Black;
 
-	
+	//DEATH->
+	UFUNCTION(BlueprintCallable)
+	void SpawnStaminaPickup(TSubclassOf<AC_StaminaPickUp> StaminaPickupClass);
+
+	AC_StaminaPickUp* StaminaPickupRef;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = "Pickup")
+	FName StaminaPickupAttachSocket;
 
 public:	
 	// Called every frame

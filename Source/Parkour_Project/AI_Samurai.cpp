@@ -10,6 +10,7 @@
 #include "TimerManager.h"
 #include "Runtime/Engine/Public/TimerManager.h"
 #include "Components/MeshComponent.h"
+#include "C_StaminaPickUp.h"
 
 
 
@@ -31,6 +32,7 @@ AAI_Samurai::AAI_Samurai()
 	
 	Black = CreateDefaultSubobject<UMaterial>("Black");
 
+	StaminaPickupAttachSocket = "StaminaPickupSpawn";
 	
 
 }
@@ -83,6 +85,9 @@ void AAI_Samurai::Death()
 	GetMesh()->SetMaterial(13, Black);
 	GetMesh()->SetMaterial(18, Black);
 	GetMesh()->SetMaterial(19, Black);
+	//Spawns stamina core
+	
+
 }
 
 void AAI_Samurai::DespawnAI()
@@ -90,6 +95,17 @@ void AAI_Samurai::DespawnAI()
 	UE_LOG(LogTemp, Log, TEXT("Despawn body"));
 	Destroy();
 	Destroy(SamuraiWeaponCase);
+}
+
+//SPAWNING PICKUP->spawns the stamina pickup
+void AAI_Samurai::SpawnStaminaPickup(TSubclassOf<AC_StaminaPickUp> StaminaPickupClass)
+{
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	StaminaPickupRef = GetWorld()->SpawnActor<AC_StaminaPickUp>(StaminaPickupClass, FVector::ZeroVector, FRotator::ZeroRotator);
+	StaminaPickupRef->SetOwner(this);
+	StaminaPickupRef->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, StaminaPickupAttachSocket);
+
 }
 
 // Called every frame
