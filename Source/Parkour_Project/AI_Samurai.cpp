@@ -29,6 +29,10 @@ AAI_Samurai::AAI_Samurai()
 
 	DeathTimer = 10.0f;
 
+	Glow = CreateDefaultSubobject<UMaterial>("Glow");
+
+	Black = CreateDefaultSubobject<UMaterial>("Black");
+
 }
 
 // Called when the game starts or when spawned
@@ -36,6 +40,7 @@ void AAI_Samurai::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	GetMesh()->SetMaterial(4, Glow);
 	
 }
 
@@ -73,7 +78,7 @@ void AAI_Samurai::Death()
 	FTimerDelegate RespawnDelegate = FTimerDelegate::CreateUObject(this, &AAI_Samurai::DespawnAI);
 	GetWorldTimerManager().SetTimer(UniqueHandle, RespawnDelegate, DeathTimer, false);
 
-	GetMesh()->SetMaterial();
+	GetMesh()->SetMaterial(4, Black);
 }
 
 void AAI_Samurai::DespawnAI()
