@@ -76,6 +76,9 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, Category = "Pickup")
 	FName StaminaPickupAttachSocket;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Death")
+	bool bHasAIDied;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
