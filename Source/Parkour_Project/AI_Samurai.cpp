@@ -28,10 +28,10 @@ AAI_Samurai::AAI_Samurai()
 	Health = 1;
 
 	DeathTimer = 10.0f;
-
-	Glow = CreateDefaultSubobject<UMaterial>("Glow");
-
+	
 	Black = CreateDefaultSubobject<UMaterial>("Black");
+
+	Red = CreateDefaultSubobject<UMaterial>("Red");
 
 }
 
@@ -39,9 +39,13 @@ AAI_Samurai::AAI_Samurai()
 void AAI_Samurai::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	GetMesh()->SetMaterial(4, Glow);
-	
+
+	GetMesh()->SetMaterial(4, Red);
+	GetMesh()->SetMaterial(9, Red);
+	GetMesh()->SetMaterial(13, Red);
+	GetMesh()->SetMaterial(18, Red);
+	GetMesh()->SetMaterial(19, Red);
+
 }
 
 // WEAPON -> The function that spawns the samurai weapon
@@ -77,8 +81,12 @@ void AAI_Samurai::Death()
 	FTimerHandle UniqueHandle;
 	FTimerDelegate RespawnDelegate = FTimerDelegate::CreateUObject(this, &AAI_Samurai::DespawnAI);
 	GetWorldTimerManager().SetTimer(UniqueHandle, RespawnDelegate, DeathTimer, false);
-
+	//Changes colour of mesh
 	GetMesh()->SetMaterial(4, Black);
+	GetMesh()->SetMaterial(9, Black);
+	GetMesh()->SetMaterial(13, Black);
+	GetMesh()->SetMaterial(18, Black);
+	GetMesh()->SetMaterial(19, Black);
 }
 
 void AAI_Samurai::DespawnAI()

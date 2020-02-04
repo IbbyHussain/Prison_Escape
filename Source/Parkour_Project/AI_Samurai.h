@@ -64,10 +64,10 @@ protected:
 	
 	// MATERIALS
 	UPROPERTY(EditAnywhere, Category = "Materials")
-	UMaterial* Glow;
+	UMaterial* Black;
 
 	UPROPERTY(EditAnywhere, Category = "Materials")
-	UMaterial* Black;
+	UMaterial* Red;
 
 public:	
 	// Called every frame
