@@ -50,6 +50,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "AK47")
 	TSubclassOf<UCameraShake> FireCameraShake;
 
+	float BaseDamage;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

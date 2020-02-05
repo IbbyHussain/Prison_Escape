@@ -24,6 +24,8 @@ AC_AK47::AC_AK47()
 	MuzzleSocket = "MuzzleSocket";
 
 	TracerTargetName = "Target";
+
+	BaseDamage = 20.0f;
 }
 
 // Called when the game starts or when spawned
@@ -69,13 +71,18 @@ void AC_AK47::Fire()
 		FHitResult Hit;
 		if (GetWorld()->LineTraceSingleByChannel(Hit, EyeLocation, TraceEnd, ECC_Visibility, QueryParams))
 		{
-			//Damage
-
 			AActor* HitActor = Hit.GetActor();
-			UGameplayStatics::ApplyPointDamage(HitActor, 20.0f, ShotDirection, Hit, MyOwner->GetInstigatorController(), this, DefaultDamage);
+			EPhysicalSurface SurfaceType = UPhysicalMaterial::DetermineSurfaceType(Hit.PhysMaterial.Get());
+
+			if(SurfaceType == SURFACE_FLESHVULNERABLE)
+			{
+
+			}
+
+			//Damage
+			UGameplayStatics::ApplyPointDamage(HitActor, BaseDamage, ShotDirection, Hit, MyOwner->GetInstigatorController(), this, DefaultDamage);
 
 			//PHYSMAterial Logic
-
 			EPhysicalSurface SurfaceType = UPhysicalMaterial::DetermineSurfaceType(Hit.PhysMaterial.Get());
 			UParticleSystem* SelectedImpactEffect = nullptr;
 			switch (SurfaceType)
