@@ -1,0 +1,227 @@
+# Pseudo Code for the McAfee Parkore Project #
+
+
+
+Death/Arrest:
+If Player_Health <= 0 THEN:
+	Player = Dead:
+		The Death/Arrest animation is played 
+		The level ends adn the palyer can chose to restart the level, restart form the beginning or to fully quit
+ELSE THEN:
+	Player_Health = Player_Health
+END IF 
+
+
+Enemy:
+Enemy_Health_Start = 100
+If Enemy finds Player THEN:
+	Ememy follows and tracks Player
+ELSE THEN:
+	Enemy follows set route
+END IF
+IF Enemy loses sight of Player THEN:
+	Enemy seaches area (50 Meaters Squared, form point of lost visual) for 45 seconds  
+	If Player is relocated THEN:
+		Ememy follows and tracks Player
+	ELSE THEN:
+		Enemy returns to and follows set route
+	END IF
+ELSE THEN:
+	ELSE THEN:
+		Enemy follows set route
+END IF
+IF Enemy distance to Player <= 2 meaters THEN:
+	Enemy = attack
+	If Enemy HIT player THEN: 
+	# Health: #
+	Player_Health = 120
+	ELIF Player colides with Enemy THEN:
+		Player_Health = Player_Health - 30
+	ELIF Player HIT by Ememy when Attacked THEN:
+		Player_Health = Player_Health - 60
+	ELSE THEN:
+		Player_Health = Player_Health
+END IF
+
+
+Objects:
+Hard Objects:
+If Character hits Hard_Object THEN: 
+	Movement in that direction = Stop movement
+ELSE THEN:
+	Character Movement continues
+END IF 
+
+Soft Objects:
+If Character hits Soft_Object THEN: 
+	IF Character_Weight is heavier THEN:
+		colided Soft_Object = bounce
+	ELIF Character_Weight is lighter THEN:
+		Character = bounce
+	ELIF Character_Weight is the Same THEN:
+		Character = bounce 
+		colided Soft_Object = bounce
+	ELSE THEN:
+		There is no bounce and the character stays the same
+	END IF
+ELSE THEN:
+	Character Movement continues
+END IF
+
+	Object Damage:
+	If Character hits Hazard THEN:
+		Character_Health = Character_Health - 1
+	ELSE THEN:
+		Character Movement continues
+	END IF 
+
+
+Basic Movement:
+If W OR w is pressed THEN:
+	IF W OR w is held-down THEN:
+		The Character moves FORWARD by 1 continuously
+		Play FORWARD animation
+	ELIF W OR w is pressed THEN:
+		The Character moves FORWARD by 1
+		Play FORWARD animation
+	END IF 
+ELIf S OR s is pressed THEN:
+	IF S OR s is held-down THEN:
+		The Character moves BACKWARD by 1 continuously
+		Play BACKWARD animation
+	ELIF S OR s is pressed THEN:
+		The Character moves BACKWARD by 1 
+		Play BACKWARD animation
+	END IF 
+ELIf A OR a is pressed THEN:
+	IF A OR a is held-down THEN:
+		The Character moves LEFT by 1 continuously
+		Play LEFT animation
+	ELIF a OR a is pressed THEN:
+		The Character moves LEFT by 1 
+		Play LEFT animation
+	END IF
+ELIf D OR d is pressed THEN:
+	IF D OR d is held-down THEN:
+		The Character moves RIGHT by 1 continuously
+		Play RIGHT animation
+	ELIF D OR d is pressed THEN:
+		The Character moves RIGHT by 1
+		Play RIGHT animation
+	END IF 
+ELSE THEN:
+	There is no Movemenrt
+END IF
+
+
+Sprinting: 
+If Shift is pressed While Movement = TRUE THEN:
+	The Character moves in Character-Orientation by 2
+	Play SPRINT animation
+If Shift is held While Movement = TRUE THEN:
+	The Character moves in Character-Orientation by 2 continuously
+	Play SPRINT animation
+ELSE THEN:
+	The Movement stays the same 
+END IF 
+
+		
+Dash:
+IF Q or q is pressed THEN:
+	Character moves in Character-Orientation by 20 
+	Play DASH animation
+IF Q or q is held THEN:
+	Character moves in Character-Orientation by 20 (only once)
+	Play DASH animation 
+ELSE THEN:
+	The Movement stays the same 
+END IF
+
+
+Stamina:
+Stamina = 100 
+Orb = 20 
+If Enemy_Health <= 0 THEN:
+	Enemy dies
+	Play ENEMY_DEATH animation
+	IF Enemy dies THEN:
+		IF Enemy drops Orb THEN:
+			FOR 20, Orb =  Orb - 1
+			IF Orb <= 0 THEN:
+				Orb is destroyed and will disapear
+			ElSE THEN:
+				Orb = Orb
+			END IF  
+		IF Player ctouches Orb then:
+			Stamina = Stamina + 10
+		ELSE THEN: 
+			Stamina = Stamina 
+		END IF
+	ELIF Enemy_Health_Start = Enemy_Health_Start/2:
+		Stamina = Stamina + 5 
+	ELSE THEN: 
+		Stamina = Stamina
+	END IF
+ELSE THEN:
+	Enemy_Health = Enemy_Health
+END IF
+
+Shooting:
+
+
+Draw Attention:
+
+
+Jumping: # Double Jump #
+Character_Hight = 0
+While Characeter_Hight = 0 THEN:	
+	IF SPACE is preesed THEN:
+		Character_Hight = Character_Hight + 20
+		Play JUMP animation
+		Character_Hight = Character_Hight - 9.81 PER second	
+		IF SPACE is pressed WHILE in Air THEN:
+			Character_Hight = Character_Hight + 20 
+			Play DOUBL_JUMP animation
+		Character_Hight = Character_Hight - 9.81 PER second	
+		ELSE THEN:
+			The Movement and Hight stays the same	
+	ELSE THEN: 
+		The Movement Stays and Hight stays the same 
+	END IF
+	Character_Hight MUST be >=0
+END WHILE 
+
+
+Menu:
+IF button M OR m is pressed THEN:
+	The Menu is oppend
+	The game is paused
+	IF selection = controls THEN:
+		PRINT (" W or w = Forwards 
+			 S or s = Backwards 
+			 A or a = Left 
+			 D or d = Right 
+			 Q or q = Dash 
+			 C or c = Crouch / Slide
+			 E or e = Draw attention
+			 SPACE = Jump 
+			 SPACE x2 = Double Jump
+			 Right CLick = Zoom
+			 Left Click = Shoot/Punch 
+			 Shift = Sprint
+			 Tab = Swich Weapons
+			 R or r = Restart
+			 M or m = Menu ")
+	ELIF selection = Exit THEN:
+		The player is returned to the home screen
+	ELIF selection = Back OR M OR m THEN: 
+		The player is returned tot he game
+		The game is unpaused 
+	ELIF selection = R or r THEN:
+		The level is restarted for the beginning 
+	ELSE THEN:
+		Nothing happends 
+	END IF
+ELSE THEN:
+	The game is continued as normal AND the Menu does not open  
+END IF			 
