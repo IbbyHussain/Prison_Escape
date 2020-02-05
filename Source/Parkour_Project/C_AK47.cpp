@@ -9,6 +9,7 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "PhysicalMaterials/PhysicalMaterial.h"
 #include "Parkour_Project.h"
+#include "TimerManager.h"
 
 
 
@@ -26,20 +27,22 @@ AC_AK47::AC_AK47()
 	TracerTargetName = "Target";
 
 	BaseDamage = 20.0f;
+
+	FireRate = 600;
 }
 
 // Called when the game starts or when spawned
 void AC_AK47::BeginPlay()
 {
 	Super::BeginPlay();
+
+	TimeBetweenShots = 60 / FireRate;
 	
 }
 
 //FIRE-> The firing function for the AK47
 void AC_AK47::Fire()
 {
-	//LineTrace Logic
-
 	// sets the player as owner of this weapon
 	AActor* MyOwner = GetOwner();
 	// checks so that it will not run if null
@@ -141,8 +144,27 @@ void AC_AK47::Fire()
 			}
 
 		}
+
+		// gets the time in the world
+		LastFireTime = GetWorld()->TimeSeconds;
+
+
 	}
 
+}
+
+//FIRING->
+void AC_AK47::StartFire()
+{
+	float FirstDelay = FMath::Max(LastFireTime * TimeBetweenShots - GetWorld()->TimeSeconds, 0.0F);
+
+	GetWorldTimerManager().SetTimer(FiringTimer, this, &AC_AK47::Fire, TimeBetweenShots, true, FirstDelay);
+}
+
+//FIRING->
+void AC_AK47::StopFire()
+{
+	GetWorldTimerManager().ClearTimer(FiringTimer);
 }
 
 

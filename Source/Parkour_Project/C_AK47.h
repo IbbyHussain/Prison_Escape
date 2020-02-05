@@ -52,11 +52,25 @@ protected:
 
 	float BaseDamage;
 
+	UFUNCTION(BlueprintCallable, Category = "AK47")
+	void Fire();
+
+	FTimerHandle FiringTimer;
+
+	float FireRate;
+
+	//RPM Bullets per minute
+	float LastFireTime;
+
+	float TimeBetweenShots;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UFUNCTION(BlueprintCallable, Category = "AK47")
-	void Fire();
+	
+
+	void StartFire();
+
+	void StopFire();
 
 };

@@ -210,6 +210,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void StartFire();
 
+	void StopFire();
+
 	//STAMINA
 	void AddStamina();
 	

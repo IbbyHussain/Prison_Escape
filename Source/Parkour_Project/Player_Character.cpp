@@ -357,7 +357,15 @@ void APlayer_Character::StartFire()
 {
 	if (AK47)
 	{
-		AK47->Fire();
+		AK47->StartFire();
+	}
+}
+
+void APlayer_Character::StopFire()
+{
+	if (AK47)
+	{
+		AK47->StopFire();
 	}
 }
 
@@ -420,6 +428,7 @@ void APlayer_Character::SetupPlayerInputComponent(UInputComponent * PlayerInputC
 
 	//FIRE
 	PlayerInputComponent->BindAction("SemiFire", IE_Pressed, this, &APlayer_Character::StartFire);
+	PlayerInputComponent->BindAction("SemiFire", IE_Released, this, &APlayer_Character::StopFire);
 }
 
 
