@@ -81,7 +81,7 @@ void AC_AK47::Fire()
 			}
 
 			//Damage
-			UGameplayStatics::ApplyPointDamage(HitActor, ActualDamage, ShotDirection, Hit, MyOwner->GetInstigatorController(), this, DefaultDamage);
+			UGameplayStatics::ApplyPointDamage(HitActor, BaseDamage, ShotDirection, Hit, MyOwner->GetInstigatorController(), this, DefaultDamage);
 
 			//PHYSMAterial Logic
 			UParticleSystem* SelectedImpactEffect = nullptr;
