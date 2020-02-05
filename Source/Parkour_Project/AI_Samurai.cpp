@@ -11,6 +11,7 @@
 #include "Runtime/Engine/Public/TimerManager.h"
 #include "Components/MeshComponent.h"
 #include "C_StaminaPickUp.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 
 
 
@@ -41,6 +42,12 @@ AAI_Samurai::AAI_Samurai()
 void AAI_Samurai::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	// Casts to the samuari weapon case class
+	TSubclassOf<AAI_Samurai_Guard_WeaponCase> ClassToFind;
+	ClassToFind = AAI_Samurai_Guard_WeaponCase::StaticClass();
+	TArray<AActor*> FoundClass;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ClassToFind, FoundClass);
 
 	
 
@@ -70,7 +77,7 @@ void AAI_Samurai::SpawnWeaponCase(TSubclassOf<AAI_Samurai_Guard_WeaponCase> Samu
 void AAI_Samurai::Death()
 {
 	bHasAIDied = true;
-	UE_LOG(LogTemp, Log, TEXT("ruuning death function"));
+	//UE_LOG(LogTemp, Log, TEXT("ruuning death function"));
 	//simulates physics
 	GetMesh()->SetSimulatePhysics(true);
 	//Stops character movement
@@ -86,16 +93,16 @@ void AAI_Samurai::Death()
 	GetMesh()->SetMaterial(13, Black);
 	GetMesh()->SetMaterial(18, Black);
 	GetMesh()->SetMaterial(19, Black);
-
 	
-
 }
 
 void AAI_Samurai::DespawnAI()
 {
 	UE_LOG(LogTemp, Log, TEXT("Despawn body"));
 	Destroy();
-	Destroy(SamuraiWeaponCase);
+	// runs the Despawn function from samuari guard case class
+	SamuraiWeaponCase->Despawn();
+
 }
 
 //SPAWNING PICKUP->spawns the stamina pickup
@@ -116,7 +123,7 @@ void AAI_Samurai::Tick(float DeltaTime)
 
 	if(Health <= 0)
 	{
-		UE_LOG(LogTemp, Log, TEXT("AI has died"));
+		//UE_LOG(LogTemp, Log, TEXT("AI has died"));
 		Death();
 	}
 }

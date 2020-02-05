@@ -32,3 +32,11 @@ void AAI_Samurai_Guard_WeaponCase::Tick(float DeltaTime)
 
 }
 
+//DESPAWN->
+void AAI_Samurai_Guard_WeaponCase::Despawn()
+{
+	Destroy();
+}
+
+
+

@@ -33,4 +33,5 @@ public:
 
 	AAI_Samurai* SamuraiRef;
 
+	void Despawn();
 };
