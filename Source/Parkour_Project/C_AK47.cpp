@@ -156,9 +156,11 @@ void AC_AK47::Fire()
 //FIRING->
 void AC_AK47::StartFire()
 {
-	float FirstDelay = FMath::Max(LastFireTime * TimeBetweenShots - GetWorld()->TimeSeconds, 0.0F);
+	float FirstDelay = FMath::Max(LastFireTime + TimeBetweenShots - GetWorld()->TimeSeconds, 0.0f);
 
 	GetWorldTimerManager().SetTimer(FiringTimer, this, &AC_AK47::Fire, TimeBetweenShots, true, FirstDelay);
+
+	
 }
 
 //FIRING->

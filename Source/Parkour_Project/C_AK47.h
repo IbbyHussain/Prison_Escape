@@ -52,11 +52,11 @@ protected:
 
 	float BaseDamage;
 
-	UFUNCTION(BlueprintCallable, Category = "AK47")
 	void Fire();
 
 	FTimerHandle FiringTimer;
 
+	UPROPERTY(EditDefaultsOnly, Category = "AK47")
 	float FireRate;
 
 	//RPM Bullets per minute
