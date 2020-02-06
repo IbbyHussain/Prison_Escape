@@ -37,7 +37,6 @@ void UC_HealthComponent::TakeAnyDamage(AActor * DamagedActor, float Damage, cons
 	}
 
 	Health = FMath::Clamp(Health - Damage, 0.0f, DefaultHealth);
-
 }
 
 // Called every frame

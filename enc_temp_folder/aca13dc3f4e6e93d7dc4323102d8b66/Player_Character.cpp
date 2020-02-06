@@ -99,8 +99,6 @@ APlayer_Character::APlayer_Character()
 
 	//FIRING->
 	WeaponAttachSocketName = "RifleSocket";
-
-	//GetCapsuleComponent()->SetCollisionResponseToChannel(,ECR_Ignore);
 }
 
 // EVENT BEGIN PLAY-> Called when the game starts or when spawned
