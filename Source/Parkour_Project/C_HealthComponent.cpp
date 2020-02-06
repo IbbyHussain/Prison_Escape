@@ -10,7 +10,7 @@ UC_HealthComponent::UC_HealthComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
+	Health = 100;
 }
 
 
@@ -18,9 +18,6 @@ UC_HealthComponent::UC_HealthComponent()
 void UC_HealthComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
-	
 }
 
 
@@ -28,7 +25,5 @@ void UC_HealthComponent::BeginPlay()
 void UC_HealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
 }
 
