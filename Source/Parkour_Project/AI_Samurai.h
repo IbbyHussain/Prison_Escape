@@ -10,6 +10,7 @@ class AAI_Samurai_Guard_Weapon;
 class AAI_Samurai_Guard_WeaponCase;
 class UMaterial;
 class AC_StaminaPickUp;
+class UC_HealthComponent;
 
 UCLASS()
 class PARKOUR_PROJECT_API AAI_Samurai : public ACharacter
@@ -53,10 +54,6 @@ protected:
 	void Death();
 
 	//DEATH->
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
-	float Health;
-
-	//DEATH->
 	FTimerHandle DeathTimerHandle;
 
 	float DeathTimer;
@@ -78,6 +75,11 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Death")
 	bool bHasAIDied;
+
+	UC_HealthComponent* HealthComponent;
+
+	UFUNCTION()
+	void OnHealthUpdated( UC_HealthComponent* HealthComponent, float Health, float HealthDelta, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
 
 public:	
 	// Called every frame

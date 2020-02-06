@@ -12,6 +12,7 @@
 #include "Components/MeshComponent.h"
 #include "C_StaminaPickUp.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
+#include "C_HealthComponent.h"
 
 
 
@@ -27,8 +28,6 @@ AAI_Samurai::AAI_Samurai()
 	//ANIMATION -> Assigning the right hand socket
 	WeaponAttachSocket = "WeaponSwordSocket";
 
-	Health = 1;
-
 	DeathTimer = 10.0f;
 	
 	Black = CreateDefaultSubobject<UMaterial>("Black");
@@ -36,6 +35,8 @@ AAI_Samurai::AAI_Samurai()
 	StaminaPickupAttachSocket = "StaminaPickupSpawn";
 	
 	bHasAIDied = false;
+
+	HealthComponent = CreateDefaultSubobject<UC_HealthComponent>("HealthComponent");
 }
 
 // Called when the game starts or when spawned
@@ -49,7 +50,7 @@ void AAI_Samurai::BeginPlay()
 	TArray<AActor*> FoundClass;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ClassToFind, FoundClass);
 
-	
+	HealthComponent->OnHealthChanged.AddDynamic(this, &AAI_Samurai::OnHealthUpdated);
 
 }
 
@@ -98,7 +99,7 @@ void AAI_Samurai::Death()
 
 void AAI_Samurai::DespawnAI()
 {
-	UE_LOG(LogTemp, Log, TEXT("Despawn body"));
+	//UE_LOG(LogTemp, Log, TEXT("Despawn body"));
 	Destroy();
 	// runs the Despawn function from samuari guard case class
 	SamuraiWeaponCase->Despawn();
@@ -116,16 +117,21 @@ void AAI_Samurai::SpawnStaminaPickup(TSubclassOf<AC_StaminaPickUp> StaminaPickup
 
 }
 
+//UPDATE HEALTH->
+void AAI_Samurai::OnHealthUpdated(UC_HealthComponent * HealthComponent, float Health, float HealthDelta, const UDamageType * DamageType, AController * InstigatedBy, AActor * DamageCauser)
+{
+	if (Health <= 0.0f)
+	{
+		Death();
+
+		UE_LOG(LogTemp,Log,TEXT("Died"))
+	}
+}
+
 // Called every frame
 void AAI_Samurai::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	if(Health <= 0)
-	{
-		//UE_LOG(LogTemp, Log, TEXT("AI has died"));
-		Death();
-	}
 }
 
 // Called to bind functionality to input
