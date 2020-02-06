@@ -40,6 +40,8 @@ void UC_HealthComponent::TakeAnyDamage(AActor * DamagedActor, float Damage, cons
 
 	OnHealthChanged.Broadcast(this, Health, Damage, DamageType, InstigatedBy, DamageCauser);
 
+	UE_LOG(LogTemp, Log, TEXT("Health: %s"), *FString::SanitizeFloat(Health));
+
 }
 
 // Called every frame
