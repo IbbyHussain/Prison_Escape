@@ -52,10 +52,10 @@ void AAI_Samurai::BeginPlay()
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ClassToFind, FoundClass);
 
 	// Casts to the samuari weapon class
-	TSubclassOf<AAI_Samurai_Guard_Weapon> ClassToFind;
+	/*TSubclassOf<AAI_Samurai_Guard_Weapon> ClassToFind;
 	ClassToFind = AAI_Samurai_Guard_Weapon::StaticClass();
 	TArray<AActor*> FoundClass;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ClassToFind, FoundClass);
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ClassToFind, FoundClass);*/
 
 	
 	

@@ -21,6 +21,11 @@ void AAI_Samurai_Guard_Weapon::BeginPlay()
 	//SetActorRelativeScale3D(FVector(1.0f, 0, 1.f));
 }
 
+void AAI_Samurai_Guard_Weapon::SimulatePhysicsForWeapon()
+{
+	Weaponref->SetSimulatePhysics(true);
+}
+
 // Called every frame
 void AAI_Samurai_Guard_Weapon::Tick(float DeltaTime)
 {

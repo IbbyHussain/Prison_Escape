@@ -22,12 +22,13 @@ protected:
 	virtual void BeginPlay() override;
 
 	// A reference to this class
-	UPROPERTY(EditAnywhere, Category = "Weapon")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	USkeletalMeshComponent* Weaponref;
 
+	UFUNCTION()
+	void SimulatePhysicsForWeapon();
 	
-	
-
+	AAI_Samurai_Guard_Weapon* Self;
 	
 
 public:	
