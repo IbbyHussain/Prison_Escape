@@ -51,16 +51,13 @@ void AAI_Samurai::BeginPlay()
 	TArray<AActor*> FoundClass;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ClassToFind, FoundClass);
 
-	// Casts to the samuari weapon class
-	/*TSubclassOf<AAI_Samurai_Guard_Weapon> ClassToFind;
+	// cast to weapon
+	TSubclassOf<AAI_Samurai_Guard_Weapon> ClassToFind1;
 	ClassToFind = AAI_Samurai_Guard_Weapon::StaticClass();
-	TArray<AActor*> FoundClass;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ClassToFind, FoundClass);*/
-
-	
+	TArray<AActor*> FoundClass1;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ClassToFind1, FoundClass1);
 	
 	HealthComponent->OnHealthChanged.AddDynamic(this, &AAI_Samurai::OnHealthUpdated);
-
 }
 
 // WEAPON -> The function that spawns the samurai weapon
@@ -103,6 +100,7 @@ void AAI_Samurai::Death()
 	GetMesh()->SetMaterial(13, Black);
 	GetMesh()->SetMaterial(18, Black);
 	GetMesh()->SetMaterial(19, Black);
+	SamuraiWeapon->test();
 	
 }
 
@@ -112,6 +110,7 @@ void AAI_Samurai::DespawnAI()
 	Destroy();
 	// runs the Despawn function from samuari guard case class
 	SamuraiWeaponCase->Despawn();
+	
 
 }
 
@@ -133,7 +132,15 @@ void AAI_Samurai::OnHealthUpdated(UC_HealthComponent * HealthComponent, float He
 	{
 		Death();
 
-		UE_LOG(LogTemp,Log,TEXT("Died"))
+		UE_LOG(LogTemp, Log, TEXT("Died"));
+	}
+}
+
+void AAI_Samurai::CheckForDeath()
+{
+	if(bHasAIDied)
+	{
+		return;
 	}
 }
 

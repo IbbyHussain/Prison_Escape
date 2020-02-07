@@ -8,6 +8,8 @@
 
 //Define external classes here:
 
+class AAI_Samurai;
+
 UCLASS()
 class PARKOUR_PROJECT_API AAI_Samurai_Guard_Weapon : public AActor
 {
@@ -24,15 +26,15 @@ protected:
 	// A reference to this class
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	USkeletalMeshComponent* Weaponref;
-
-	UFUNCTION()
-	void SimulatePhysicsForWeapon();
 	
-	AAI_Samurai_Guard_Weapon* Self;
+	AAI_Samurai* AISamuraiRef;
+
 	
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	void test();
 
 };
