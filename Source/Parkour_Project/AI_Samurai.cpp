@@ -13,6 +13,7 @@
 #include "C_StaminaPickUp.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "C_HealthComponent.h"
+#include "AI_Samurai_Guard_Weapon.h"
 
 
 
@@ -50,6 +51,14 @@ void AAI_Samurai::BeginPlay()
 	TArray<AActor*> FoundClass;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ClassToFind, FoundClass);
 
+	// Casts to the samuari weapon class
+	TSubclassOf<AAI_Samurai_Guard_Weapon> ClassToFind;
+	ClassToFind = AAI_Samurai_Guard_Weapon::StaticClass();
+	TArray<AActor*> FoundClass;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ClassToFind, FoundClass);
+
+	
+	
 	HealthComponent->OnHealthChanged.AddDynamic(this, &AAI_Samurai::OnHealthUpdated);
 
 }

@@ -11,6 +11,7 @@ class AAI_Samurai_Guard_WeaponCase;
 class UMaterial;
 class AC_StaminaPickUp;
 class UC_HealthComponent;
+class AI_Samurai_Guard_Weapon;
 
 UCLASS()
 class PARKOUR_PROJECT_API AAI_Samurai : public ACharacter
@@ -80,6 +81,8 @@ protected:
 
 	UFUNCTION()
 	void OnHealthUpdated( UC_HealthComponent* HealthComponent, float Health, float HealthDelta, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
+
+	AI_Samurai_Guard_Weapon* SamuariWeaponRef;
 
 public:	
 	// Called every frame
