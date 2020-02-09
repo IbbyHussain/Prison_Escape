@@ -359,7 +359,7 @@ void APlayer_Character::EndZoom()
 //FIRING->
 void APlayer_Character::StartFire()
 {
-	if (AK47 && LoadedAmmo > 0)
+	if (AK47)
 	{
 		/*if (LoadedAmmo <= 0)
 		{
@@ -377,7 +377,6 @@ void APlayer_Character::SubtractAmmo()
 {
 	if (LoadedAmmo <= 0)
 	{
-		AK47->StopFire();
 		return;
 	}
 	LoadedAmmo -= 1;
