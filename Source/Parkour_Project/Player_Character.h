@@ -83,6 +83,14 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly)
 	FName WeaponAttachSocketName;
 
+	//AMMO
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AK 47")
+	int32 LoadedAmmo;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AK 47")
+	int32 MaxAmmo;
+
 	
 public:	
 	// Called every frame

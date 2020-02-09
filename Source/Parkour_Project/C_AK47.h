@@ -63,6 +63,8 @@ protected:
 	float LastFireTime;
 
 	float TimeBetweenShots;
+
+	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

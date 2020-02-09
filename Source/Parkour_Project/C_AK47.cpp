@@ -29,6 +29,8 @@ AC_AK47::AC_AK47()
 	BaseDamage = 20.0f;
 
 	FireRate = 300;
+
+
 }
 
 // Called when the game starts or when spawned
