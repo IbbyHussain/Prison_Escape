@@ -84,14 +84,15 @@ protected:
 	FName WeaponAttachSocketName;
 
 	//AMMO
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AK 47")
 	int32 LoadedAmmo;
 
+	//AMMO
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AK 47")
 	int32 MaxAmmo;
 
-	
+	//AMMO
+	void Reload();
 
 	
 public:	
@@ -225,7 +226,7 @@ public:
 	//STAMINA
 	void AddStamina();
 	
-	//AMMO
+	//AMMO-> The function that subtracts ammo
 	UFUNCTION()
 	void SubtractAmmo();
 };

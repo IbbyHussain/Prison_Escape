@@ -356,23 +356,16 @@ void APlayer_Character::EndZoom()
 	bCanZoomIn = false;
 }
 
-//FIRING->
+//FIRING-> can only fire when ammo is 1 or more
 void APlayer_Character::StartFire()
 {
 	if (AK47 && LoadedAmmo > 0)
 	{
-		/*if (LoadedAmmo <= 0)
-		{
-			return;
-		}
-		LoadedAmmo -= 1;*/
-		
 		AK47->StartFire();
-		
 	}
 }
 
-//SUBTRACT AMMO FUNCTION
+//AMMO->SUBTRACT AMMO FUNCTION
 void APlayer_Character::SubtractAmmo()
 {
 	if (LoadedAmmo <= 0)
@@ -381,6 +374,25 @@ void APlayer_Character::SubtractAmmo()
 		return;
 	}
 	LoadedAmmo -= 1;
+}
+
+void APlayer_Character::Reload()
+{
+	if(MaxAmmo <= 0 || LoadedAmmo >= 30)
+	{
+		return;
+	}
+
+	if(MaxAmmo < (30 - LoadedAmmo))
+	{
+		LoadedAmmo = LoadedAmmo + MaxAmmo;
+		MaxAmmo = 0;
+	}
+	else
+	{
+		MaxAmmo = MaxAmmo - (30 - LoadedAmmo);
+		LoadedAmmo = 30;
+	}
 }
 
 void APlayer_Character::StopFire()
@@ -451,6 +463,9 @@ void APlayer_Character::SetupPlayerInputComponent(UInputComponent * PlayerInputC
 	//FIRE
 	PlayerInputComponent->BindAction("SemiFire", IE_Pressed, this, &APlayer_Character::StartFire);
 	PlayerInputComponent->BindAction("SemiFire", IE_Released, this, &APlayer_Character::StopFire);
+
+	//AMMO->
+	PlayerInputComponent->BindAction("Reload", IE_Pressed, this, &APlayer_Character::Reload);
 }
 
 
