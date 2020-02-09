@@ -69,7 +69,12 @@ protected:
 	APlayer_Character *PlayerCharacterRef;
 
 	UFUNCTION(BlueprintCallable)
-	void SpawnMag(TSubclassOf<AC_AK47Mag>(MagClass));
+	void SpawnMag(TSubclassOf<AC_AK47Mag>MagClass);
+
+	AC_AK47Mag* MagRef;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = "AK47")
+	FName MagAttachSocket;
 
 public:	
 	// Called every frame

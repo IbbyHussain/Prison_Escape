@@ -182,7 +182,7 @@ void AC_AK47::StopFire()
 
 
 
-//MAG->spawns mag attached to weapon
+
 void AC_AK47::SpawnMag(TSubclassOf<AC_AK47Mag> MagClass)
 {
 	FActorSpawnParameters SpawnParams;
