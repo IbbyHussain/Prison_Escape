@@ -183,6 +183,10 @@ void AC_AK47::StopFire()
 
 
 
+void AC_AK47::SpawnMag(TSubclassOf(MagClass))
+{
+}
+
 //EVENT TICK-> Called every frame
 void AC_AK47::Tick(float DeltaTime)
 {

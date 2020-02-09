@@ -17,7 +17,6 @@ AC_AK47Mag::AC_AK47Mag()
 void AC_AK47Mag::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame

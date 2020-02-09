@@ -10,6 +10,7 @@ class USkeletalMeshComponent;
 class UDamageType;
 class UParticleSystem;
 class APlayer_Character;
+class AC_AK47Mag;
 
 UCLASS()
 class PARKOUR_PROJECT_API AC_AK47 : public AActor
@@ -66,6 +67,10 @@ protected:
 	float TimeBetweenShots;
 
 	APlayer_Character *PlayerCharacterRef;
+
+	UFUNCTION(BlueprintCallable)
+	void SpawnMag(TSubclassOf<AC_AK47Mag>(MagClass));
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
