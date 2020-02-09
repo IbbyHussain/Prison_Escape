@@ -100,7 +100,9 @@ APlayer_Character::APlayer_Character()
 	//FIRING->
 	WeaponAttachSocketName = "RifleSocket";
 
-	//GetCapsuleComponent()->SetCollisionResponseToChannel(,ECR_Ignore);
+	LoadedAmmo = 30;
+
+	MaxAmmo = 30;
 }
 
 // EVENT BEGIN PLAY-> Called when the game starts or when spawned
