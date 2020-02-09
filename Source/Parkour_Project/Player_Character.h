@@ -92,6 +92,8 @@ protected:
 	int32 MaxAmmo;
 
 	
+
+	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -223,5 +225,7 @@ public:
 	//STAMINA
 	void AddStamina();
 	
-
+	//AMMO
+	UFUNCTION()
+	void SubtractAmmo();
 };

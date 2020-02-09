@@ -9,6 +9,7 @@
 class USkeletalMeshComponent;
 class UDamageType;
 class UParticleSystem;
+class APlayer_Character;
 
 UCLASS()
 class PARKOUR_PROJECT_API AC_AK47 : public AActor
@@ -64,7 +65,7 @@ protected:
 
 	float TimeBetweenShots;
 
-	
+	APlayer_Character *PlayerCharacterRef;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

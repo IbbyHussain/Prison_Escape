@@ -56,11 +56,6 @@ void AC_AK47::Fire()
 	// checks so that it will not run if null
 	if (MyOwner)
 	{
-		if (PlayerCharacterRef)
-		{
-			PlayerCharacterRef->SubtractAmmo();
-		}
-
 		// vector values for line trace parameters
 		FVector EyeLocation;
 		FRotator EyeRotation;
@@ -173,6 +168,10 @@ void AC_AK47::StartFire()
 
 	GetWorldTimerManager().SetTimer(FiringTimer, this, &AC_AK47::Fire, TimeBetweenShots, true, FirstDelay);
 
+	if (PlayerCharacterRef)
+	{
+		PlayerCharacterRef->SubtractAmmo();
+	}
 }
 
 //FIRING->

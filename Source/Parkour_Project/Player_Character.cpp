@@ -361,8 +361,25 @@ void APlayer_Character::StartFire()
 {
 	if (AK47)
 	{
+		/*if (LoadedAmmo <= 0)
+		{
+			return;
+		}
+		LoadedAmmo -= 1;*/
+		
 		AK47->StartFire();
+		
 	}
+}
+
+//SUBTRACT AMMO FUNCTION
+void APlayer_Character::SubtractAmmo()
+{
+	if (LoadedAmmo <= 0)
+	{
+		return;
+	}
+	LoadedAmmo -= 1;
 }
 
 void APlayer_Character::StopFire()
