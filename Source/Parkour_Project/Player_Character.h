@@ -101,6 +101,7 @@ protected:
 	FTimerHandle ReloadTimerHandle;
 	
 	//RELOADING
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AK 47")
 	float ReloadLength;
 	
 	//RELOADING
