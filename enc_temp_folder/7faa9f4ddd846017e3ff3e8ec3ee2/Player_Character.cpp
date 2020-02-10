@@ -100,11 +100,17 @@ APlayer_Character::APlayer_Character()
 	//FIRING->
 	WeaponAttachSocketName = "RifleSocket";
 
+	//AMMO
 	LoadedAmmo = 30;
 
+	//AMMO
 	MaxAmmo = 30;
+	
+	//RELOADING
+	ReloadLength = 2.2f;
 
-	ReloadLength = 2.0f;
+	//RELOADING
+	bIsReloading = false;
 }
 
 // EVENT BEGIN PLAY-> Called when the game starts or when spawned
@@ -380,6 +386,8 @@ void APlayer_Character::SubtractAmmo()
 
 void APlayer_Character::ReloadDuration()
 {
+	bIsReloading = true;
+
 	if (MaxAmmo <= 0 || LoadedAmmo >= 30)
 	{
 		return;
@@ -407,6 +415,8 @@ void APlayer_Character::Reload()
 		MaxAmmo = MaxAmmo - (30 - LoadedAmmo);
 		LoadedAmmo = 30;
 	}
+
+	bIsReloading = false;
 }
 
 void APlayer_Character::StopFire()

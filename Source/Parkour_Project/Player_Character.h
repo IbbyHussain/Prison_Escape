@@ -91,17 +91,21 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AK 47")
 	int32 MaxAmmo;
 
-	//AMMO
+	//RELOADING
 	void Reload();
 
-	//AMMO
+	//RELOADING
 	void ReloadDuration();
 
-	//AMMO
+	//RELOADING
 	FTimerHandle ReloadTimerHandle;
-
+	
+	//RELOADING
 	float ReloadLength;
-
+	
+	//RELOADING
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Reloading")
+	bool bIsReloading;
 	
 public:	
 	// Called every frame
