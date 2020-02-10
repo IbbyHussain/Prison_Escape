@@ -94,6 +94,14 @@ protected:
 	//AMMO
 	void Reload();
 
+	//AMMO
+	void ReloadDuration();
+
+	//AMMO
+	FTimerHandle ReloadTimerHandle;
+
+	float ReloadLength;
+
 	
 public:	
 	// Called every frame

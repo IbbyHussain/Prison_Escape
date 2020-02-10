@@ -104,7 +104,7 @@ APlayer_Character::APlayer_Character()
 
 	MaxAmmo = 30;
 
-	ReloadLength = 2.2f;
+	ReloadLength = 2.0f;
 }
 
 // EVENT BEGIN PLAY-> Called when the game starts or when spawned
