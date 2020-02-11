@@ -106,7 +106,9 @@ protected:
 	
 	//RELOADING
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Reloading")
-	bool bIsReloading;
+	bool bReloading;
+
+	
 	
 public:	
 	// Called every frame

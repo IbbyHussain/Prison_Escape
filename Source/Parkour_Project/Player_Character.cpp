@@ -110,7 +110,7 @@ APlayer_Character::APlayer_Character()
 	ReloadLength = 2.16f;
 
 	//RELOADING
-	bIsReloading = false;
+	bReloading = false;
 }
 
 // EVENT BEGIN PLAY-> Called when the game starts or when spawned
@@ -386,25 +386,25 @@ void APlayer_Character::SubtractAmmo()
 
 void APlayer_Character::ReloadDuration()
 {
-	bIsReloading = true;
+	if(!bReloading)
+	{
+		if (MaxAmmo <= 0 || LoadedAmmo >= 30)
+		{
+			return;
+		
+		}
+		else
+		{
+			
+			GetWorldTimerManager().SetTimer(ReloadTimerHandle, this, &APlayer_Character::Reload, ReloadLength, false);
 
-	if (MaxAmmo <= 0 || LoadedAmmo >= 30)
-	{
-		return;
-	}
-	else
-	{
-		GetWorldTimerManager().SetTimer(ReloadTimerHandle, this, &APlayer_Character::Reload, ReloadLength, false);
+		}
+		bReloading = true;
 	}
 }
 
 void APlayer_Character::Reload()
 {
-	/*if(MaxAmmo <= 0 || LoadedAmmo >= 30)
-	{
-		return;
-	}*/
-
 	if(MaxAmmo < (30 - LoadedAmmo))
 	{
 		LoadedAmmo = LoadedAmmo + MaxAmmo;
@@ -416,7 +416,7 @@ void APlayer_Character::Reload()
 		LoadedAmmo = 30;
 	}
 
-	bIsReloading = false;
+	bReloading = false;
 }
 
 void APlayer_Character::StopFire()
