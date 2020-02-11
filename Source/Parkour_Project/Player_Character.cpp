@@ -142,6 +142,7 @@ void APlayer_Character::Tick(float DeltaTime)
 	// drains over time
 	if (bIsSprinting)
 	{
+		
 		// if the stamina is greater than or equal to 0
 		if (MaxStamina >= 0)
 		{
@@ -156,6 +157,11 @@ void APlayer_Character::Tick(float DeltaTime)
 			StopSprinting();
 		}
 	}
+	
+	/*if(!bIsSprinting)
+	{
+		bReloading = true;
+	}*/
 	
 	//ZOOM-> will set currentFOV based on the value of bCanZoomIn (left to right)
 	float TargetFOV = bCanZoomIn ? ZoomedFOV : DefaultFOV;
@@ -221,7 +227,6 @@ void APlayer_Character::StopSprinting()
 	GetCharacterMovement()->MaxWalkSpeed = Defaultspeed;
 	bIsSprinting = false;
 }
-
 
 //SPRINT RESET->  when button pressed
 void APlayer_Character::ResetSprintPressed()

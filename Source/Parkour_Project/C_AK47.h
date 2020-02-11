@@ -76,6 +76,9 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, Category = "AK47")
 	FName MagAttachSocket;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "AK47")
+	bool bCanFire;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

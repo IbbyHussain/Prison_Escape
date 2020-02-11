@@ -33,6 +33,8 @@ AC_AK47::AC_AK47()
 	FireRate = 300;
 
 	MagAttachSocket = "MagSocket";
+
+	bCanFire = true;
 }
 
 // Called when the game starts or when spawned
@@ -49,119 +51,121 @@ void AC_AK47::BeginPlay()
 //FIRE-> The firing function for the AK47
 void AC_AK47::Fire()
 {
-	// sets the player as owner of this weapon
-	AActor* MyOwner = GetOwner();
-	// checks so that it will not run if null
-	if (MyOwner)
+	if (bCanFire)
 	{
-		if (PlayerCharacterRef)
+		// sets the player as owner of this weapon
+		AActor* MyOwner = GetOwner();
+		// checks so that it will not run if null
+		if (MyOwner)
 		{
-			PlayerCharacterRef->SubtractAmmo();
-		}
-
-		// vector values for line trace parameters
-		FVector EyeLocation;
-		FRotator EyeRotation;
-		//Gets the point of the camera
-		MyOwner->GetActorEyesViewPoint(EyeLocation, EyeRotation);
-		
-		FVector ShotDirection = EyeRotation.Vector();
-		
-		// The line trace will end from camera to 1000units in the direction of camera
-		FVector TraceEnd = EyeLocation + (ShotDirection * 5000);
-
-		// ignores the player and the gun so they dont take damage
-		FCollisionQueryParams QueryParams;
-		QueryParams.AddIgnoredActor(MyOwner);
-		QueryParams.AddIgnoredActor(this);
-		//complex line trace
-		QueryParams.bTraceComplex = true;
-		QueryParams.bReturnPhysicalMaterial = true;
-
-
-		// the "target" for the tracer particle parameter
-		FVector TracerEndPoint = TraceEnd;
-
-		FHitResult Hit;
-		if (GetWorld()->LineTraceSingleByChannel(Hit, EyeLocation, TraceEnd, ECC_Visibility, QueryParams))
-		{
-			AActor* HitActor = Hit.GetActor();
-			EPhysicalSurface SurfaceType = UPhysicalMaterial::DetermineSurfaceType(Hit.PhysMaterial.Get());
-
-			float ActualDamage = BaseDamage;
-			if(SurfaceType == SURFACE_FLESHVULNERABLE)
+			if (PlayerCharacterRef)
 			{
-				ActualDamage *= 2.0f;
+				PlayerCharacterRef->SubtractAmmo();
 			}
 
-			//Damage
-			UGameplayStatics::ApplyPointDamage(HitActor, ActualDamage, ShotDirection, Hit, MyOwner->GetInstigatorController(), this, DefaultDamage);
+			// vector values for line trace parameters
+			FVector EyeLocation;
+			FRotator EyeRotation;
+			//Gets the point of the camera
+			MyOwner->GetActorEyesViewPoint(EyeLocation, EyeRotation);
 
-			//PHYSMAterial Logic
-			UParticleSystem* SelectedImpactEffect = nullptr;
-			switch (SurfaceType)
+			FVector ShotDirection = EyeRotation.Vector();
+
+			// The line trace will end from camera to 1000units in the direction of camera
+			FVector TraceEnd = EyeLocation + (ShotDirection * 5000);
+
+			// ignores the player and the gun so they dont take damage
+			FCollisionQueryParams QueryParams;
+			QueryParams.AddIgnoredActor(MyOwner);
+			QueryParams.AddIgnoredActor(this);
+			//complex line trace
+			QueryParams.bTraceComplex = true;
+			QueryParams.bReturnPhysicalMaterial = true;
+
+
+			// the "target" for the tracer particle parameter
+			FVector TracerEndPoint = TraceEnd;
+
+			FHitResult Hit;
+			if (GetWorld()->LineTraceSingleByChannel(Hit, EyeLocation, TraceEnd, ECC_Visibility, QueryParams))
 			{
-			case SURFACE_FLESHDEFAULT:
-			case SURFACE_FLESHVULNERABLE:
-				SelectedImpactEffect = FleshImpactEffect;
-				break;
-			default:
-				SelectedImpactEffect = DefaultImpactEffect;
-				break;
+				AActor* HitActor = Hit.GetActor();
+				EPhysicalSurface SurfaceType = UPhysicalMaterial::DetermineSurfaceType(Hit.PhysMaterial.Get());
+
+				float ActualDamage = BaseDamage;
+				if (SurfaceType == SURFACE_FLESHVULNERABLE)
+				{
+					ActualDamage *= 2.0f;
+				}
+
+				//Damage
+				UGameplayStatics::ApplyPointDamage(HitActor, ActualDamage, ShotDirection, Hit, MyOwner->GetInstigatorController(), this, DefaultDamage);
+
+				//PHYSMAterial Logic
+				UParticleSystem* SelectedImpactEffect = nullptr;
+				switch (SurfaceType)
+				{
+				case SURFACE_FLESHDEFAULT:
+				case SURFACE_FLESHVULNERABLE:
+					SelectedImpactEffect = FleshImpactEffect;
+					break;
+				default:
+					SelectedImpactEffect = DefaultImpactEffect;
+					break;
+				}
+
+				TracerEndPoint = Hit.ImpactPoint;
+
+				// will play the impact effect that has been chosen by switch statement
+				if (SelectedImpactEffect)
+				{
+					UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), SelectedImpactEffect, Hit.ImpactPoint, Hit.ImpactNormal.Rotation());
+				}
 			}
 
-			TracerEndPoint = Hit.ImpactPoint;
-
-			// will play the impact effect that has been chosen by switch statement
-			if (SelectedImpactEffect)
+			//Attaches the particle effect to the AK47
+			if (MuzzleEffect)
 			{
-				UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), SelectedImpactEffect, Hit.ImpactPoint, Hit.ImpactNormal.Rotation());
-			}
-		}
-		
-		//Attaches the particle effect to the AK47
-		if (MuzzleEffect)
-		{
-			UGameplayStatics::SpawnEmitterAttached(MuzzleEffect, AK47Mesh, MuzzleSocket);
-		}
-
-
-
-		if (TraceEffect)
-		{
-			//gets the location of the muzzle socket 
-			FVector MuzzleLocation = AK47Mesh->GetSocketLocation(MuzzleSocket);
-
-			UParticleSystemComponent* TracerComp = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), TraceEffect, MuzzleLocation);
-
-			if (TracerComp)
-			{
-				TracerComp->SetVectorParameter(TracerTargetName, TracerEndPoint);
+				UGameplayStatics::SpawnEmitterAttached(MuzzleEffect, AK47Mesh, MuzzleSocket);
 			}
 
-		}
 
-		//Debug Line for line trace
-		//DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, FColor::Green, false, 1.0f, 0, 1.0f);
 
-		APawn* MyOwner = Cast<APawn>(GetOwner());
-		if(MyOwner)
-		{
-			APlayerController* PlayerController = Cast<APlayerController>(MyOwner->GetController());
-			//get controller
-			if(PlayerController)
+			if (TraceEffect)
 			{
-				PlayerController->ClientPlayCameraShake(FireCameraShake);
+				//gets the location of the muzzle socket 
+				FVector MuzzleLocation = AK47Mesh->GetSocketLocation(MuzzleSocket);
+
+				UParticleSystemComponent* TracerComp = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), TraceEffect, MuzzleLocation);
+
+				if (TracerComp)
+				{
+					TracerComp->SetVectorParameter(TracerTargetName, TracerEndPoint);
+				}
+
 			}
 
+			//Debug Line for line trace
+			//DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, FColor::Green, false, 1.0f, 0, 1.0f);
+
+			APawn* MyOwner = Cast<APawn>(GetOwner());
+			if (MyOwner)
+			{
+				APlayerController* PlayerController = Cast<APlayerController>(MyOwner->GetController());
+				//get controller
+				if (PlayerController)
+				{
+					PlayerController->ClientPlayCameraShake(FireCameraShake);
+				}
+
+			}
+
+			// gets the time in the world
+			LastFireTime = GetWorld()->TimeSeconds;
+
+
 		}
-
-		// gets the time in the world
-		LastFireTime = GetWorld()->TimeSeconds;
-
-
 	}
-
 }
 
 //FIRING->
