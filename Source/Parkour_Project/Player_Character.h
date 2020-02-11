@@ -244,4 +244,7 @@ public:
 	//AMMO-> The function that subtracts ammo
 	UFUNCTION()
 	void SubtractAmmo();
+
+	UFUNCTION()
+	void CanFire();
 };

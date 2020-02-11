@@ -158,11 +158,6 @@ void APlayer_Character::Tick(float DeltaTime)
 		}
 	}
 	
-	/*if(!bIsSprinting)
-	{
-		bReloading = true;
-	}*/
-	
 	//ZOOM-> will set currentFOV based on the value of bCanZoomIn (left to right)
 	float TargetFOV = bCanZoomIn ? ZoomedFOV : DefaultFOV;
 
@@ -170,6 +165,8 @@ void APlayer_Character::Tick(float DeltaTime)
 
 	//ZOOM-> Ensures that the FOV is constantly updated
 	CameraComp->SetFieldOfView(NewFOV);
+
+	CanFire();
 }
 
 //MOVEMENTCODE->
@@ -387,6 +384,18 @@ void APlayer_Character::SubtractAmmo()
 		return;
 	}
 	LoadedAmmo -= 1;
+}
+
+void APlayer_Character::CanFire()
+{
+	if (bIsSprinting || bReloading)
+	{
+		AK47->bCanFire = false;
+	}
+	else
+	{
+		AK47->bCanFire = true;
+	}
 }
 
 void APlayer_Character::ReloadDuration()
