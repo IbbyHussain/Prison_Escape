@@ -85,7 +85,7 @@ void AC_AK47::Fire()
 
 			// the "target" for the tracer particle parameter
 			FVector TracerEndPoint = TraceEnd;
-
+			
 			FHitResult Hit;
 			if (GetWorld()->LineTraceSingleByChannel(Hit, EyeLocation, TraceEnd, ECC_Visibility, QueryParams))
 			{
@@ -200,6 +200,6 @@ void AC_AK47::SpawnMag(TSubclassOf<AC_AK47Mag> MagClass)
 void AC_AK47::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	
 }
 
