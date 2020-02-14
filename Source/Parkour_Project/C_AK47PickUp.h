@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "C_AK47PickUp.generated.h"
 
+class UBoxComponent;
+
 UCLASS()
 class PARKOUR_PROJECT_API AC_AK47PickUp : public AActor
 {
@@ -21,6 +23,13 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "AK47")
 	USkeletalMeshComponent* MeshComponent;
+
+	UPROPERTY(EditAnywhere, Category = "AK47")
+	UBoxComponent* BoxCollision;
+
+
+	UFUNCTION()
+	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 public:	
 	// Called every frame

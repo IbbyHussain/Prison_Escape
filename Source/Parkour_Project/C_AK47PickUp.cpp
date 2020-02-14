@@ -2,6 +2,7 @@
 
 
 #include "C_AK47PickUp.h"
+#include "Components/BoxComponent.h"
 
 // Sets default values
 AC_AK47PickUp::AC_AK47PickUp()
@@ -10,6 +11,8 @@ AC_AK47PickUp::AC_AK47PickUp()
 	PrimaryActorTick.bCanEverTick = true;
 
 	MeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>("MeshComponent");
+	RootComponent = MeshComponent;
+	BoxCollision = CreateDefaultSubobject<UBoxComponent>("BoxCollision");
 }
 
 // Called when the game starts or when spawned
@@ -17,6 +20,12 @@ void AC_AK47PickUp::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+//Overlap
+void AC_AK47PickUp::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	UE_LOG(LogTemp, Log, TEXT("OVERLAPPED"));
 }
 
 // Called every frame
