@@ -7,6 +7,7 @@
 #include "C_AK47PickUp.generated.h"
 
 class UBoxComponent;
+class APlayer_Character;
 
 UCLASS()
 class PARKOUR_PROJECT_API AC_AK47PickUp : public AActor
@@ -34,5 +35,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	APlayer_Character* PlayerCharacterRef;
 
 };

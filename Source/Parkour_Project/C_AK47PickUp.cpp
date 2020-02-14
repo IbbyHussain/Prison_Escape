@@ -19,6 +19,7 @@ AC_AK47PickUp::AC_AK47PickUp()
 void AC_AK47PickUp::BeginPlay()
 {
 	Super::BeginPlay();
+	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AC_AK47PickUp::OnOverlapBegin);
 	
 }
 
