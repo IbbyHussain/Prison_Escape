@@ -23,6 +23,7 @@ AC_StaminaPickUp::AC_StaminaPickUp()
 
 	BoxComponent = CreateDefaultSubobject<UBoxComponent>("BoxComp");
 	BoxComponent->AttachTo(RootComponent);
+	
 	//changes the relative scale of the box collision
 	BoxComponent->SetRelativeScale3D(FVector(0.65f));
 	
