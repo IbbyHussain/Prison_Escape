@@ -108,6 +108,7 @@ protected:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Reloading")
 	bool bReloading;
 
+	UFUNCTION(BlueprintCallable, Category = "AK47")
 	void SpawnAK47();
 	
 public:	
