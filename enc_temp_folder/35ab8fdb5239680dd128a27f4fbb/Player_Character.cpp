@@ -133,13 +133,6 @@ void APlayer_Character::BeginPlay()
 	}
 }
 
-//Changes ABP
-void APlayer_Character::ChangeABP()
-{
-	//GetMesh()->SetAnimInstanceClass();
-	//GetMesh()->SetAnimationMode();
-}
-
 // EVENT TICK-> Called every frame
 void APlayer_Character::Tick(float DeltaTime)
 {

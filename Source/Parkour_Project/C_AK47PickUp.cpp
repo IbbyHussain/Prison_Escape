@@ -34,6 +34,7 @@ void AC_AK47PickUp::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor 
 {
 	UE_LOG(LogTemp, Log, TEXT("Overlapped"));
 	Destroy();
+
 }
 
 // Called every frame
