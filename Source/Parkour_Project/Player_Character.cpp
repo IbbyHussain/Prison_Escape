@@ -120,7 +120,11 @@ void APlayer_Character::BeginPlay()
 
 	//ZOOM->
 	DefaultFOV = CameraComp->FieldOfView;
+}
 
+//Spawns AK47
+void APlayer_Character::SpawnAK47()
+{
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
@@ -131,13 +135,6 @@ void APlayer_Character::BeginPlay()
 		AK47->SetOwner(this);
 		AK47->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, WeaponAttachSocketName);
 	}
-}
-
-//Changes ABP
-void APlayer_Character::ChangeABP()
-{
-	//GetMesh()->SetAnimInstanceClass();
-	//GetMesh()->SetAnimationMode();
 }
 
 // EVENT TICK-> Called every frame

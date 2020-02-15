@@ -108,7 +108,7 @@ protected:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Reloading")
 	bool bReloading;
 
-	void ChangeABP();
+	void SpawnAK47();
 	
 public:	
 	// Called every frame
