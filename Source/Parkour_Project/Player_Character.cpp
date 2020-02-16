@@ -13,6 +13,7 @@
 #include "TimerManager.h"
 #include "C_AK47.h"
 #include "Components/CapsuleComponent.h"
+#include "C_AK47Mag.h"
 
 
 
@@ -111,6 +112,10 @@ APlayer_Character::APlayer_Character()
 
 	//RELOADING
 	bReloading = false;
+
+	//MAG ATTACH
+	MagAttachSocketName = "MagAttachSocket";
+
 }
 
 // EVENT BEGIN PLAY-> Called when the game starts or when spawned
@@ -135,6 +140,16 @@ void APlayer_Character::SpawnAK47()
 		AK47->SetOwner(this);
 		AK47->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, WeaponAttachSocketName);
 	}
+}
+
+//MAG ATTACH-> Spawns mag
+void APlayer_Character::SpawnMag()
+{
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+	AK47Mag = GetWorld()->SpawnActor<AC_AK47Mag>(AK47MagClass, FVector::ZeroVector, FRotator::ZeroRotator, SpawnParams);
+
 }
 
 // EVENT TICK-> Called every frame

@@ -9,6 +9,7 @@
 class UCameraComponent;
 class USpringArmComponent;
 class AC_AK47;
+class AC_AK47Mag;
 class APlayer_Character;
 
 UCLASS()
@@ -84,11 +85,11 @@ protected:
 	FName WeaponAttachSocketName;
 
 	//AMMO
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AK 47")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AK47")
 	int32 LoadedAmmo;
 
 	//AMMO
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AK 47")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AK47")
 	int32 MaxAmmo;
 
 	//RELOADING
@@ -110,6 +111,21 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = "AK47")
 	void SpawnAK47();
+
+	//MAG ATTACH
+	AC_AK47Mag* AK47Mag;
+
+	//MAG ATTACH
+	TSubclassOf<AC_AK47Mag>AK47MagClass;
+
+	//MAG ATTACH
+	UFUNCTION(BlueprintCallable)
+	void SpawnMag();
+
+	//MAG ATTACH
+	FName MagAttachSocketName;
+
+
 	
 public:	
 	// Called every frame
