@@ -183,9 +183,6 @@ void AC_AK47::StopFire()
 	GetWorldTimerManager().ClearTimer(FiringTimer);
 }
 
-
-
-
 //MAG->spawns mag attached to weapon
 void AC_AK47::SpawnMag(TSubclassOf<AC_AK47Mag> MagClass)
 {

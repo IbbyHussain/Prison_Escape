@@ -125,6 +125,7 @@ void APlayer_Character::BeginPlay()
 
 	//ZOOM->
 	DefaultFOV = CameraComp->FieldOfView;
+
 }
 
 //Spawns AK47
@@ -143,13 +144,13 @@ void APlayer_Character::SpawnAK47()
 }
 
 //MAG ATTACH-> Spawns mag
-void APlayer_Character::SpawnMag()
+void APlayer_Character::SpawnMag(TSubclassOf<AC_AK47Mag> AK47MagClass)
 {
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-
-	AK47Mag = GetWorld()->SpawnActor<AC_AK47Mag>(AK47MagClass, FVector::ZeroVector, FRotator::ZeroRotator, SpawnParams);
-
+	AK47Mag = GetWorld()->SpawnActor<AC_AK47Mag>(AK47MagClass, FVector::ZeroVector, FRotator::ZeroRotator);
+	AK47Mag->SetOwner(this);
+	AK47Mag->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, MagAttachSocketName);
 }
 
 // EVENT TICK-> Called every frame
