@@ -12,6 +12,7 @@
 #include "TimerManager.h"
 #include "Player_Character.h"
 #include "C_AK47Mag.h"
+#include "GameFramework/Pawn.h"
 
 
 
@@ -35,6 +36,8 @@ AC_AK47::AC_AK47()
 	MagAttachSocket = "MagSocket";
 
 	bCanFire = true;
+
+	bISFiring = false;
 }
 
 // Called when the game starts or when spawned
@@ -175,12 +178,18 @@ void AC_AK47::StartFire()
 
 	GetWorldTimerManager().SetTimer(FiringTimer, this, &AC_AK47::Fire, TimeBetweenShots, true, FirstDelay);
 
+	bISFiring = true;
+	UE_LOG(LogTemp, Log, TEXT("Fire = true"));
+
 }
 
 //FIRING->
 void AC_AK47::StopFire()
 {
 	GetWorldTimerManager().ClearTimer(FiringTimer);
+
+	bISFiring = false;
+	UE_LOG(LogTemp, Log, TEXT("Fire = false"));
 }
 
 //MAG->spawns mag attached to weapon

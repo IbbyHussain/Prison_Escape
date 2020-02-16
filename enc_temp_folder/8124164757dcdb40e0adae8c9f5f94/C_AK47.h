@@ -76,7 +76,6 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, Category = "AK47")
 	FName MagAttachSocket;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AK47")
 	bool bISFiring;
 
 public:	
