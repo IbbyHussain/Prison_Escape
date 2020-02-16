@@ -117,10 +117,12 @@ protected:
 
 	//MAG ATTACH
 	UFUNCTION(BlueprintCallable, Category = "SpawnMagOnPlayer")
-	void SpawnMag (TSubclassOf<AC_AK47Mag>AK47MagClass);
+	void SpawnMagOnPlayersBack(TSubclassOf<AC_AK47Mag>AK47MagClass);
 
 	//MAG ATTACH
-	FName MagAttachSocketName;
+	FName MagPlayersBackAttachSocketName;
+	
+	FName MagPlayersHandAttachSocketName;
 
 
 	

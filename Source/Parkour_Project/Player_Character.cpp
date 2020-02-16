@@ -114,7 +114,9 @@ APlayer_Character::APlayer_Character()
 	bReloading = false;
 
 	//MAG ATTACH
-	MagAttachSocketName = "MagAttachSocket";
+	MagPlayersBackAttachSocketName = "MagAttachSocketBack";
+
+	MagPlayersHandAttachSocketName = "MagAttachSocketHand";
 
 }
 
@@ -143,14 +145,19 @@ void APlayer_Character::SpawnAK47()
 	}
 }
 
-//MAG ATTACH-> Spawns mag
-void APlayer_Character::SpawnMag(TSubclassOf<AC_AK47Mag> AK47MagClass)
+//MAG ATTACH-> Spawns mag on players back
+void APlayer_Character::SpawnMagOnPlayersBack(TSubclassOf<AC_AK47Mag> AK47MagClass)
 {
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	
 	AK47Mag = GetWorld()->SpawnActor<AC_AK47Mag>(AK47MagClass, FVector::ZeroVector, FRotator::ZeroRotator);
 	AK47Mag->SetOwner(this);
-	AK47Mag->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, MagAttachSocketName);
+	AK47Mag->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, MagPlayersBackAttachSocketName);
+
+	AK47Mag = GetWorld()->SpawnActor<AC_AK47Mag>(AK47MagClass, FVector::ZeroVector, FRotator::ZeroRotator);
+	AK47Mag->SetOwner(this);
+	AK47Mag->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, MagPlayersHandAttachSocketName);
 }
 
 // EVENT TICK-> Called every frame
