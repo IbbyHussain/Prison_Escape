@@ -68,6 +68,7 @@ protected:
 	float DefaultFOV;
 
 	//ZOOM-> A boolean to control zooming in
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = "Zoom")
 	bool bCanZoomIn;
 
 	//ZOOM->
