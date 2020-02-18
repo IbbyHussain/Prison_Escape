@@ -384,7 +384,7 @@ void APlayer_Character::AddStamina()
 //ZOOM-> Initial Zoom
 void APlayer_Character::BeginZoom()
 {
-	if(AK47)
+	if(AK47 && !bIsSprinting)
 	{
 		bCanZoomIn = true;
 	}
