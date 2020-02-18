@@ -416,6 +416,7 @@ void APlayer_Character::SubtractAmmo()
 	LoadedAmmo -= 1;
 }
 
+//FIRING
 void APlayer_Character::CanFire()
 {
 	
@@ -428,13 +429,9 @@ void APlayer_Character::CanFire()
 			AK47->bCanFire = false;
 		}
 	}
-
-	/*if(!AK47)
-	{
-		AK47->bCanFire = false;
-	}*/
 }
 
+//RELOADING
 void APlayer_Character::ReloadDuration()
 {
 	if(!bReloading)
@@ -454,6 +451,7 @@ void APlayer_Character::ReloadDuration()
 	}
 }
 
+//RELOADING
 void APlayer_Character::Reload()
 {
 	if(MaxAmmo < (30 - LoadedAmmo))
@@ -470,6 +468,7 @@ void APlayer_Character::Reload()
 	bReloading = false;
 }
 
+//STOP FIRING
 void APlayer_Character::StopFire()
 {
 	if (AK47)
