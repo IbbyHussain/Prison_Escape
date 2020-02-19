@@ -14,6 +14,7 @@
 #include "C_AK47.h"
 #include "Components/CapsuleComponent.h"
 #include "C_AK47Mag.h"
+#include "C_Kabuto.h"
 
 
 
@@ -118,6 +119,8 @@ APlayer_Character::APlayer_Character()
 
 	MagPlayersHandAttachSocketName = "MagAttachSocketHand";
 
+	KabutoAttachSocketName = "KabutoSocket";
+
 }
 
 // EVENT BEGIN PLAY-> Called when the game starts or when spawned
@@ -158,6 +161,18 @@ void APlayer_Character::SpawnMagOnPlayersBack(TSubclassOf<AC_AK47Mag> AK47MagCla
 	AK47Mag = GetWorld()->SpawnActor<AC_AK47Mag>(AK47MagClass, FVector::ZeroVector, FRotator::ZeroRotator);
 	AK47Mag->SetOwner(this);
 	AK47Mag->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, MagPlayersHandAttachSocketName);
+}
+
+//SPWAN KABUTO
+void APlayer_Character::SpawnKabuto(TSubclassOf<AC_Kabuto> KabutoClass)
+{
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+	Kabuto = GetWorld()->SpawnActor<AC_Kabuto>(KabutoClass, FVector::ZeroVector, FRotator::ZeroRotator);
+	Kabuto->SetOwner(this);
+	Kabuto->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, KabutoAttachSocketName);
+
 }
 
 // EVENT TICK-> Called every frame

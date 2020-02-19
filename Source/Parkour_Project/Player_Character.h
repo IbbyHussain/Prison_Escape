@@ -11,6 +11,7 @@ class USpringArmComponent;
 class AC_AK47;
 class AC_AK47Mag;
 class APlayer_Character;
+class AC_Kabuto;
 
 UCLASS()
 class PARKOUR_PROJECT_API APlayer_Character : public ACharacter
@@ -123,9 +124,18 @@ protected:
 	//MAG ATTACH
 	FName MagPlayersBackAttachSocketName;
 	
+	//MAG ATTACH
 	FName MagPlayersHandAttachSocketName;
 
+	//KABUTO ATTACH
+	UFUNCTION(BlueprintCallable, Category = "SpawnKabuto")
+	void SpawnKabuto(TSubclassOf<AC_Kabuto>KabutoClass);
 
+	//KABUTO ATTACH
+	AC_Kabuto* Kabuto;
+
+	//KABUTO ATTACH
+	FName KabutoAttachSocketName;
 	
 public:	
 	// Called every frame
