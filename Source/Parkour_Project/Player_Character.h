@@ -266,7 +266,7 @@ public:
 	void StopFire();
 
 	//STAMINA
-	void AddStamina();
+	void AddResources();
 	
 	//AMMO-> The function that subtracts ammo
 	UFUNCTION()

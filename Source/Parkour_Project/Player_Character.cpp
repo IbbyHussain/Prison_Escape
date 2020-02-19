@@ -388,10 +388,11 @@ void APlayer_Character::ResetDashing()
 }
 
 //STAMINA
-void APlayer_Character::AddStamina()
+void APlayer_Character::AddResources()
 {
 	MaxStamina += 0.1;
-	UE_LOG(LogTemp, Log, TEXT("ADDS STAMINA"));
+	
+	MaxAmmo += 15;
 }
 
 //WEAPON CODE->
