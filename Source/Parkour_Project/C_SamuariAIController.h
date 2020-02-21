@@ -9,6 +9,9 @@
 /**
  * 
  */
+
+class UBlackboardComponent;
+
 UCLASS()
 class PARKOUR_PROJECT_API AC_SamuariAIController : public AAIController
 {
@@ -21,16 +24,16 @@ public:
 	
 	void OnPossess(APawn* const pawn) override;
 
-	class UBlackBoardComponent* get_blackboard() const;
+	class UBlackboardComponent* get_blackboard() const;
 
 private:
-	UPROPERTY(EditInstnaceOnly, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	class UBehaviorTreeComponent* behavior_tree_Component;
 
-	UPROPERTY(EditInstnaceOnly, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	class UBehaviorTree* behavior_tree;
 
-	class UBlackBoardComponent* blackboard;
+	class UBlackboardComponent* AIblackboard;
 
 
 

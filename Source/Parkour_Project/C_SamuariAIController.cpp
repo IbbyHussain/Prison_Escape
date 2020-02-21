@@ -19,7 +19,7 @@ AC_SamuariAIController::AC_SamuariAIController(FObjectInitializer const& object_
 
 	behavior_tree_Component = object_initializer.CreateDefaultSubobject<UBehaviorTreeComponent>(this, TEXT("BehaviorComp"));
 
-	blackboard = object_initializer.CreateDefaultSubobject<UBlackBoardComponent>(this, TEXT("BlackboardComp"));
+	AIblackboard = object_initializer.CreateDefaultSubobject<UBlackboardComponent>(this, TEXT("BlackboardComp"));
 
 
 
@@ -37,14 +37,14 @@ void AC_SamuariAIController::BeginPlay()
 void AC_SamuariAIController::OnPossess(APawn * const pawn)
 {
 	Super::OnPossess(pawn);
-	if(blackboard)
+	if(AIblackboard)
 	{
-		blackboard->InitializeBlackboard(*behavior_tree->BlackboardAsset);
+		AIblackboard->InitializeBlackboard(*behavior_tree->BlackboardAsset);
 	}
 }
 
 
-UBlackBoardComponent * AC_SamuariAIController::get_blackboard() const
+UBlackboardComponent * AC_SamuariAIController::get_blackboard() const
 {
-	return blackboard;
+	return AIblackboard;
 }
