@@ -13,7 +13,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Blueprintable)
 class PARKOUR_PROJECT_API UFindRandomLocation : public UBTTask_BlackboardBase
 {
 	GENERATED_BODY()
@@ -23,7 +23,7 @@ public:
 
 	EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& Owner_comp, uint8* node_memory);
 
-protected:
+private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Search", meta = (AllowPrivateAccess = "true"))
 	float SearchRadius = 1500.0f;
