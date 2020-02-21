@@ -8,9 +8,10 @@
 #include "UObject/ConstructorHelpers.h"
 #include "Player_Character.h"
 
+//CONSTRUCTOR
 AC_SamuariAIController::AC_SamuariAIController(FObjectInitializer const& object_initializer)
 {
-	static ConstructorHelpers::FObjectFinder<UBehaviorTree> obj(TEXT(""));
+	static ConstructorHelpers::FObjectFinder<UBehaviorTree> obj(TEXT("BehaviorTree'/Game/AI/AI_Samuari/BT_AISamuari.BT_AISamuari'"));
 	if (obj.Succeeded())
 	{
 		behavior_tree = obj.Object;
@@ -24,14 +25,24 @@ AC_SamuariAIController::AC_SamuariAIController(FObjectInitializer const& object_
 
 }
 
-//
+//BEGINPLAY
 void AC_SamuariAIController::BeginPlay()
 {
+	Super::BeginPlay();
+	RunBehaviorTree(behavior_tree);
+	behavior_tree_Component->StartTree(*behavior_tree);
 }
 
+//ONPOSSESS
 void AC_SamuariAIController::OnPossess(APawn * const pawn)
 {
+	Super::OnPossess(pawn);
+	if(blackboard)
+	{
+		blackboard->InitializeBlackboard(*behavior_tree->BlackboardAsset);
+	}
 }
+
 
 UBlackBoardComponent * AC_SamuariAIController::get_blackboard() const
 {
