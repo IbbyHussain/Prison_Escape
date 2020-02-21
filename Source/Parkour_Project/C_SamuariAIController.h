@@ -30,7 +30,7 @@ private:
 	UPROPERTY(EditInstnaceOnly, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	class UBehaviorTree* behavior_tree;
 
-	class UBlackBoardComponent* BlackBoard;
+	class UBlackBoardComponent* blackboard;
 
 
 
