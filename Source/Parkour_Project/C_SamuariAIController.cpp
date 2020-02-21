@@ -3,3 +3,7 @@
 
 #include "C_SamuariAIController.h"
 
+UBlackBoardComponent * AC_SamuariAIController::get_blackboard() const
+{
+	return nullptr;
+}
