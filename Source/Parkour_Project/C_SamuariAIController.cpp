@@ -58,11 +58,6 @@ UBlackboardComponent * AC_SamuariAIController::get_blackboard() const
 	return AIblackboard;
 }
 
-//ONPERCEPTIONUPDATED
-void AC_SamuariAIController::OnPerceptionUpdated(TArray<AActor*> const & UpdatedActors)
-{
-}
-
 //SETUPPERCEPTION
 void AC_SamuariAIController::SetupPerceptionSystem()
 {
