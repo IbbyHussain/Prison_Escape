@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
+#include "Perception/AIPerceptionTypes.h"
 #include "C_SamuariAIController.generated.h"
 
 /**
@@ -35,9 +36,12 @@ private:
 
 	class UBlackboardComponent* AIblackboard;
 
+	class UAISenseConfig_Sight* SightConfig;
 
+	UFUNCTION()
+	void OnPerceptionUpdated(TArray<AActor*> const& UpdatedActors);
 
-
+	void SetupPerceptionSystem();
 
 
 
