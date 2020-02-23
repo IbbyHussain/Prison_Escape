@@ -7,6 +7,13 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Player_Character.h"
+#include "Perception/AISenseConfig_Sight.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
+#include "Perception/AIPerceptionComponent.h"
+#include "BlackBoardKeys.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
+#include "Runtime/Engine/Classes/Engine/World.h"
+#include "GameFramework/Character.h"
 
 //CONSTRUCTOR
 AC_SamuariAIController::AC_SamuariAIController(FObjectInitializer const& object_initializer)
@@ -21,6 +28,8 @@ AC_SamuariAIController::AC_SamuariAIController(FObjectInitializer const& object_
 
 	AIblackboard = object_initializer.CreateDefaultSubobject<UBlackboardComponent>(this, TEXT("BlackboardComp"));
 
+	//Perceptionsystem
+	SetupPerceptionSystem();
 
 
 }
@@ -53,6 +62,8 @@ void AC_SamuariAIController::OnPerceptionUpdated(TArray<AActor*> const & Updated
 {
 }
 
+//SETUPPERCEPTION
 void AC_SamuariAIController::SetupPerceptionSystem()
 {
+	SightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("Sight Config"));
 }
