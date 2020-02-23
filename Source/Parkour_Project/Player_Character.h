@@ -278,5 +278,6 @@ public:
 private:
 	class UAIPerceptionStimuliSourceComponent* Stimulus;
 
+	UFUNCTION()
 	void SetupStimulus();
 };
