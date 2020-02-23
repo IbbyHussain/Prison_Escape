@@ -11,7 +11,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Blueprintable)
 class PARKOUR_PROJECT_API UCTask_ChasePlayer : public UBTTask_BlackboardBase
 {
 	GENERATED_BODY()

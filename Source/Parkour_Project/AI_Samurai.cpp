@@ -38,6 +38,11 @@ AAI_Samurai::AAI_Samurai()
 	bHasAIDied = false;
 
 	HealthComponent = CreateDefaultSubobject<UC_HealthComponent>("HealthComponent");
+
+	bUseControllerRotationYaw = false;
+	//GetCharacterMovement()->bUseControllerDesiredRotation = true;
+	GetCharacterMovement()->bOrientRotationToMovement = true;
+
 }
 
 // Called when the game starts or when spawned

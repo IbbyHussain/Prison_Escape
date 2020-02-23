@@ -66,11 +66,11 @@ void AC_SamuariAIController::SetupPerceptionSystem()
 	SetPerceptionComponent(*CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("Perception Component")));
 
 	//sets default values
-	SightConfig->SightRadius = 500.0f;
+	SightConfig->SightRadius = 3500.0f;
 	SightConfig->LoseSightRadius = SightConfig->SightRadius + 50.0f;
 	SightConfig->PeripheralVisionAngleDegrees = 90.0f;
 	SightConfig->SetMaxAge(5.0f);
-	SightConfig->AutoSuccessRangeFromLastSeenLocation = 900.0f;
+	SightConfig->AutoSuccessRangeFromLastSeenLocation = 4000.0f;
 
 	//AI will sense all types of objects
 	SightConfig->DetectionByAffiliation.bDetectEnemies = true;
