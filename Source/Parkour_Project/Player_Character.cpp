@@ -15,6 +15,8 @@
 #include "Components/CapsuleComponent.h"
 #include "C_AK47Mag.h"
 #include "C_Kabuto.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
+#include "Perception/AISense_Sight.h"
 
 
 
@@ -120,6 +122,8 @@ APlayer_Character::APlayer_Character()
 	MagPlayersHandAttachSocketName = "MagAttachSocketHand";
 
 	KabutoAttachSocketName = "KabutoSocket";
+
+	SetupStimulus();
 
 }
 
@@ -445,6 +449,15 @@ void APlayer_Character::CanFire()
 			AK47->bCanFire = false;
 		}
 	}
+}
+
+//AI STIMULUS
+void APlayer_Character::SetupStimulus()
+{
+	Stimulus = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("Stimulus"));
+	Stimulus->RegisterForSense(TSubclassOf<UAISense_Sight>());
+	Stimulus->RegisterWithPerceptionSystem();
+
 }
 
 //RELOADING

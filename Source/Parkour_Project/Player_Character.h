@@ -274,4 +274,9 @@ public:
 
 	UFUNCTION()
 	void CanFire();
+
+private:
+	class UAIPerceptionStimuliSourceComponent* Stimulus;
+
+	void SetupStimulus();
 };
