@@ -84,7 +84,17 @@ void AC_SamuariAIController::SetupPerceptionSystem()
 
 	//Add sight configuration component to perception component
 	GetPerceptionComponent()->SetDominantSense(*SightConfig->GetSenseImplementation());
-	GetPerceptionComponent()->OnPerceptionUpdated.AddDynamic(this, &AC_SamuariAIController::OnPerceptionUpdated);
+	GetPerceptionComponent()->OnTargetPerceptionUpdated.AddDynamic(this, &AC_SamuariAIController::OnTargetDetected);
 	GetPerceptionComponent()->ConfigureSense(*SightConfig);
 	
+}
+
+//ONTARGETDETECTED
+void AC_SamuariAIController::OnTargetDetected(AActor * Actor, FAIStimulus const Stimulus)
+{
+	
+	if (auto const ch = Cast<APlayer_Character>(Actor))
+	{
+		get_blackboard()->SetValueAsBool(bb_Keys::bCanSeePlayer, Stimulus.WasSuccessfullySensed());
+	}
 }

@@ -43,6 +43,8 @@ private:
 
 	void SetupPerceptionSystem();
 
+	void OnTargetDetected(AActor* Actor, FAIStimulus const Stimulus);
+
 
 
 
