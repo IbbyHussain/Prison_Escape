@@ -58,6 +58,7 @@ UBlackboardComponent * AC_SamuariAIController::get_blackboard() const
 	return AIblackboard;
 }
 
+//ONPERCEPTIONUPDATED
 void AC_SamuariAIController::OnPerceptionUpdated(TArray<AActor*> const & UpdatedActors)
 {
 }
@@ -80,5 +81,10 @@ void AC_SamuariAIController::SetupPerceptionSystem()
 	SightConfig->DetectionByAffiliation.bDetectEnemies = true;
 	SightConfig->DetectionByAffiliation.bDetectFriendlies = true;
 	SightConfig->DetectionByAffiliation.bDetectNeutrals = true;
+
+	//Add sight configuration component to perception component
+	GetPerceptionComponent()->SetDominantSense(*SightConfig->GetSenseImplementation());
+	GetPerceptionComponent()->OnPerceptionUpdated.AddDynamic(this, &AC_SamuariAIController::OnPerceptionUpdated);
+	GetPerceptionComponent()->ConfigureSense(*SightConfig);
 	
 }
