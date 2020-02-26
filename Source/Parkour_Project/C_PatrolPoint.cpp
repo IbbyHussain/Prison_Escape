@@ -25,3 +25,13 @@ void AC_PatrolPoint::Tick(float DeltaTime)
 
 }
 
+FVector AC_PatrolPoint::GetPatrolPoints(int const index) const
+{
+	return FVector();
+}
+
+int AC_PatrolPoint::num() const
+{
+	return 0;
+}
+
