@@ -5,6 +5,7 @@
 #include "C_SamuariAIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "AI_Samurai.h"
+#include "C_PatrolPoint.h"
 #include "BlackBoardKeys.h"
 
 //CONSTRUCTOR
@@ -24,7 +25,7 @@ EBTNodeResult::Type UCTask_FindPatrolPathPoint::ExecuteTask(UBehaviorTreeCompone
 
 	//Use PatrolPointIndex variable to get current patrol point
 	AAI_Samurai* const AISamuraiReference = Cast<AAI_Samurai>(Controller->GetPawn());
-	FVector const Point = AISamuraiReference->GetPatrolPointAI()->GetPatrolPoint(index);
+	FVector const Point = AISamuraiReference->GetPatrolPointAI()->GetPatrolPoints(index);
 
 	//Covert Local vector to global vector
 	FVector const GlobalPoint = AISamuraiReference->GetPatrolPointAI()->GetActorTransform().TransformPosition(Point);
