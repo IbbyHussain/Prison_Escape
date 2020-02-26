@@ -19,5 +19,11 @@ public:
 	UCTask_IncrementPatrolPathIndex(FObjectInitializer const& ObjectInitializer);
 
 	EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& Owner, uint8* NodeMemory) override;
-	
+private:
+	enum class EDirectionType
+	{
+		Forward, Reverse
+	};
+
+	EDirectionType Direction = EDirectionType::Forward;
 };
