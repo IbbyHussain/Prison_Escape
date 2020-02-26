@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "C_PatrolPoint.h"
 #include "AI_Samurai.generated.h"
 
 class AAI_Samurai_Guard_Weapon;
@@ -12,7 +13,6 @@ class UMaterial;
 class AC_StaminaPickUp;
 class UC_HealthComponent;
 class AI_Samurai_Guard_Weapon;
-class AC_PatrolPoint;
 
 UCLASS()
 class PARKOUR_PROJECT_API AAI_Samurai : public ACharacter
@@ -95,9 +95,10 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void CheckForDeath();
-	AC_PatrolPoint* GetPatrolPointAI();
+	
+	AC_PatrolPoint* GetPatrolPathAI();
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
-	AC_PatrolPoint* Patrolpoint;
+	AC_PatrolPoint* PatrolPath;
 };

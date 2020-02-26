@@ -10,7 +10,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Blueprintable)
 class PARKOUR_PROJECT_API UCTask_IncrementPatrolPathIndex : public UBTTask_BlackboardBase
 {
 	GENERATED_BODY()
@@ -18,7 +18,7 @@ class PARKOUR_PROJECT_API UCTask_IncrementPatrolPathIndex : public UBTTask_Black
 public:
 	UCTask_IncrementPatrolPathIndex(FObjectInitializer const& ObjectInitializer);
 
-	EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& Owner, uint8* NodeMemory) override;
+	EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& Owner, uint8* node_memory) override;
 private:
 	enum class EDirectionType
 	{
@@ -26,4 +26,9 @@ private:
 	};
 
 	EDirectionType Direction = EDirectionType::Forward;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	bool bDirectional;
+
+
 };

@@ -149,9 +149,9 @@ void AAI_Samurai::CheckForDeath()
 	}
 }
 
-AC_PatrolPoint * AAI_Samurai::GetPatrolPointAI()
+AC_PatrolPoint * AAI_Samurai::GetPatrolPathAI()
 {
-	return Patrolpoint;
+	return PatrolPath;
 }
 
 // Called every frame
