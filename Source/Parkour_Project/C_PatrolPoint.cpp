@@ -25,13 +25,17 @@ void AC_PatrolPoint::Tick(float DeltaTime)
 
 }
 
+//GETPATROLPOINTS
 FVector AC_PatrolPoint::GetPatrolPoints(int const index) const
 {
-	return FVector();
+	//returns the location of the current patrol point
+	return PatrolPoints[index];
 }
 
+//PATROLPOINTNUM
 int AC_PatrolPoint::num() const
 {
-	return 0;
+	// returns the number in the array
+	return PatrolPoints.Num();
 }
 
