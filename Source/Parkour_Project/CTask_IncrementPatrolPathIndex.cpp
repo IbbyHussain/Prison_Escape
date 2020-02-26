@@ -23,7 +23,24 @@ EBTNodeResult::Type UCTask_IncrementPatrolPathIndex::ExecuteTask(UBehaviorTreeCo
 	int const MinIndex = 0;
 	int const MaxIndex = NumberOfPoints - 1;
 
+	//Declare and Initialize blackboard index
+	int index = Controller->get_blackboard()->SetValueAsInt(bb_Keys::PatrolPointIndex);
+	if (index >= MaxIndex && Direction == EDirectionType::Forward)
+	{
+		Direction = EDirectionType::Reverse;
+	}
 	
+	else if(index == MinIndex && Direction == EDirectionType::Reverse)
+	{
+		Direction = EDirectionType::Forward;
+	}
 
+	// if forward increment
+	//if reverse decrement
+	//use of modulus division so that the ai will loop around all points
+	Controller->get_blackboard()->SetValueAsInt(bb_Keys::PatrolPointIndex, 
+		(Direction == EDirectionType::Forward ? ++index : --index) % NumberOfPoints);
+
+	
 	return EBTNodeResult::Type();
 }
