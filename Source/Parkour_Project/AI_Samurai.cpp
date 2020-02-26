@@ -149,6 +149,11 @@ void AAI_Samurai::CheckForDeath()
 	}
 }
 
+AC_PatrolPoint * AAI_Samurai::GetPatrolPointAI()
+{
+	return Patrolpoint;
+}
+
 // Called every frame
 void AAI_Samurai::Tick(float DeltaTime)
 {
