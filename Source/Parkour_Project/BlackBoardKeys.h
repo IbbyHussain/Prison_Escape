@@ -8,4 +8,8 @@ namespace bb_Keys
 	TCHAR const * const TargetLocation = TEXT("TargetLocation");
 
 	TCHAR const * const bCanSeePlayer = TEXT("CanSeePlayer");
+
+	TCHAR const * const PatrolPoint = TEXT("PatrolPoint");
+
+	TCHAR const * const PatrolPointIndex = TEXT("PatrolPathIndex");
 }
