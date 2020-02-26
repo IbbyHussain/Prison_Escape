@@ -27,12 +27,15 @@ public:
 
 	class UBlackboardComponent* get_blackboard() const;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "AI")
+	class UBehaviorTree* behavior_tree;
+
 private:
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	class UBehaviorTreeComponent* behavior_tree_Component;
 
-	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
-	class UBehaviorTree* behavior_tree;
+	//UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	//class UBehaviorTree* behavior_tree;
 
 	class UBlackboardComponent* AIblackboard;
 

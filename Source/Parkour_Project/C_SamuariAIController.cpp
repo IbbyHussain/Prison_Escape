@@ -18,11 +18,11 @@
 //CONSTRUCTOR
 AC_SamuariAIController::AC_SamuariAIController(FObjectInitializer const& object_initializer)
 {
-	static ConstructorHelpers::FObjectFinder<UBehaviorTree> obj(TEXT("BehaviorTree'/Game/AI/AI_Samuari/BT_AISamuari.BT_AISamuari'"));
+	/*static ConstructorHelpers::FObjectFinder<UBehaviorTree> obj(TEXT("BehaviorTree'/Game/AI/AI_Samuari/BT_AISamuari.BT_AISamuari'"));
 	if (obj.Succeeded())
 	{
 		behavior_tree = obj.Object;
-	}
+	}*/
 
 	behavior_tree_Component = object_initializer.CreateDefaultSubobject<UBehaviorTreeComponent>(this, TEXT("BehaviorComp"));
 
