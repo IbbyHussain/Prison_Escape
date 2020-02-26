@@ -41,6 +41,7 @@ EBTNodeResult::Type UCTask_IncrementPatrolPathIndex::ExecuteTask(UBehaviorTreeCo
 	Controller->get_blackboard()->SetValueAsInt(bb_Keys::PatrolPointIndex, 
 		(Direction == EDirectionType::Forward ? ++index : --index) % NumberOfPoints);
 
-	
-	return EBTNodeResult::Type();
+	//Finish With Success
+	FinishLatentTask(Owner, EBTNodeResult::Succeeded);
+	return EBTNodeResult::Succeeded;
 }
