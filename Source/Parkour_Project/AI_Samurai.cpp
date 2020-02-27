@@ -43,6 +43,8 @@ AAI_Samurai::AAI_Samurai()
 	//GetCharacterMovement()->bUseControllerDesiredRotation = true;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 
+	bIsSprinting = false;
+
 }
 
 // Called when the game starts or when spawned
@@ -139,6 +141,18 @@ void AAI_Samurai::OnHealthUpdated(UC_HealthComponent * HealthComponent, float He
 
 		UE_LOG(LogTemp, Log, TEXT("Died"));
 	}
+}
+
+//Changes Sprint Status-> walk
+void AAI_Samurai::SprintStatusFalse()
+{
+	bIsSprinting = false;
+}
+
+//Changes Sprint Status-> Run
+void AAI_Samurai::SprintStatusTrue()
+{
+	bIsSprinting = true;
 }
 
 void AAI_Samurai::CheckForDeath()

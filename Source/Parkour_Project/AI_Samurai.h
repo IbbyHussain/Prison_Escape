@@ -85,6 +85,9 @@ protected:
 
 	AI_Samurai_Guard_Weapon* SamuariWeaponRef;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+	bool bIsSprinting;
+
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	AC_PatrolPath* patrol_path;
@@ -100,6 +103,10 @@ public:
 	void CheckForDeath();
 
 	AC_PatrolPath* get_patrol_path();
+
+	void SprintStatusFalse();
+
+	void SprintStatusTrue();
 	
 
 
