@@ -4,30 +4,22 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "C_PatrolPoint.generated.h"
+#include "C_PatrolPath.generated.h"
 
 UCLASS()
-class PARKOUR_PROJECT_API AC_PatrolPoint : public AActor
+class PARKOUR_PROJECT_API AC_PatrolPath : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AC_PatrolPoint();
+	AC_PatrolPath();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	FVector GetPatrolPoints(int const index) const;
-
+	FVector get_patrol_point(int const index) const;
 	int num() const;
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (MakeEditWidget = "true", AllowPrivateAccess = "true"))
-	TArray<FVector> PatrolPoints;
+	TArray<FVector> patrol_points;
+
 };

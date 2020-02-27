@@ -9,7 +9,9 @@ namespace bb_Keys
 
 	TCHAR const * const bCanSeePlayer = TEXT("CanSeePlayer");
 
-	TCHAR const * const PatrolPoint = TEXT("PatrolPoint");
+	TCHAR const * const patrol_path_vector = TEXT("PatrolPathVector");
 
-	TCHAR const * const PatrolPointIndex = TEXT("PatrolPathIndex");
+	TCHAR const * const patrol_path_index = TEXT("PatrolPathIndex");
+
+	
 }

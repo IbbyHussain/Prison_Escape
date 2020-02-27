@@ -7,31 +7,30 @@
 #include "AI_Samurai.h"
 #include "BlackBoardKeys.h"
 
-//CONSTRUCTOR
+
 UCTask_FindPatrolPathPoint::UCTask_FindPatrolPathPoint(FObjectInitializer const& object_initializer)
 {
-	NodeName = TEXT("Find Patrol Path Point");
+	NodeName = TEXT("Find patrol path point C");
 }
 
 
 EBTNodeResult::Type UCTask_FindPatrolPathPoint::ExecuteTask(UBehaviorTreeComponent & Owner, uint8 * node_memory)
 {
-	//Get AI controller 
+	//get ai controller
 	AC_SamuariAIController* const Controller = Cast<AC_SamuariAIController>(Owner.GetAIOwner());
 
-	//Get the current patrol path index from the blackboard
-	int const index = Controller->get_blackboard()->GetValueAsInt(bb_Keys::PatrolPointIndex);
+	//get current patrol path index from blackboard
+	int const index = Controller->get_blackboard()->GetValueAsInt(bb_Keys::patrol_path_index);
 
-	//Use PatrolPointIndex variable to get current patrol point
-	AAI_Samurai* const AISamuraiReference = Cast<AAI_Samurai>(Controller->GetPawn());
-	FVector const Point = AISamuraiReference->GetPatrolPathAI()->GetPatrolPoints(index);
+	// use index to get current patrol path from ai ref from patrol path
+	AAI_Samurai* const AISamurai = Cast<AAI_Samurai>(Controller->GetPawn());
+	FVector const point = AISamurai->get_patrol_path()->get_patrol_point(index);
 
-	//Covert Local vector to global vector
-	FVector const GlobalPoint = AISamuraiReference->GetPatrolPathAI()->GetActorTransform().TransformPosition(Point);
+	//transform point to global position
+	FVector const global_point = AISamurai->get_patrol_path()->GetActorTransform().TransformPosition(point);
 
-	Controller->get_blackboard()->SetValueAsVector(bb_Keys::PatrolPoint, GlobalPoint);
+	Controller->get_blackboard()->SetValueAsVector(bb_Keys::patrol_path_vector, global_point);
 
-	//Finish task with success
 	FinishLatentTask(Owner, EBTNodeResult::Succeeded);
 	return EBTNodeResult::Succeeded;
 }

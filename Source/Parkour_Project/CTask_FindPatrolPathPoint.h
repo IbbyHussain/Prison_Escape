@@ -10,10 +10,11 @@
 /**
  * 
  */
-UCLASS(Blueprintable)
+UCLASS()
 class PARKOUR_PROJECT_API UCTask_FindPatrolPathPoint : public UBTTask_BlackboardBase
 {
 	GENERATED_BODY()
+
 public:
 	UCTask_FindPatrolPathPoint(FObjectInitializer const& object_initializer);
 	EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& Owner, uint8* node_memory) override;

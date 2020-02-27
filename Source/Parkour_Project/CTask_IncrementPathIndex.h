@@ -5,20 +5,20 @@
 #include "CoreMinimal.h"
 #include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
 #include "BehaviorTree/BehaviorTreeTypes.h"
-#include "CTask_IncrementPatrolPathIndex.generated.h"
+#include "CTask_IncrementPathIndex.generated.h"
 
 /**
  * 
  */
-UCLASS(Blueprintable)
-class PARKOUR_PROJECT_API UCTask_IncrementPatrolPathIndex : public UBTTask_BlackboardBase
+UCLASS()
+class PARKOUR_PROJECT_API UCTask_IncrementPathIndex : public UBTTask_BlackboardBase
 {
 	GENERATED_BODY()
-
 public:
-	UCTask_IncrementPatrolPathIndex(FObjectInitializer const& ObjectInitializer);
+	UCTask_IncrementPathIndex(FObjectInitializer const& object_initializer);
 
 	EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& Owner, uint8* node_memory) override;
+	
 private:
 	enum class EDirectionType
 	{
@@ -26,9 +26,5 @@ private:
 	};
 
 	EDirectionType Direction = EDirectionType::Forward;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
-	bool bDirectional;
-
 
 };

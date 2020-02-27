@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "C_PatrolPoint.h"
+#include "C_PatrolPath.h"
 #include "AI_Samurai.generated.h"
 
 class AAI_Samurai_Guard_Weapon;
@@ -85,6 +85,9 @@ protected:
 
 	AI_Samurai_Guard_Weapon* SamuariWeaponRef;
 
+private:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	AC_PatrolPath* patrol_path;
 	
 
 public:	
@@ -95,10 +98,9 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void CheckForDeath();
-	
-	AC_PatrolPoint* GetPatrolPathAI();
 
-private:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
-	AC_PatrolPoint* PatrolPath;
+	AC_PatrolPath* get_patrol_path();
+	
+
+
 };
