@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "C_PatrolPath.h"
+#include "C_CombatInterface.h"
 #include "AI_Samurai.generated.h"
 
 class AAI_Samurai_Guard_Weapon;
@@ -13,9 +14,11 @@ class UMaterial;
 class AC_StaminaPickUp;
 class UC_HealthComponent;
 class AI_Samurai_Guard_Weapon;
+class UC_CombatInterface;
+
 
 UCLASS()
-class PARKOUR_PROJECT_API AAI_Samurai : public ACharacter
+class PARKOUR_PROJECT_API AAI_Samurai : public ACharacter, public IC_CombatInterface
 {
 	GENERATED_BODY()
 
@@ -88,11 +91,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 	bool bIsSprinting;
 
-private:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
-	AC_PatrolPath* patrol_path;
-	
-
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -108,6 +106,16 @@ public:
 
 	void SprintStatusTrue();
 	
+	//ATTACK
+	int MeleeAttack_Implementation() override;
 
+	//ATTACK
+	UAnimMontage* GetAnimMontage() const;
 
+private:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	AC_PatrolPath* patrol_path;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
+	UAnimMontage* AttackMontage;
 };
