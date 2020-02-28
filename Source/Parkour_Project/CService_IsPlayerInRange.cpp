@@ -24,7 +24,7 @@ void UCService_IsPlayerInRange::OnBecomeRelevant(UBehaviorTreeComponent & Owner,
 	Super::OnBecomeRelevant(Owner, NodeMemory);
 
 	//Get AI Controller Reference
-	AC_SamuariAIController* const Controller = Cast<AC_SamuariAIController>(Owner.GetAIOwner);
+	AC_SamuariAIController* const Controller = Cast<AC_SamuariAIController>(Owner.GetAIOwner());
 
 	AAI_Samurai* const AISamuraiReference = Cast<AAI_Samurai>(Controller->GetPawn());
 
