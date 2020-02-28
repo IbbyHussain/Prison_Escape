@@ -16,8 +16,7 @@ class PARKOUR_PROJECT_API UCTask_Attack : public UBTTask_BlackboardBase
 public:
 	UCTask_Attack(FObjectInitializer const& ObjectInitializer);
 
-	EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& Owner, uint8 NodeMemory) override;
-
+	EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& Owner, uint8* NodeMemory) override;
 private:
 	bool bHasMontageFinished(AAI_Samurai* const AISamuraiReference);
 	
