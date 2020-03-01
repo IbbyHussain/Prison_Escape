@@ -13,6 +13,7 @@ class AC_AK47Mag;
 class APlayer_Character;
 class AC_Kabuto;
 class AI_Samurai_Guard_Weapon;
+class UC_HealthComponent;
 
 UCLASS()
 class PARKOUR_PROJECT_API APlayer_Character : public ACharacter
@@ -147,8 +148,18 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AK47")
 	TSubclassOf<UDamageType> DefaultDamage;
 	
-	UFUNCTION(BlueprintCallable, Catgeory = "PlayerDeath")
+	//PlAYER DEATH
+	UFUNCTION(BlueprintCallable, Category = "PlayerDeath")
 	void PlayerDeath();
+
+	//PLAYER DEATH
+	UFUNCTION()
+	void OnHealthUpdated(UC_HealthComponent* HealthComponent, float Health, float HealthDelta, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
+
+	UC_HealthComponent* HealthComponent;
+
+
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

@@ -19,6 +19,7 @@
 #include "Perception/AISense_Sight.h"
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "C_HealthComponent.h"
 #include "AI_Samurai_Guard_Weapon.h"
 
 
@@ -134,6 +135,8 @@ APlayer_Character::APlayer_Character()
 	TriggerCapsule->SetCollisionProfileName(TEXT("Trigger"));
 	TriggerCapsule->SetupAttachment(RootComponent);
 
+	HealthComponent = CreateDefaultSubobject<UC_HealthComponent>("HealthComponent");
+
 }
 
 // EVENT BEGIN PLAY-> Called when the game starts or when spawned
@@ -145,6 +148,8 @@ void APlayer_Character::BeginPlay()
 	DefaultFOV = CameraComp->FieldOfView;
 
 	TriggerCapsule->OnComponentBeginOverlap.AddDynamic(this, &APlayer_Character::OnOverlapBegin);
+
+	HealthComponent->OnHealthChanged.AddDynamic(this, &APlayer_Character::OnHealthUpdated);
 }
 
 //Spawns AK47
@@ -204,9 +209,20 @@ void APlayer_Character::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AAc
 //PLAYERDEATH
 void APlayer_Character::PlayerDeath()
 {
-	UE_LOG(LogTemp, Log, TEXT("PLAYER HAS DIED"))
+	UE_LOG(LogTemp, Log, TEXT("Called death function"))
 	GetCharacterMovement()->StopMovementImmediately();
 	GetCharacterMovement()->DisableMovement();
+	GetMesh()->SetSimulatePhysics(true);
+}
+
+void APlayer_Character::OnHealthUpdated(UC_HealthComponent * HealthComponent, float Health, float HealthDelta, const UDamageType * DamageType, AController * InstigatedBy, AActor * DamageCauser)
+{
+	if (Health <= 0.0f)
+	{
+		PlayerDeath();
+
+		UE_LOG(LogTemp, Log, TEXT("Died"));
+	}
 }
 
 // EVENT TICK-> Called every frame
