@@ -27,7 +27,9 @@ AAI_Samurai_Guard_Weapon::AAI_Samurai_Guard_Weapon()
 void AAI_Samurai_Guard_Weapon::BeginPlay()
 {
 	Super::BeginPlay();
-	//SetActorRelativeScale3D(FVector(1.0f, 0, 1.f));
+	
+	// overlap 
+	BoxComponent->OnComponentBeginOverlap.AddDynamic(this, &AAI_Samurai_Guard_Weapon::OnOverlapBegin);
 
 	TSubclassOf<AAI_Samurai> ClassToFind;
 	ClassToFind = AAI_Samurai::StaticClass();
@@ -44,6 +46,17 @@ void AAI_Samurai_Guard_Weapon::test()
 	
 	//Weaponref->DetachFromActor();
 
+}
+
+//OVERLAP
+void AAI_Samurai_Guard_Weapon::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	if (OtherActor && (OtherActor != this) && OtherActor == PlayerCharacterReference)
+	{
+		UE_LOG(LogTemp, Log, TEXT("OVERLAPPED"));
+	}
+
+	
 }
 
 // Called every frame

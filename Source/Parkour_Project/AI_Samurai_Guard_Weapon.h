@@ -9,6 +9,7 @@
 //Define external classes here:
 class UBoxComponent;
 class AAI_Samurai;
+class APlayer_Character;
 
 UCLASS()
 class PARKOUR_PROJECT_API AAI_Samurai_Guard_Weapon : public AActor
@@ -32,7 +33,10 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Collision")
 	UBoxComponent* BoxComponent;
 
-	
+	UFUNCTION(BlueprintCallable, Category = "OnOverlapBeginAK47PickUp")
+	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	APlayer_Character* PlayerCharacterReference;
 
 public:	
 	// Called every frame
