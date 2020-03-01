@@ -29,6 +29,9 @@ protected:
 	
 	AAI_Samurai* AISamuraiRef;
 
+	UPROPERTY(EditAnywhere, Category = "Collision")
+	UBoxComponent* BoxComponent;
+
 	
 
 public:	

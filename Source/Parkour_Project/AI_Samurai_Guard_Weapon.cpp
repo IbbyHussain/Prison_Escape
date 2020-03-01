@@ -4,6 +4,7 @@
 #include "AI_Samurai_Guard_Weapon.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "Runtime/Engine/Classes/Engine/World.h."
+#include "Components/BoxComponent.h"
 #include "AI_Samurai.h"
 
 // Sets default values
@@ -13,8 +14,12 @@ AAI_Samurai_Guard_Weapon::AAI_Samurai_Guard_Weapon()
 	PrimaryActorTick.bCanEverTick = true;
 
 	Weaponref = CreateDefaultSubobject<USkeletalMeshComponent>("SkeletalMesh");
-	
-	
+	RootComponent = Weaponref;
+
+	BoxComponent = CreateDefaultSubobject<UBoxComponent>("BoxCollision");
+	BoxComponent->SetRelative3DScale(FVector(10.0f));
+	BoxComponent->SetRealativeLocation(FVector(10.0f));
+	BoxComponent->AttachTo(RootComponent)
 }
 
 // Called when the game starts or when spawned
