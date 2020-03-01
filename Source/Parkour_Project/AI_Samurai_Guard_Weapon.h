@@ -7,7 +7,7 @@
 #include "AI_Samurai_Guard_Weapon.generated.h"
 
 //Define external classes here:
-
+class UBoxComponent;
 class AAI_Samurai;
 
 UCLASS()

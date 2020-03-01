@@ -16,7 +16,6 @@ AAI_Samurai_Guard_Weapon::AAI_Samurai_Guard_Weapon()
 	Weaponref = CreateDefaultSubobject<USkeletalMeshComponent>("SkeletalMesh");
 	RootComponent = Weaponref;
 
-	//sets the transform of the collision box
 	BoxComponent = CreateDefaultSubobject<UBoxComponent>("BoxCollision");
 	BoxComponent->SetRelativeScale3D(FVector(55.0f, 10.0f, 10.0f));
 	BoxComponent->SetRelativeLocation(FVector(1500.0f, 10.0f, 10.0f));
