@@ -201,6 +201,14 @@ void APlayer_Character::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AAc
 	}
 }
 
+//PLAYERDEATH
+void APlayer_Character::PlayerDeath()
+{
+	UE_LOG(LogTemp, Log, TEXT("PLAYER HAS DIED"))
+	GetCharacterMovement()->StopMovementImmediately();
+	GetCharacterMovement()->DisableMovement();
+}
+
 // EVENT TICK-> Called every frame
 void APlayer_Character::Tick(float DeltaTime)
 {

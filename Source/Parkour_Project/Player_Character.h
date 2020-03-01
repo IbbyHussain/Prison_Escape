@@ -147,6 +147,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AK47")
 	TSubclassOf<UDamageType> DefaultDamage;
 	
+	UFUNCTION(BlueprintCallable, Catgeory = "PlayerDeath")
+	void PlayerDeath();
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
