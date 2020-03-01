@@ -155,18 +155,17 @@ void AAI_Samurai::SprintStatusTrue()
 	bIsSprinting = true;
 }
 
-int AAI_Samurai::MeleeAttack_Implementation()
+UAnimMontage * AAI_Samurai::GetAnimMontage() const
+{
+	return AttackMontage;
+}
+
+void AAI_Samurai::MeleeAttack()
 {
 	if(AttackMontage)
 	{
 		PlayAnimMontage(AttackMontage);
 	}
-	return 0;
-}
-
-UAnimMontage * AAI_Samurai::GetAnimMontage() const
-{
-	return AttackMontage;
 }
 
 void AAI_Samurai::CheckForDeath()
