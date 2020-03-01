@@ -18,6 +18,7 @@
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "Perception/AISense_Sight.h"
 #include "Components/CapsuleComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "AI_Samurai_Guard_Weapon.h"
 
 
@@ -194,6 +195,9 @@ void APlayer_Character::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AAc
 	if (OtherActor && (OtherActor != this) && OtherComp)
 	{
 		UE_LOG(LogTemp, Log, TEXT("Overlapped"));
+
+		UGameplayStatics::ApplyDamage(this, 10.0f, OtherActor->GetInstigatorController(), OtherActor, DefaultDamage);
+		
 	}
 }
 

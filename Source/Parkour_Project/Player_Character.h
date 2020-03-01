@@ -144,7 +144,8 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Trigger Capsule")
 	class UCapsuleComponent* TriggerCapsule;
 
-
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AK47")
+	TSubclassOf<UDamageType> DefaultDamage;
 	
 public:	
 	// Called every frame
