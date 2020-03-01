@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+n// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -10,6 +10,7 @@
 class UBoxComponent;
 class AAI_Samurai;
 class APlayer_Character;
+class AAI_Samurai;
 
 UCLASS()
 class PARKOUR_PROJECT_API AAI_Samurai_Guard_Weapon : public AActor
@@ -32,11 +33,8 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Collision")
 	UBoxComponent* BoxComponent;
-
-	UFUNCTION(BlueprintCallable, Category = "OnOverlapBeginAK47PickUp")
-	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	APlayer_Character* PlayerCharacterReference;
+	
+	AAI_Samurai* SamuraiReference;
 
 public:	
 	// Called every frame

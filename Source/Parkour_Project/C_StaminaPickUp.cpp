@@ -48,7 +48,7 @@ void AC_StaminaPickUp::BeginPlay()
 // STAMINA REGEN -> adds stamina when player overlaps with box collision
 void AC_StaminaPickUp::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	UE_LOG(LogTemp, Log, TEXT("OVERLAPED WITH STAMINA COMP"));
+	
 
 	if(PlayerCharacterRef && PlayerCharacterRef == OtherActor)
 	{

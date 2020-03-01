@@ -179,7 +179,7 @@ void AC_AK47::StartFire()
 	GetWorldTimerManager().SetTimer(FiringTimer, this, &AC_AK47::Fire, TimeBetweenShots, true, FirstDelay);
 
 	bISFiring = true;
-	UE_LOG(LogTemp, Log, TEXT("Fire = true"));
+	
 
 }
 
@@ -189,7 +189,7 @@ void AC_AK47::StopFire()
 	GetWorldTimerManager().ClearTimer(FiringTimer);
 
 	bISFiring = false;
-	UE_LOG(LogTemp, Log, TEXT("Fire = false"));
+
 }
 
 //MAG->spawns mag attached to weapon

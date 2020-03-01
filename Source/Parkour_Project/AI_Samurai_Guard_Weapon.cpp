@@ -28,35 +28,18 @@ void AAI_Samurai_Guard_Weapon::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	// overlap 
-	BoxComponent->OnComponentBeginOverlap.AddDynamic(this, &AAI_Samurai_Guard_Weapon::OnOverlapBegin);
-
 	TSubclassOf<AAI_Samurai> ClassToFind;
 	ClassToFind = AAI_Samurai::StaticClass();
 	TArray<AActor*> FoundClass;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ClassToFind, FoundClass);
 }
 
-
 //test
 void AAI_Samurai_Guard_Weapon::test()
 {
-	UE_LOG(LogTemp, Log, TEXT("Successful cast"));
 	Weaponref->SetSimulatePhysics(true);
 	
 	//Weaponref->DetachFromActor();
-
-}
-
-//OVERLAP
-void AAI_Samurai_Guard_Weapon::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
-{
-	if (OtherActor && (OtherActor != this) && OtherActor == PlayerCharacterReference)
-	{
-		UE_LOG(LogTemp, Log, TEXT("OVERLAPPED"));
-	}
-
-	
 }
 
 // Called every frame
