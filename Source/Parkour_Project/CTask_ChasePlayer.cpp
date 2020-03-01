@@ -37,7 +37,7 @@ EBTNodeResult::Type UCTask_ChasePlayer::ExecuteTask(UBehaviorTreeComponent & Own
 	if (PlayerCharacterReference)
 	{
 		// moves  the AI directly to the player character
-		Controller->MoveToActor(PlayerCharacterReference, 50.0f, true, true, true, 0, true);
+		Controller->MoveToActor(PlayerCharacterReference, 40.0f, true, true, true, 0, true);
 		
 
 		FinishLatentTask(Owner, EBTNodeResult::Succeeded);
