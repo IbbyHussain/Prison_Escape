@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "C_PatrolPath.h"
-#include "C_CombatInterface.h"
+
 #include "AI_Samurai.generated.h"
 
 class AAI_Samurai_Guard_Weapon;
@@ -18,7 +18,7 @@ class UC_CombatInterface;
 
 
 UCLASS()
-class PARKOUR_PROJECT_API AAI_Samurai : public ACharacter, public IC_CombatInterface
+class PARKOUR_PROJECT_API AAI_Samurai : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -107,10 +107,11 @@ public:
 	void SprintStatusTrue();
 	
 	//ATTACK
-	int MeleeAttack_Implementation() override;
-
-	//ATTACK
 	UAnimMontage* GetAnimMontage() const;
+	
+	//ATTACK
+	void MeleeAttack();
+
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))

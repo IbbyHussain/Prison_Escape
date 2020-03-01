@@ -14,4 +14,6 @@ namespace bb_Keys
 	TCHAR const * const patrol_path_index = TEXT("PatrolPathIndex");
 
 	TCHAR const * const bPlayerIsInMeleeRange = TEXT("PlayerIsInMeleeRange");
+
+	TCHAR const * const PlayerRef = TEXT("PlayerRef");
 }
