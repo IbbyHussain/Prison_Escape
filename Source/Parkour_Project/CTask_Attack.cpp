@@ -2,7 +2,6 @@
 
 
 #include "CTask_Attack.h"
-#include "C_CombatInterface.h"
 #include "C_SamuariAIController.h"
 #include "AI_Samurai.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -22,15 +21,14 @@ UCTask_Attack::UCTask_Attack(FObjectInitializer  const& ObjectInitializer)
 EBTNodeResult::Type UCTask_Attack::ExecuteTask(UBehaviorTreeComponent & Owner, uint8 * NodeMemory)
 {
 	AC_SamuariAIController* const Controller = Cast<AC_SamuariAIController>(Owner.GetAIOwner());
-	AAI_Samurai* const AISamuraiReference = Cast<AAI_Samurai>(Controller->GetPawn());
-
+	
 	// If AI is in range
-	if (IC_CombatInterface* const ICombatInterfaceReference = Cast<IC_CombatInterface>(AISamuraiReference))
+	if (AAI_Samurai* const AISamuraiReference = Cast<AAI_Samurai>(Controller->GetPawn()))
 	{
 		if (bHasMontageFinished(AISamuraiReference))
 		{
 			//execute task
-			ICombatInterfaceReference->Execute_MeleeAttack(AISamuraiReference);
+			AISamuraiReference->MeleeAttack();
 		}
 	}
 
