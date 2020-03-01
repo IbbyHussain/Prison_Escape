@@ -12,6 +12,7 @@ class AC_AK47;
 class AC_AK47Mag;
 class APlayer_Character;
 class AC_Kabuto;
+class AI_Samurai_Guard_Weapon;
 
 UCLASS()
 class PARKOUR_PROJECT_API APlayer_Character : public ACharacter
@@ -50,9 +51,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Jump")
 	bool bCanJump;
-
 	
-
 	// STAMINA-> the current stamina value                                           
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stamina")
 	float CurrentStamina;
@@ -137,11 +136,11 @@ protected:
 	//KABUTO ATTACH
 	FName KabutoAttachSocketName;
 
-	//AIDAMAGE
+	//AI DAMAGE
 	UFUNCTION()
 	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
-	//AIDAMAGE
+	//AI DAMAGE
 	UPROPERTY(VisibleAnywhere, Category = "Trigger Capsule")
 	class UCapsuleComponent* TriggerCapsule;
 
@@ -284,6 +283,9 @@ public:
 
 	UFUNCTION()
 	void CanFire();
+
+	UPROPERTY(EditAnywhere)
+	AActor* AIWeaponReference;
 
 private:
 	class UAIPerceptionStimuliSourceComponent* Stimulus;

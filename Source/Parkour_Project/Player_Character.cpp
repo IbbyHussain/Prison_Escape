@@ -17,6 +17,8 @@
 #include "C_Kabuto.h"
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "Perception/AISense_Sight.h"
+#include "Components/CapsuleComponent.h"
+#include "AI_Samurai_Guard_Weapon.h"
 
 
 
@@ -125,6 +127,12 @@ APlayer_Character::APlayer_Character()
 
 	SetupStimulus();
 
+	//AI DAMAGE
+	TriggerCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Trigger Capsule"));
+	TriggerCapsule->InitCapsuleSize(55.f, 96.0f);;
+	TriggerCapsule->SetCollisionProfileName(TEXT("Trigger"));
+	TriggerCapsule->SetupAttachment(RootComponent);
+
 }
 
 // EVENT BEGIN PLAY-> Called when the game starts or when spawned
@@ -135,6 +143,7 @@ void APlayer_Character::BeginPlay()
 	//ZOOM->
 	DefaultFOV = CameraComp->FieldOfView;
 
+	TriggerCapsule->OnComponentBeginOverlap.AddDynamic(this, &APlayer_Character::OnOverlapBegin);
 }
 
 //Spawns AK47
@@ -179,8 +188,13 @@ void APlayer_Character::SpawnKabuto(TSubclassOf<AC_Kabuto> KabutoClass)
 
 }
 
+//AI DAMAGE
 void APlayer_Character::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
+	if (OtherActor && (OtherActor != this) && OtherComp)
+	{
+		UE_LOG(LogTemp, Log, TEXT("Overlapped"));
+	}
 }
 
 // EVENT TICK-> Called every frame
