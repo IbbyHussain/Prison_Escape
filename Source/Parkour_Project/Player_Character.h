@@ -158,7 +158,8 @@ protected:
 
 	UC_HealthComponent* HealthComponent;
 
-
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "PlayerDeath")
+	bool bPlayerHasDied;
 
 public:	
 	// Called every frame

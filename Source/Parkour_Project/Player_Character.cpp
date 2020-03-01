@@ -137,6 +137,7 @@ APlayer_Character::APlayer_Character()
 
 	HealthComponent = CreateDefaultSubobject<UC_HealthComponent>("HealthComponent");
 
+	bPlayerHasDied = false;
 }
 
 // EVENT BEGIN PLAY-> Called when the game starts or when spawned
@@ -199,10 +200,7 @@ void APlayer_Character::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AAc
 {
 	if (OtherActor && (OtherActor != this) && OtherComp)
 	{
-		UE_LOG(LogTemp, Log, TEXT("Overlapped"));
-
 		UGameplayStatics::ApplyDamage(this, 10.0f, OtherActor->GetInstigatorController(), OtherActor, DefaultDamage);
-		
 	}
 }
 
@@ -213,6 +211,7 @@ void APlayer_Character::PlayerDeath()
 	GetCharacterMovement()->StopMovementImmediately();
 	GetCharacterMovement()->DisableMovement();
 	GetMesh()->SetSimulatePhysics(true);
+	bPlayerHasDied = true;
 }
 
 void APlayer_Character::OnHealthUpdated(UC_HealthComponent * HealthComponent, float Health, float HealthDelta, const UDamageType * DamageType, AController * InstigatedBy, AActor * DamageCauser)
