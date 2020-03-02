@@ -20,6 +20,8 @@ UCTask_Attack::UCTask_Attack(FObjectInitializer  const& ObjectInitializer)
 
 EBTNodeResult::Type UCTask_Attack::ExecuteTask(UBehaviorTreeComponent & Owner, uint8 * NodeMemory)
 {
+	
+
 	AC_SamuariAIController* const Controller = Cast<AC_SamuariAIController>(Owner.GetAIOwner());
 	
 	// If AI is in range
@@ -29,6 +31,7 @@ EBTNodeResult::Type UCTask_Attack::ExecuteTask(UBehaviorTreeComponent & Owner, u
 		{
 			//execute task
 			AISamuraiReference->MeleeAttack();
+			
 		}
 	}
 
@@ -42,3 +45,5 @@ bool UCTask_Attack::bHasMontageFinished(AAI_Samurai * const AISamuraiReference)
 	//checks to see if the montage is finished
 	return AISamuraiReference->GetMesh()->GetAnimInstance()->Montage_GetIsStopped(AISamuraiReference->GetAnimMontage());
 }
+
+

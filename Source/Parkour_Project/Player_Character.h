@@ -161,6 +161,13 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "PlayerDeath")
 	bool bPlayerHasDied;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerDeath")
+	bool bHasBeenDamaged;
+
+	FTimerHandle DamagedTimerHandle;
+
+	void DamageFunction();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

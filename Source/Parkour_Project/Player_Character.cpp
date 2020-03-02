@@ -138,6 +138,8 @@ APlayer_Character::APlayer_Character()
 	HealthComponent = CreateDefaultSubobject<UC_HealthComponent>("HealthComponent");
 
 	bPlayerHasDied = false;
+
+	bHasBeenDamaged = false;
 }
 
 // EVENT BEGIN PLAY-> Called when the game starts or when spawned
@@ -198,9 +200,10 @@ void APlayer_Character::SpawnKabuto(TSubclassOf<AC_Kabuto> KabutoClass)
 //AI DAMAGE
 void APlayer_Character::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	if (OtherActor && (OtherActor != this) && OtherComp)
+	if (OtherActor && (OtherActor != this) && OtherComp && !bHasBeenDamaged)
 	{
 		UGameplayStatics::ApplyDamage(this, 10.0f, OtherActor->GetInstigatorController(), OtherActor, DefaultDamage);
+		bHasBeenDamaged = true;
 	}
 }
 
@@ -258,6 +261,22 @@ void APlayer_Character::Tick(float DeltaTime)
 	CameraComp->SetFieldOfView(NewFOV);
 
 	CanFire();
+
+	//if(bHasBeenDamaged)
+	//{
+
+	//	GetWorldTimerManager().SetTimer(DamagedTimerHandle, this, &APlayer_Character::DamageFunction, 1.25f, false);
+
+	//	//UE_LOG(LogTemp, Log, TEXT("Damaged"));
+	//	
+	//}
+
+}
+
+void APlayer_Character::DamageFunction()
+{
+	bHasBeenDamaged = false;
+	//UE_LOG(LogTemp, Log, TEXT("UNDamaged"));
 }
 
 //MOVEMENTCODE->
