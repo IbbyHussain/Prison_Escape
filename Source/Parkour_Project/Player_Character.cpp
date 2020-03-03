@@ -215,14 +215,16 @@ void APlayer_Character::PlayerDeath()
 	GetCharacterMovement()->DisableMovement();
 	GetMesh()->SetSimulatePhysics(true);
 	bPlayerHasDied = true;
+	bReloading = true;
+	AK47->bCanFire = false;	
 }
 
+//UPDATES HEALTH
 void APlayer_Character::OnHealthUpdated(UC_HealthComponent * HealthComponent, float Health, float HealthDelta, const UDamageType * DamageType, AController * InstigatedBy, AActor * DamageCauser)
 {
 	if (Health <= 0.0f)
 	{
 		PlayerDeath();
-
 		UE_LOG(LogTemp, Log, TEXT("Died"));
 	}
 }
@@ -468,7 +470,7 @@ void APlayer_Character::AddResources()
 //ZOOM-> Initial Zoom
 void APlayer_Character::BeginZoom()
 {
-	if(AK47 && !bIsSprinting)
+	if(AK47 && !bIsSprinting && !bPlayerHasDied)
 	{
 		bCanZoomIn = true;
 	}
