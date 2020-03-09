@@ -197,7 +197,7 @@ void APlayer_Character::SpawnKabuto(TSubclassOf<AC_Kabuto> KabutoClass)
 
 }
 
-//AI DAMAGE
+//AI DAMAGE-> any overlap event causes damage
 void APlayer_Character::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 	if (OtherActor && (OtherActor != this) && OtherComp && !bHasBeenDamaged)
@@ -215,8 +215,9 @@ void APlayer_Character::PlayerDeath()
 	GetCharacterMovement()->DisableMovement();
 	GetMesh()->SetSimulatePhysics(true);
 	bPlayerHasDied = true;
+	Playwidget = true;
 	bReloading = true;
-	AK47->bCanFire = false;	
+	//AK47->bCanFire = false;	
 }
 
 //UPDATES HEALTH
@@ -226,6 +227,7 @@ void APlayer_Character::OnHealthUpdated(UC_HealthComponent * HealthComponent, fl
 	{
 		PlayerDeath();
 		UE_LOG(LogTemp, Log, TEXT("Died"));
+		
 	}
 }
 
@@ -253,6 +255,7 @@ void APlayer_Character::Tick(float DeltaTime)
 			StopSprinting();
 		}
 	}
+	
 	
 	//ZOOM-> will set currentFOV based on the value of bCanZoomIn (left to right)
 	float TargetFOV = bCanZoomIn ? ZoomedFOV : DefaultFOV;

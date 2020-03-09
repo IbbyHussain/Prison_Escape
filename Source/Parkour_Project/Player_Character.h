@@ -161,6 +161,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "PlayerDeath")
 	bool bPlayerHasDied;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "PlayerDeath")
+	bool Playwidget;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerDeath")
 	bool bHasBeenDamaged;
 

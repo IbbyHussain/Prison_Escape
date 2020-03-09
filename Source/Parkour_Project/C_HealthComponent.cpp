@@ -44,6 +44,12 @@ void UC_HealthComponent::TakeAnyDamage(AActor * DamagedActor, float Damage, cons
 
 }
 
+// Resets Health
+void UC_HealthComponent::ResetHealth()
+{
+	Health = 100;
+}
+
 // Called every frame
 void UC_HealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
